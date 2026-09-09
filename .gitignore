@@ -1,0 +1,31 @@
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Generated Storyboard Images & Variations (Kept locally)
+Final selected images/
+3- Finals/Final selected images/
+3- Finals/final_selected_images/
+3- Finals/flow_generated_images/
+
+# Postmortem Video & Extracted Frame Dumps
+1- Postmartum/video_low.mp4
+1- Postmartum/all_shots/
+1- Postmartum/analysis_frames/
+1- Postmartum/deep_frames/
+1- Postmartum/*.wav
+
+# Playwright Debug Screenshots & Test Dumps
+2- Code/*.png
+2- Code/test.txt
+2- Code/test_out.txt
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+.vscode/
+.idea/

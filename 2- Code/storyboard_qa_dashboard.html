@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ink Explainers Storyboard Curation & AI Learning Studio</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    body { background: #0F172A; color: #F8FAFC; padding: 20px 24px; min-height: 100vh; }
+    
+    /* Top Header */
+    header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      margin-bottom: 20px; 
+      padding-bottom: 16px; 
+      border-bottom: 1px solid #334155; 
+      max-width: 1540px; 
+      margin-left: auto; 
+      margin-right: auto; 
+    }
+    .header-title h1 { font-size: 24px; font-weight: 700; color: #38BDF8; letter-spacing: -0.5px; }
+    .header-title p { font-size: 13px; color: #94A3B8; margin-top: 4px; }
+    
+    .header-controls { display: flex; align-items: center; gap: 14px; }
+    .search-box { padding: 10px 16px; border-radius: 8px; border: 1px solid #334155; background: #1E293B; color: #FFF; width: 340px; font-size: 13px; outline: none; transition: border-color 0.2s; }
+    .search-box:focus { border-color: #38BDF8; }
+    .status-pill-live { background: #064E3B; border: 1px solid #059669; color: #34D399; font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* Filter Toolbar */
+    .filter-toolbar { 
+      background: #1E293B; 
+      border: 1px solid #334155; 
+      border-radius: 12px; 
+      padding: 14px 20px; 
+      margin-bottom: 24px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      flex-wrap: wrap; 
+      gap: 12px; 
+      max-width: 1540px; 
+      margin-left: auto; 
+      margin-right: auto; 
+    }
+    .filter-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .filter-title { font-size: 11px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.8px; margin-right: 6px; }
+    
+    .filter-btn { padding: 7px 15px; border-radius: 20px; border: 1px solid #334155; background: #0F172A; color: #CBD5E1; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .filter-btn:hover { border-color: #38BDF8; color: #FFF; background: #1E293B; }
+    .filter-btn.active { background: #38BDF8; color: #0F172A; border-color: #38BDF8; font-weight: 700; }
+    .filter-btn.btn-orange.active { background: #F59E0B; color: #0F172A; border-color: #F59E0B; }
+    .filter-btn.btn-red.active { background: #EF4444; color: #FFF; border-color: #EF4444; }
+    .filter-btn.btn-green.active { background: #10B981; color: #0F172A; border-color: #10B981; }
+
+    .stats-summary { font-size: 13px; color: #94A3B8; font-weight: 500; }
+    .stats-summary b { color: #F8FAFC; }
+
+    /* Feed of Shot Cards - Strictly Vertical Column */
+    .shots-container { display: flex; flex-direction: column; gap: 28px; width: 100%; max-width: 1540px; margin: 0 auto; }
+    
+    /* Individual Shot Card: strictly vertical layout (above & below) */
+    .shot-card { 
+      display: flex; 
+      flex-direction: column; 
+      width: 100%; 
+      background: #1E293B; 
+      border: 1px solid #334155; 
+      border-radius: 12px; 
+      overflow: hidden; 
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      transition: border-color 0.2s; 
+    }
+    .shot-card.is-hidden { display: none !important; }
+    .shot-card:hover { border-color: #475569; }
+    .shot-card.is-overridden { border-top: 4px solid #F59E0B; }
+    .shot-card.is-queued { border-top: 4px solid #EF4444; }
+    .shot-card.is-clean { border-top: 4px solid #10B981; }
+    .shot-card.is-pending { border-top: 4px solid #64748B; }
+
+    /* 1. Card Header (ABOVE) */
+    .shot-header { 
+      width: 100%; 
+      padding: 12px 20px; 
+      background: #0F172A; 
+      border-bottom: 1px solid #334155; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+    }
+    .shot-meta { display: flex; align-items: center; gap: 12px; }
+    .shot-num-badge { font-size: 15px; font-weight: 800; color: #38BDF8; letter-spacing: -0.3px; }
+    .timecode-pill { background: #334155; color: #E2E8F0; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 4px; font-family: monospace; }
+    .status-badge { font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .status-badge.clean { background: #064E3B; color: #34D399; border: 1px solid #059669; }
+    .status-badge.overridden { background: #78350F; color: #FBBF24; border: 1px solid #D97706; }
+    .status-badge.queued { background: #7F1D1D; color: #FCA5A5; border: 1px solid #DC2626; }
+    .status-badge.pending { background: #1E293B; color: #94A3B8; border: 1px solid #475569; }
+
+    .shot-actions-quick { display: flex; gap: 8px; align-items: center; }
+    .btn-toggle-reason { background: #312E81; border: 1px solid #4F46E5; color: #C7D2FE; font-size: 12px; padding: 5px 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s; font-weight: 600; }
+    .btn-toggle-reason:hover { background: #4338CA; color: #FFF; }
+    .btn-quick-reject { background: transparent; border: 1px solid #64748B; color: #94A3B8; font-size: 12px; padding: 5px 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s; font-weight: 600; }
+    .btn-quick-reject:hover { border-color: #EF4444; color: #EF4444; background: rgba(239, 68, 68, 0.1); }
+
+    /* 2. Voiceover Strip (ABOVE) */
+    .vo-strip { 
+      width: 100%; 
+      padding: 14px 20px; 
+      background: #162032; 
+      border-bottom: 1px solid #334155; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      flex-wrap: wrap; 
+      gap: 10px; 
+    }
+    .vo-quote { font-size: 16px; font-weight: 600; color: #F1F5F9; font-style: italic; }
+    .visual-desc { font-size: 12px; font-weight: 500; color: #94A3B8; }
+
+    /* 3. Hero Variations Row (CENTER - WIDE SIDE-BY-SIDE) */
+    .variations-row { 
+      width: 100%; 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 18px; 
+      padding: 18px 20px; 
+    }
+    @media (max-width: 900px) {
+      .variations-row { grid-template-columns: 1fr; }
+    }
+
+    .var-tile { 
+      background: #0F172A; 
+      border: 2px solid #334155; 
+      border-radius: 10px; 
+      overflow: hidden; 
+      display: flex; 
+      flex-direction: column; 
+      cursor: pointer; 
+      transition: all 0.2s ease; 
+      position: relative; 
+    }
+    .var-tile:hover { transform: translateY(-2px); border-color: #38BDF8; box-shadow: 0 6px 16px rgba(56, 189, 248, 0.15); }
+    .var-tile.is-selected { border-color: #10B981 !important; box-shadow: 0 0 16px rgba(16, 185, 129, 0.35) !important; }
+
+    .img-wrap { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #020617; overflow: hidden; }
+    .img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    
+    .selected-overlay-badge { position: absolute; top: 10px; left: 10px; background: #10B981; color: #022C22; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; box-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+    .ai-pick-badge { position: absolute; top: 10px; right: 10px; background: #2563EB; color: #FFF; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; box-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+
+    .var-footer { padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; background: #131E31; border-top: 1px solid #1E293B; }
+    .var-name { font-size: 12px; font-weight: 700; color: #E2E8F0; }
+    .var-metrics { display: flex; gap: 6px; font-size: 11px; color: #94A3B8; }
+    .var-score-pill { background: #1E293B; padding: 2px 6px; border-radius: 4px; font-weight: 600; color: #38BDF8; }
+
+    /* 4. AI Differential Reflection & Open-Ended Reason (BELOW) */
+    .learning-strip { 
+      width: calc(100% - 40px); 
+      margin: 0 20px 16px 20px; 
+      background: #1E1B4B; 
+      border: 1px solid #6366F1; 
+      border-radius: 8px; 
+      padding: 14px 18px; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 10px; 
+    }
+    .learning-title { font-weight: 700; color: #A5B4FC; display: flex; align-items: center; gap: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .learning-text { font-size: 13px; color: #E0E7FF; line-height: 1.4; font-weight: 500; }
+    
+    /* Open-ended reason row */
+    .open-reason-box { background: #131238; border: 1px solid #4338CA; border-radius: 6px; padding: 12px 14px; margin-top: 4px; }
+    .open-reason-label { font-size: 12px; font-weight: 700; color: #C7D2FE; margin-bottom: 8px; }
+    .open-reason-row { display: flex; gap: 8px; align-items: center; }
+    .open-reason-input { 
+      flex: 1; 
+      background: #0F172A; 
+      border: 1px solid #6366F1; 
+      border-radius: 6px; 
+      padding: 9px 12px; 
+      color: #F8FAFC; 
+      font-size: 13px; 
+      outline: none; 
+      transition: border-color 0.2s; 
+    }
+    .open-reason-input:focus { border-color: #A5B4FC; box-shadow: 0 0 8px rgba(99, 102, 241, 0.3); }
+    .btn-save-reason { 
+      background: #4F46E5; 
+      color: #FFF; 
+      border: none; 
+      padding: 9px 16px; 
+      border-radius: 6px; 
+      font-size: 12px; 
+      font-weight: 700; 
+      cursor: pointer; 
+      white-space: nowrap; 
+      transition: background 0.2s; 
+    }
+    .btn-save-reason:hover { background: #6366F1; }
+
+    .learning-reason-tags { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 8px; }
+    .reason-btn { background: #312E81; border: 1px solid #4F46E5; color: #C7D2FE; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; cursor: pointer; transition: all 0.15s; }
+    .reason-btn:hover { background: #4338CA; color: #FFF; }
+
+    /* 5. Critique & Re-generation Panel (BELOW) */
+    .regen-panel { 
+      width: calc(100% - 40px); 
+      margin: 0 20px 16px 20px; 
+      background: #1F1523; 
+      border: 1px solid #9D174D; 
+      border-radius: 8px; 
+      padding: 14px 18px; 
+      display: none; 
+    }
+    .regen-panel.active { display: block; animation: fadeIn 0.2s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+    
+    .regen-title { font-size: 12px; font-weight: 700; color: #F472B6; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
+    .critique-input { width: 100%; background: #0F172A; border: 1px solid #831843; border-radius: 6px; padding: 10px 12px; color: #F8FAFC; font-size: 13px; resize: vertical; min-height: 60px; margin-bottom: 10px; outline: none; }
+    .critique-input:focus { border-color: #F472B6; }
+
+    .tag-checkboxes { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .chk-tag { display: flex; align-items: center; gap: 6px; background: #0F172A; padding: 4px 10px; border-radius: 6px; border: 1px solid #334155; font-size: 11px; color: #CBD5E1; cursor: pointer; user-select: none; }
+    .chk-tag input { cursor: pointer; accent-color: #F472B6; }
+
+    .regen-actions { display: flex; justify-content: flex-end; gap: 10px; }
+    .btn-cancel { background: transparent; border: 1px solid #475569; color: #94A3B8; font-size: 12px; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+    .btn-submit-regen { background: #BE185D; border: none; color: #FFF; font-size: 12px; padding: 6px 16px; border-radius: 6px; cursor: pointer; font-weight: 700; transition: background 0.2s; }
+    .btn-submit-regen:hover { background: #DB2777; }
+
+    /* Toast Notification */
+    .toast-popup { position: fixed; bottom: 24px; right: 28px; background: #1E293B; border: 1px solid #38BDF8; color: #F8FAFC; padding: 12px 20px; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); font-size: 13px; font-weight: 600; z-index: 9999; display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="header-title">
+      <h1>Storyboard Visual Curation & AI Learning Studio</h1>
+      <p id="stats-banner">334-Shot Master Script | 16:9 Full Bleed Widescreen | Google Flow Continuous Learning Engine</p>
+    </div>
+    <div class="header-controls">
+      <span class="status-pill-live" id="live-indicator">● LIVE SYNC ACTIVE</span>
+      <input type="text" class="search-box" id="search" placeholder="Search VO text, shot #, or prompt..." onkeyup="filterShots()">
+    </div>
+  </header>
+
+  <!-- Filter Toolbar -->
+  <div class="filter-toolbar">
+    <div class="filter-left">
+      <div class="filter-title">Filter View:</div>
+      <button class="filter-btn active" onclick="setFilter('all', this)">All Shots (334)</button>
+      <button class="filter-btn btn-green" onclick="setFilter('completed', this)">Ready / Completed</button>
+      <button class="filter-btn btn-orange" onclick="setFilter('overridden', this)">Your Overrides</button>
+      <button class="filter-btn btn-red" onclick="setFilter('queued', this)">Re-generation Queued</button>
+      <button class="filter-btn" onclick="setFilter('pending', this)">Pending Generation</button>
+    </div>
+    <div class="stats-summary" id="stats-counter">
+      Showing <b>0</b> of <b>334</b> shots
+    </div>
+  </div>
+
+  <!-- Continuous Feed of All Shots -->
+  <div class="shots-container" id="shots-feed">
+    <!-- Populated non-destructively by JavaScript -->
+  </div>
+
+  <div class="toast-popup" id="toast">Selection Updated!</div>
+
+  <script>
+    let activeFilter = 'all';
+    let allShotsData = [];
+
+    async function loadData() {
+      try {
+        const res = await fetch('/api/shots');
+        if (res.ok) {
+          allShotsData = await res.json();
+          updateShotsFeed();
+        }
+      } catch (e) {
+        console.error("Error loading shots:", e);
+      }
+    }
+
+    function setFilter(filter, btn) {
+      activeFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      filterShots();
+    }
+
+    function filterShots() {
+      const query = document.getElementById('search').value.toLowerCase();
+      const cards = document.querySelectorAll('.shot-card');
+      let visible = 0;
+
+      cards.forEach(card => {
+        const shotNum = card.getAttribute('data-shot');
+        const vo = card.getAttribute('data-vo').toLowerCase();
+        const prompt = card.getAttribute('data-prompt').toLowerCase();
+        const status = card.getAttribute('data-status');
+
+        const matchesSearch = shotNum.includes(query) || vo.includes(query) || prompt.includes(query);
+        let matchesFilter = false;
+
+        if (activeFilter === 'all') matchesFilter = true;
+        else if (activeFilter === 'completed') matchesFilter = status === 'clean' || status === 'overridden';
+        else if (activeFilter === 'overridden') matchesFilter = status === 'overridden';
+        else if (activeFilter === 'queued') matchesFilter = status === 'queued';
+        else if (activeFilter === 'pending') matchesFilter = status === 'pending';
+
+        if (matchesSearch && matchesFilter) {
+          card.classList.remove('is-hidden');
+          visible++;
+        } else {
+          card.classList.add('is-hidden');
+        }
+      });
+
+      document.getElementById('stats-counter').innerHTML = `Showing <b>${visible}</b> of <b>${allShotsData.length}</b> shots`;
+    }
+
+    // Non-destructive update: keeps scroll position, focus, and typed inputs intact
+    function updateShotsFeed() {
+      const container = document.getElementById('shots-feed');
+
+      allShotsData.forEach(shot => {
+        let statusClass = 'pending';
+        let statusLabel = 'PENDING GENERATION';
+        if (shot.is_regen_queued) {
+          statusClass = 'queued';
+          statusLabel = 'RE-GEN QUEUED';
+        } else if (shot.is_overridden) {
+          statusClass = 'overridden';
+          statusLabel = 'USER OVERRIDDEN';
+        } else if (shot.has_final) {
+          statusClass = 'clean';
+          statusLabel = 'READY / VERIFIED';
+        }
+
+        let card = document.getElementById(`shot-card-${shot.shot_num}`);
+
+        if (!card) {
+          // Create new card
+          card = document.createElement('div');
+          card.id = `shot-card-${shot.shot_num}`;
+          card.className = `shot-card is-${statusClass}`;
+          card.setAttribute('data-shot', shot.shot_num.toString());
+          card.setAttribute('data-vo', shot.vo_text || '');
+          card.setAttribute('data-prompt', shot.prompt || '');
+          card.setAttribute('data-status', statusClass);
+
+          card.innerHTML = buildCardHTML(shot, statusClass, statusLabel);
+          container.appendChild(card);
+        } else {
+          // In-place updates for existing card
+          card.setAttribute('data-status', statusClass);
+          card.className = `shot-card is-${statusClass}`;
+
+          const badgeEl = card.querySelector('.status-badge');
+          if (badgeEl) {
+            badgeEl.className = `status-badge ${statusClass}`;
+            badgeEl.innerText = statusLabel;
+          }
+
+          // Update variations if needed
+          const varRow = card.querySelector('.variations-row');
+          if (varRow && shot.variations && shot.variations.length > 0) {
+            shot.variations.forEach(v => {
+              const tile = card.querySelector(`#var-tile-${shot.shot_num}-${v.var_idx}`);
+              if (tile) {
+                if (v.is_active_final) {
+                  tile.classList.add('is-selected');
+                  let overlay = tile.querySelector('.selected-overlay-badge');
+                  if (!overlay) {
+                    overlay = document.createElement('div');
+                    overlay.className = 'selected-overlay-badge';
+                    overlay.innerText = '✓ ACTIVE FINAL';
+                    tile.querySelector('.img-wrap').appendChild(overlay);
+                  }
+                } else {
+                  tile.classList.remove('is-selected');
+                  const overlay = tile.querySelector('.selected-overlay-badge');
+                  if (overlay) overlay.remove();
+                }
+              }
+            });
+          } else if (shot.variations && shot.variations.length > 0 && !varRow) {
+            // Variations just became ready
+            card.innerHTML = buildCardHTML(shot, statusClass, statusLabel);
+          }
+
+          // Update differential reflection & user reason if not currently focused
+          const reflectionEl = card.querySelector(`#reflection-text-${shot.shot_num}`);
+          if (reflectionEl && shot.differential_reflection) {
+            reflectionEl.innerText = shot.differential_reflection;
+          }
+
+          const reasonInput = card.querySelector(`#open-reason-${shot.shot_num}`);
+          if (reasonInput && document.activeElement !== reasonInput) {
+            if (shot.user_reason && !reasonInput.value) {
+              reasonInput.value = shot.user_reason;
+            }
+          }
+
+          // Toggle learning strip visibility if overridden
+          const learningStrip = card.querySelector(`#learning-strip-${shot.shot_num}`);
+          if (learningStrip && (shot.is_overridden || shot.user_reason)) {
+            learningStrip.style.display = 'flex';
+          }
+        }
+      });
+
+      filterShots();
+    }
+
+    function buildCardHTML(shot, statusClass, statusLabel) {
+      const showLearning = (shot.is_overridden || (shot.user_reason && shot.user_reason.length > 0));
+      const reflectionText = shot.differential_reflection || "AI Deduction: Preferred for stronger visual focus and character storytelling.";
+      const userReasonVal = shot.user_reason || "";
+
+      let html = `
+        <!-- 1. Header (ABOVE) -->
+        <div class="shot-header">
+          <div class="shot-meta">
+            <span class="shot-num-badge">SHOT #${String(shot.shot_num).padStart(3, '0')}</span>
+            <span class="timecode-pill">${shot.timecode}</span>
+            <span class="status-badge ${statusClass}">${statusLabel}</span>
+          </div>
+          <div class="shot-actions-quick">
+            <button class="btn-toggle-reason" onclick="toggleReasonPanel(${shot.shot_num})">💬 AI Learning Feedback</button>
+            <button class="btn-quick-reject" onclick="toggleRegenPanel(${shot.shot_num})">❌ Neither Works (Re-generate)</button>
+          </div>
+        </div>
+
+        <!-- 2. Voiceover Strip (ABOVE) -->
+        <div class="vo-strip">
+          <div class="vo-quote">"${shot.vo_text}"</div>
+          <div class="visual-desc">${shot.visual_desc || ''}</div>
+        </div>
+      `;
+
+      // 3. Variations Row (CENTER - WIDE SIDE-BY-SIDE)
+      if (shot.variations && shot.variations.length > 0) {
+        html += `<div class="variations-row">`;
+        shot.variations.forEach(v => {
+          const isSelected = v.is_active_final;
+          const isAiPick = v.is_ai_best;
+          
+          html += `
+            <div class="var-tile ${isSelected ? 'is-selected' : ''}" id="var-tile-${shot.shot_num}-${v.var_idx}" onclick="selectVariation(${shot.shot_num}, ${v.var_idx})">
+              <div class="img-wrap">
+                <img src="${v.img_url}" alt="Shot ${shot.shot_num} Var ${v.var_idx}" loading="lazy">
+                ${isSelected ? '<div class="selected-overlay-badge">✓ ACTIVE FINAL</div>' : ''}
+                ${isAiPick ? '<div class="ai-pick-badge">🤖 AI SCORE: ' + v.score.toFixed(1) + '</div>' : ''}
+              </div>
+              <div class="var-footer">
+                <span class="var-name">Variation ${v.var_idx}</span>
+                <div class="var-metrics">
+                  <span class="var-score-pill">Score: ${v.score.toFixed(1)}</span>
+                  <span>Sharp: ${v.details.sharpness || '-'}</span>
+                  <span>Focus: ${v.details.center_focus || '-'}</span>
+                  <span>Contrast: ${v.details.contrast || '-'}</span>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+        html += `</div>`;
+      } else {
+        html += `<div style="padding: 28px; text-align: center; color: #64748B; font-size: 13px;">Waiting for background worker to render variations...</div>`;
+      }
+
+      // 4. AI Differential Reflection & Open-Ended Reason Input (BELOW)
+      html += `
+        <div class="learning-strip" id="learning-strip-${shot.shot_num}" style="display: ${showLearning ? 'flex' : 'none'};">
+          <div class="learning-title">
+            <span>🧠 AI Differential Reflection:</span>
+          </div>
+          <div class="learning-text" id="reflection-text-${shot.shot_num}">${reflectionText}</div>
+          
+          <!-- Open-Ended Reason Input -->
+          <div class="open-reason-box">
+            <div class="open-reason-label">Why did you choose this image? (Add your open-ended reason so the AI learns your artistic preferences):</div>
+            <div class="open-reason-row">
+              <input type="text" class="open-reason-input" id="open-reason-${shot.shot_num}" 
+                     placeholder="e.g. 'Character expression is funnier', 'Lighting fits VO better', 'Cleaner background'..."
+                     value="${userReasonVal.replace(/"/g, '&quot;')}"
+                     onkeydown="if(event.key==='Enter') saveOpenReason(${shot.shot_num})">
+              <button class="btn-save-reason" onclick="saveOpenReason(${shot.shot_num})">💾 Save Reason</button>
+            </div>
+            <div class="learning-reason-tags">
+              <span style="font-size:11px; color:#94A3B8; margin-right:4px;">Quick Tags:</span>
+              <button type="button" class="reason-btn" onclick="quickAppendTag(${shot.shot_num}, 'Stronger character emotion')">+ Emotion / Face</button>
+              <button type="button" class="reason-btn" onclick="quickAppendTag(${shot.shot_num}, 'Better visual storytelling')">+ Story Fidelity</button>
+              <button type="button" class="reason-btn" onclick="quickAppendTag(${shot.shot_num}, 'Cleaner minimalist background')">+ Cleaner / Simpler</button>
+              <button type="button" class="reason-btn" onclick="quickAppendTag(${shot.shot_num}, 'Closer framing on action')">+ Action Framing</button>
+              <button type="button" class="reason-btn" onclick="quickAppendTag(${shot.shot_num}, 'Bolder ink linework')">+ Bolder Ink</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // 5. Critique & Re-generation Panel (BELOW)
+      html += `
+        <div class="regen-panel" id="regen-panel-${shot.shot_num}">
+          <div class="regen-title">❌ Direct & Re-generate Shot #${shot.shot_num}:</div>
+          <textarea class="critique-input" id="critique-${shot.shot_num}" placeholder="What needs to change? (e.g. 'Character should look exhausted, slouched under tree. Remove clutter from background.')"></textarea>
+          <div class="tag-checkboxes">
+            <label class="chk-tag"><input type="checkbox" id="chk-emotion-${shot.shot_num}"> Stronger Emotion / Face</label>
+            <label class="chk-tag"><input type="checkbox" id="chk-clean-${shot.shot_num}"> Cleaner / Less Cluttered</label>
+            <label class="chk-tag"><input type="checkbox" id="chk-close-${shot.shot_num}"> Closer Framing</label>
+            <label class="chk-tag"><input type="checkbox" id="chk-action-${shot.shot_num}"> Match Voiceover Action</label>
+            <label class="chk-tag"><input type="checkbox" id="chk-light-${shot.shot_num}"> Dramatic Lighting</label>
+          </div>
+          <div class="regen-actions">
+            <button class="btn-cancel" onclick="toggleRegenPanel(${shot.shot_num})">Cancel</button>
+            <button class="btn-submit-regen" onclick="submitRegen(${shot.shot_num})">🚀 Queue Re-generation with AI Direction</button>
+          </div>
+        </div>
+      `;
+
+      return html;
+    }
+
+    async function selectVariation(shotNum, varIdx) {
+      // Optimistic UI update
+      const card = document.getElementById(`shot-card-${shotNum}`);
+      if (card) {
+        card.querySelectorAll('.var-tile').forEach(t => t.classList.remove('is-selected'));
+        card.querySelectorAll('.selected-overlay-badge').forEach(b => b.remove());
+
+        const chosenTile = card.querySelector(`#var-tile-${shotNum}-${varIdx}`);
+        if (chosenTile) {
+          chosenTile.classList.add('is-selected');
+          const overlay = document.createElement('div');
+          overlay.className = 'selected-overlay-badge';
+          overlay.innerText = '✓ ACTIVE FINAL';
+          chosenTile.querySelector('.img-wrap').appendChild(overlay);
+        }
+
+        // Show learning strip immediately
+        const learningStrip = card.querySelector(`#learning-strip-${shotNum}`);
+        if (learningStrip) {
+          learningStrip.style.display = 'flex';
+          const inputEl = card.querySelector(`#open-reason-${shotNum}`);
+          if (inputEl) inputEl.focus();
+        }
+      }
+
+      try {
+        const res = await fetch('/api/select', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ shot_num: shotNum, var_idx: varIdx })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          showToast(`Saved Variation ${varIdx} as Final for Shot #${shotNum}!`);
+          if (data.reflection && card) {
+            const reflectionEl = card.querySelector(`#reflection-text-${shotNum}`);
+            if (reflectionEl) reflectionEl.innerText = data.reflection;
+          }
+          // Update card status
+          card.setAttribute('data-status', 'overridden');
+          card.className = 'shot-card is-overridden';
+          const badgeEl = card.querySelector('.status-badge');
+          if (badgeEl) {
+            badgeEl.className = 'status-badge overridden';
+            badgeEl.innerText = 'USER OVERRIDDEN';
+          }
+        }
+      } catch (e) {
+        console.error("Select error:", e);
+      }
+    }
+
+    function toggleReasonPanel(shotNum) {
+      const panel = document.getElementById(`learning-strip-${shotNum}`);
+      if (panel) {
+        panel.style.display = (panel.style.display === 'none' || !panel.style.display) ? 'flex' : 'none';
+        if (panel.style.display === 'flex') {
+          const inputEl = document.getElementById(`open-reason-${shotNum}`);
+          if (inputEl) inputEl.focus();
+        }
+      }
+    }
+
+    async function saveOpenReason(shotNum) {
+      const inputEl = document.getElementById(`open-reason-${shotNum}`);
+      if (!inputEl) return;
+      const reasonText = inputEl.value.trim();
+      if (!reasonText) {
+        alert("Please enter a reason before saving.");
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ shot_num: shotNum, reason: reasonText })
+        });
+        if (res.ok) {
+          showToast(`Reason saved to AI Learning Database!`);
+        }
+      } catch (e) {
+        console.error("Save reason error:", e);
+      }
+    }
+
+    function quickAppendTag(shotNum, tag) {
+      const inputEl = document.getElementById(`open-reason-${shotNum}`);
+      if (inputEl) {
+        if (inputEl.value.trim().length > 0) {
+          inputEl.value += ", " + tag;
+        } else {
+          inputEl.value = tag;
+        }
+        inputEl.focus();
+      }
+    }
+
+    function toggleRegenPanel(shotNum) {
+      const panel = document.getElementById(`regen-panel-${shotNum}`);
+      if (panel) {
+        panel.classList.toggle('active');
+        if (panel.classList.contains('active')) {
+          const critiqueEl = document.getElementById(`critique-${shotNum}`);
+          if (critiqueEl) critiqueEl.focus();
+        }
+      }
+    }
+
+    async function submitRegen(shotNum) {
+      const critiqueText = document.getElementById(`critique-${shotNum}`).value.trim();
+      const tags = [];
+      if (document.getElementById(`chk-emotion-${shotNum}`).checked) tags.push("Stronger Emotion / Face");
+      if (document.getElementById(`chk-clean-${shotNum}`).checked) tags.push("Cleaner / Less Cluttered");
+      if (document.getElementById(`chk-close-${shotNum}`).checked) tags.push("Closer Framing");
+      if (document.getElementById(`chk-action-${shotNum}`).checked) tags.push("Match Voiceover Action");
+      if (document.getElementById(`chk-light-${shotNum}`).checked) tags.push("Dramatic Lighting");
+
+      if (!critiqueText && tags.length === 0) {
+        alert("Please enter a critique or check at least one tag.");
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/reject', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ shot_num: shotNum, critique: critiqueText, adjustments: tags })
+        });
+        if (res.ok) {
+          toggleRegenPanel(shotNum);
+          showToast(`Shot #${shotNum} queued for re-generation!`);
+          
+          const card = document.getElementById(`shot-card-${shotNum}`);
+          if (card) {
+            card.setAttribute('data-status', 'queued');
+            card.className = 'shot-card is-queued';
+            const badgeEl = card.querySelector('.status-badge');
+            if (badgeEl) {
+              badgeEl.className = 'status-badge queued';
+              badgeEl.innerText = 'RE-GEN QUEUED';
+            }
+          }
+        }
+      } catch (e) {
+        console.error("Regen submit error:", e);
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 3200);
+    }
+
+    // Initial load
+    loadData();
+    // Live background polling every 6 seconds
+    setInterval(loadData, 6000);
+  </script>
+</body>
+</html>

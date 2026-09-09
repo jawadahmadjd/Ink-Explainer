@@ -1,0 +1,79 @@
+{
+  "inputTag": "SPAN",
+  "inputClass": "prosemirror-placeholder ProseMirror-widget",
+  "inputHtml": "<span class=\"prosemirror-placeholder ProseMirror-widget\" contenteditable=\"false\" style=\"\">What do you want to create?</span>",
+  "buttons": [
+    {
+      "text": "home",
+      "ariaLabel": "Home",
+      "className": "mdc-icon-button mat-mdc-icon-button mat-mdc-button-base mat-mdc-tooltip-trigger back-button mat-unthemed flow-icon-button-transparent flow-button-large",
+      "html": "<button _ngcontent-ng-c1389597430=\"\" flow-icon-button=\"\" maticonbutton=\"\" class=\"mdc-icon-button mat-mdc-icon-button mat-mdc-button-base mat-mdc-toolt"
+    },
+    {
+      "text": "more_vert",
+      "ariaLabel": "More options for the project",
+      "className": "mdc-icon-button mat-mdc-icon-button mat-mdc-button-base mat-mdc-menu-trigger mat-mdc-tooltip-trigger more-options-button mat-unthemed flow-icon-button-transparent flow-button-large",
+      "html": "<button _ngcontent-ng-c3313979382=\"\" more-options=\"\" flow-icon-button=\"\" maticonbutton=\"\" class=\"mdc-icon-button mat-mdc-icon-button mat-mdc-button-ba"
+    },
+    {
+      "text": "search",
+      "ariaLabel": "Search",
+      "className": "mdc-icon-button mat-mdc-icon-button mat-mdc-button-base mat-mdc-tooltip-trigger icon-button-inside-search-input search-button mat-unthemed flow-icon-button-transparent flow-button-small",
+      "html": "<button _ngcontent-ng-c4191359715=\"\" flow-icon-button=\"\" maticonbutton=\"\" class=\"mdc-icon-button mat-mdc-icon-button mat-mdc-button-base mat-mdc-toolt"
+    },
+    {
+      "text": "filter_list",
+      "ariaLabel": "Filtering and sorting options",
+      "className": "mdc-icon-button mat-mdc-icon-button mat-mdc-button-base mat-mdc-tooltip-trigger filter-button mat-unthemed flow-icon-button-primary flow-button-small",
+      "html": "<button _ngcontent-ng-c4191359715=\"\" cdkoverlayorigin=\"\" flow-icon-button=\"\" maticonbutton=\"\" class=\"mdc-icon-button mat-mdc-icon-button mat-mdc-butto"
+    },
+    {
+      "text": "add",
+      "ariaLabel": "Add media menu",
+      "className": "mdc-icon-button mat-mdc-icon-button mat-mdc-button-base mat-mdc-menu-trigger mat-mdc-tooltip-trigger mat-unthemed flow-icon-button-transparent flow-button-large",
+      "html": "<button _ngcontent-ng-c3313979382=\"\" flow-icon-button=\"\" maticonbutton=\"\" mattooltip=\"Add media\" aria-label=\"Add media menu\" class=\"mdc-icon-button ma"
+    },
+    {
+      "text": "help",
+      "ariaLabel": "Product help",
+      "className": "mdc-icon-button mat-mdc-icon-button mat-mdc-button-base mat-mdc-tooltip-trigger mat-unthemed flow-icon-button-transparent flow-button-large",
+      "html": "<button _ngcontent-ng-c3313979382=\"\" flow-icon-button=\"\" maticonbutton=\"\" mattooltip=\"Product help\" aria-label=\"Product help\" class=\"mdc-icon-button m"
+    },
+    {
+      "text": "settings_2",
+      "ariaLabel": "Tile grid settings",
+      "className": "mdc-icon-button mat-mdc-icon-button mat-mdc-button-base mat-mdc-menu-trigger mat-mdc-tooltip-trigger mat-unthemed flow-icon-button-transparent flow-button-large",
+      "html": "<button _ngcontent-ng-c3313979382=\"\" flow-icon-button=\"\" maticonbutton=\"\" mattooltip=\"View settings\" aria-label=\"Tile grid settings\" class=\"mdc-icon-b"
+    },
+    {
+      "text": "more_vert",
+      "ariaLabel": "More options",
+      "className": "mdc-icon-button mat-mdc-icon-button mat-mdc-button-base mat-mdc-menu-trigger mat-mdc-tooltip-trigger mat-unthemed flow-icon-button-transparent flow-button-large",
+      "html": "<button maticonbutton=\"\" flow-icon-button=\"\" aria-label=\"More options\" mattooltip=\"More options\" class=\"mdc-icon-button mat-mdc-icon-button mat-mdc-bu"
+    },
+    {
+      "text": "add",
+      "ariaLabel": "Add ingredients to the prompt box",
+      "className": "mdc-icon-button mat-mdc-icon-button mat-mdc-button-base mat-mdc-tooltip-trigger add-menu-trigger mat-unthemed",
+      "html": "<button maticonbutton=\"\" type=\"button\" aria-haspopup=\"true\" class=\"mdc-icon-button mat-mdc-icon-button mat-mdc-button-base mat-mdc-tooltip-trigger add"
+    },
+    {
+      "text": "Agent",
+      "ariaLabel": null,
+      "className": "agent-mode-chip",
+      "html": "<button _ngcontent-ng-c4180204343=\"\" class=\"agent-mode-chip\" aria-pressed=\"false\"><!----><span _ngcontent-ng-c4180204343=\"\" class=\"agent-mode-chip-lab"
+    },
+    {
+      "text": "\ud83c\udf4c Nano Banana Pro\ncrop_16_9\nx4",
+      "ariaLabel": "Settings trigger",
+      "className": "mdc-button mat-mdc-button-base settings-trigger-button mdc-button--unelevated mat-mdc-unelevated-button mat-unthemed flow-button-primary flow-button-small",
+      "html": "<button _ngcontent-ng-c3242540962=\"\" matbutton=\"\" flow-button=\"\" aria-label=\"Settings trigger\" cdkoverlayorigin=\"\" class=\"mdc-button mat-mdc-button-ba"
+    },
+    {
+      "text": "arrow_forward",
+      "ariaLabel": "Start generation",
+      "className": "mdc-icon-button mat-mdc-icon-button mat-mdc-button-base generate-icon-button mat-mdc-button-disabled mat-unthemed flow-icon-button-secondary flow-button-small",
+      "html": "<button _ngcontent-ng-c1280870177=\"\" flow-icon-button=\"\" maticonbutton=\"\" type=\"submit\" aria-label=\"Start generation\" cdkoverlayorigin=\"\" class=\"mdc-i"
+    }
+  ]
+}
