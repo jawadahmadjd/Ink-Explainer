@@ -16,8 +16,6 @@ PROJECT_ROOT = os.path.dirname(BASE_DIR)
 REGEN_QUEUE_JSON = os.path.join(PROJECT_ROOT, "3- Finals", "regeneration_queue.json")
 RAW_IMG_DIR = os.path.join(PROJECT_ROOT, "3- Finals", "flow_generated_images")
 FINAL_DIR_ROOT = os.path.join(PROJECT_ROOT, "Final selected images")
-FINAL_DIR_FINALS = os.path.join(PROJECT_ROOT, "3- Finals", "Final selected images")
-FINAL_DIR_LEGACY = os.path.join(PROJECT_ROOT, "3- Finals", "final_selected_images")
 SELECTION_LOG = os.path.join(PROJECT_ROOT, "3- Finals", "selection_log.csv")
 
 TARGET_PROJECT_URL = "https://flow.google.com/u/0/project/8a28cfa5-fddf-4528-b188-6deb5ce5e0e5"

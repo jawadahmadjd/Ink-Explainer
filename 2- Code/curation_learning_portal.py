@@ -1,4 +1,4 @@
-﻿import csv
+import csv
 import json
 import os
 import shutil
@@ -38,8 +38,6 @@ st.markdown("""
 CSV_PATH = os.path.join("3- Finals", "storyboard_master.csv")
 RAW_IMG_DIR = os.path.join("3- Finals", "flow_generated_images")
 FINAL_DIR_ROOT = "Final selected images"
-FINAL_DIR_FINALS = os.path.join("3- Finals", "Final selected images")
-FINAL_DIR_LEGACY = os.path.join("3- Finals", "final_selected_images")
 STATUS_JSON = os.path.join("3- Finals", "production_status.json")
 LOG_CSV = os.path.join("3- Finals", "selection_log.csv")
 LEARNING_JSON = os.path.join("3- Finals", "ai_learning_log.json")
@@ -158,14 +156,9 @@ def get_active_final_path(shot_num):
     return p if os.path.exists(p) else None
 
 def set_final_image(shot_num, chosen_path, reason="", user_override=False):
-    """Copies chosen image to all final directories and logs learning data."""
+    """Copies chosen image strictly to Final selected images/ and logs learning data."""
     final_root = os.path.join(FINAL_DIR_ROOT, f"shot_{shot_num:03d}.jpg")
-    final_finals = os.path.join(FINAL_DIR_FINALS, f"shot_{shot_num:03d}.jpg")
-    final_legacy = os.path.join(FINAL_DIR_LEGACY, f"shot_{shot_num:03d}.jpg")
-
     shutil.copy2(chosen_path, final_root)
-    shutil.copy2(chosen_path, final_finals)
-    shutil.copy2(chosen_path, final_legacy)
 
     # If user override, log to learning system
     if user_override:

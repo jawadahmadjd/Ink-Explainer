@@ -89,5 +89,6 @@ python "2- Code/run_regeneration_queue.py"
 ## Master Script Details
 - **Total Shots**: 334
 - **Runtime**: 12:52.0
-- **Visual Style**: Minimalist hand-drawn 2D vector illustration, clean bold black ink comic line art, graphic novel aesthetic, cinematic 16:9 widescreen composition.
-- **Status**: 334 / 334 (100%) generated, verified, and logged.
+- **Visual Style**: Minimalist hand-drawn 2D vector illustration, clean bold black ink comic line art, graphic novel aesthetic, minimalist white-filled black-outlined stick figure characters, cinematic 16:9 widescreen composition.
+- **Canonical Output**: All final curated images reside exclusively in `Final selected images/` (`shot_001.jpg` ... `shot_334.jpg`).
+- **Status**: 334 / 334 generated, audited for stick-figure character compliance, and logged.

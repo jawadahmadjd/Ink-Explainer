@@ -1,9 +1,9 @@
 {
-  "current_shot": 334,
+  "current_shot": 9,
   "total_shots": 334,
-  "completed_count": 334,
-  "status": "COMPLETED",
-  "active_model": "Nano Banana 2 Lite (x2)",
-  "last_updated": "2026-09-09T12:20:14.264651",
-  "note": "All shots generated and selected!"
+  "completed": 9,
+  "status": "RUNNING",
+  "active_model": "Nano Banana Pro (x2)",
+  "last_updated": "2026-09-09T18:43:27.189758",
+  "note": "Completed stick figure regeneration for Shot 9 (Var 1)"
 }

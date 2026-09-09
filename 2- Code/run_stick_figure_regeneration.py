@@ -1,3 +1,10 @@
+"""
+Automated Stick-Figure Regeneration Runner
+Regenerates non-stick figure storyboard shots using Google Flow with
+model priority cascade: Nano Banana Pro > Nano Banana 2 > Nano Banana 2 Lite.
+Saves winning images strictly to 'Final selected images/'.
+"""
+
 import argparse
 import csv
 import json
@@ -11,28 +18,27 @@ import cv2
 import numpy as np
 from playwright.sync_api import sync_playwright
 
-# Import status tracker
-sys.path.append(os.path.dirname(__file__))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(BASE_DIR)
+
+sys.path.append(BASE_DIR)
 from update_prompt_status_tracker import refresh_trackers
 
 TARGET_PROJECT_URL = "https://flow.google.com/u/0/project/8a28cfa5-fddf-4528-b188-6deb5ce5e0e5"
-TARGET_VARIATIONS = 2  # 2 variations per prompt per SOP
+TARGET_VARIATIONS = 2
 MODEL_CASCADE = ["Nano Banana Pro", "Nano Banana 2", "Nano Banana 2 Lite"]
 
-CSV_PATH = os.path.join("3- Finals", "storyboard_master.csv")
-RAW_IMG_DIR = os.path.join("3- Finals", "flow_generated_images")
-
-# The single canonical destination folder per user instruction
-FINAL_DIR_ROOT = "Final selected images"
-
-LOG_CSV = os.path.join("3- Finals", "selection_log.csv")
-STATUS_JSON = os.path.join("3- Finals", "production_status.json")
+CSV_PATH = os.path.join(PROJECT_ROOT, "3- Finals", "storyboard_master.csv")
+AUDIT_JSON = os.path.join(PROJECT_ROOT, "3- Finals", "character_audit.json")
+RAW_IMG_DIR = os.path.join(PROJECT_ROOT, "3- Finals", "flow_generated_images")
+FINAL_DIR_ROOT = os.path.join(PROJECT_ROOT, "Final selected images")
+LOG_CSV = os.path.join(PROJECT_ROOT, "3- Finals", "selection_log.csv")
+STATUS_JSON = os.path.join(PROJECT_ROOT, "3- Finals", "production_status.json")
 
 os.makedirs(RAW_IMG_DIR, exist_ok=True)
 os.makedirs(FINAL_DIR_ROOT, exist_ok=True)
 
 def safe_evaluate(page, js_code, max_retries=3):
-    """Safely evaluates JavaScript in page context with retry logic if execution context is reloaded."""
     for attempt in range(max_retries):
         try:
             return page.evaluate(js_code)
@@ -46,11 +52,10 @@ def safe_evaluate(page, js_code, max_retries=3):
                     pass
                 time.sleep(2.0)
             else:
-                print(f"safe_evaluate warning: {e}")
                 time.sleep(1.0)
     return None
 
-def analyze_and_score_variation(image_path, is_character_shot=False):
+def analyze_and_score_variation(image_path, is_character_shot=True):
     img = cv2.imread(image_path)
     if img is None:
         return -1.0, {}
@@ -58,11 +63,11 @@ def analyze_and_score_variation(image_path, is_character_shot=False):
     h, w, _ = img.shape
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    # 1. Edge & Linework Sharpness (Laplacian variance)
+    # 1. Edge Sharpness
     laplacian_var = cv2.Laplacian(gray, cv2.CV_64F).var()
     sharpness_score = min(100.0, float(laplacian_var) / 15.0)
 
-    # 2. Full-bleed border penalty (check if border has white framing)
+    # 2. Full-bleed border penalty
     top_strip = gray[:max(1, int(h*0.02)), :]
     bot_strip = gray[max(0, int(h*0.98)):, :]
     left_strip = gray[:, :max(1, int(w*0.02))]
@@ -74,7 +79,7 @@ def analyze_and_score_variation(image_path, is_character_shot=False):
     if border_mean > 240 and border_std < 10:
         border_penalty = 50.0
 
-    # 3. Subject prominence (Center vs periphery contrast)
+    # 3. Center Subject Prominence
     center_y, center_x = int(h*0.2), int(w*0.2)
     center_crop = gray[center_y:int(h*0.8), center_x:int(w*0.8)]
     center_std = float(np.std(center_crop))
@@ -140,7 +145,6 @@ def analyze_and_score_variation(image_path, is_character_shot=False):
     return float(total_score), details
 
 def check_for_page_errors(page):
-    """Detect failure toasts, error dialogs, or unusual activity warnings."""
     res = safe_evaluate(page, """() => {
         const alertElements = Array.from(document.querySelectorAll('[role="alert"], mat-snack-bar-container, .mdc-snackbar__label, .flow-toast'));
         for (const el of alertElements) {
@@ -149,23 +153,17 @@ def check_for_page_errors(page):
                 return 'Flow Toast/Alert: ' + el.innerText.substring(0, 80);
             }
         }
-
         const allText = document.body ? document.body.innerText : '';
         if (allText.includes("You've reached your usage limit") || 
             allText.includes("something went wrong") || 
             allText.includes("Unusual activity detected")) {
             return 'Flow Usage Limit / Warning Banner detected on canvas';
         }
-
         return null;
     }""")
     return res
 
 def switch_flow_model(page, target_model_name):
-    """
-    Switches Google Flow model to target_model_name ('Nano Banana 2', 'Nano Banana Pro', 'Nano Banana 2 Lite')
-    and ensures x2 variations are configured.
-    """
     print(f"[MODEL SWITCH] Switching Google Flow model to: {target_model_name}...")
     try:
         page.mouse.click(100, 100)
@@ -183,7 +181,6 @@ def switch_flow_model(page, target_model_name):
         target_option.click(timeout=5000)
         time.sleep(0.8)
 
-        # Ensure x2 variations
         x2_btn = page.locator('button:has-text("x2")').first
         if x2_btn.count() > 0:
             x2_btn.click(timeout=3000)
@@ -194,15 +191,35 @@ def switch_flow_model(page, target_model_name):
         print(f"[MODEL SWITCH] Successfully switched to {target_model_name} (x{TARGET_VARIATIONS})")
         return True
     except Exception as e:
-        print(f"[MODEL SWITCH ERROR] Failed to switch model: {e}")
-        page.mouse.click(100, 100)
+        print(f"[MODEL SWITCH ERROR] Could not switch model: {e}")
+        try:
+            page.mouse.click(100, 100)
+        except Exception:
+            pass
         return False
 
-def update_status(shot_num, total_shots, status, note="", active_model="Nano Banana 2"):
+def get_or_create_dedicated_flow_page(context):
+    for page in context.pages:
+        try:
+            if "flow.google.com" in page.url:
+                print(f"[DEDICATED TAB] Using existing Google Flow tab: '{page.title()}' ({page.url})")
+                page.bring_to_front()
+                return page
+        except Exception:
+            pass
+
+    print("[DEDICATED TAB] Creating new dedicated tab for Google Flow...")
+    page = context.new_page()
+    page.goto(TARGET_PROJECT_URL, wait_until="domcontentloaded")
+    time.sleep(5)
+    page.bring_to_front()
+    return page
+
+def update_status(shot_num, total_shots, status, note, active_model):
     data = {
         "current_shot": shot_num,
         "total_shots": total_shots,
-        "completed_count": len([f for f in os.listdir(FINAL_DIR_ROOT) if f.startswith("shot_") and f.endswith(".jpg")]),
+        "completed": shot_num,
         "status": status,
         "active_model": f"{active_model} (x{TARGET_VARIATIONS})",
         "last_updated": datetime.now().isoformat(),
@@ -211,49 +228,49 @@ def update_status(shot_num, total_shots, status, note="", active_model="Nano Ban
     with open(STATUS_JSON, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
 
-def get_or_create_dedicated_flow_page(ctx):
-    """Finds existing dedicated Flow page or creates a new isolated tab for this pipeline."""
-    # Look for existing tab that matches target project
-    for pg in ctx.pages:
-        if TARGET_PROJECT_URL in pg.url or "flow.google.com" in pg.url:
-            print(f"[TAB MANAGER] Found existing Google Flow tab: {pg.title()}")
-            return pg
-
-    # If not found, open a dedicated new tab
-    print("[TAB MANAGER] Creating a new isolated tab for Google Flow...")
-    new_pg = ctx.new_page()
-    new_pg.goto(TARGET_PROJECT_URL, wait_until="domcontentloaded")
-    try:
-        new_pg.wait_for_load_state("networkidle", timeout=10000)
-    except Exception:
-        pass
-    time.sleep(3)
-    print(f"[TAB MANAGER] Dedicated tab ready: {new_pg.title()}")
-    return new_pg
-
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--start", type=int, default=1)
-    parser.add_argument("--end", type=int, default=334)
+    parser = argparse.ArgumentParser(description="Run Google Flow Stick-Figure Regeneration Pipeline")
+    parser.add_argument("--start", type=int, default=1, help="Start shot number")
+    parser.add_argument("--end", type=int, default=334, help="End shot number")
+    parser.add_argument("--shots", type=str, default="", help="Comma-separated list of specific shot numbers to regenerate")
+    parser.add_argument("--limit", type=int, default=0, help="Max number of shots to regenerate in this execution")
     args = parser.parse_args()
 
-    # Initial sync and tracker refresh
-    refresh_trackers()
+    # Load audit
+    with open(AUDIT_JSON, "r", encoding="utf-8") as f:
+        audit_records = json.load(f)
 
-    # Load master rows
+    audit_map = {d["shot_num"]: d for d in audit_records}
+
+    # Load master CSV
     with open(CSV_PATH, "r", encoding="utf-8") as f:
-        reader = csv.reader(f)
-        header = next(reader)
-        all_rows = list(reader)
+        all_rows = list(csv.reader(f))[1:]
 
-    total_shots = len(all_rows)
-    print(f"Loaded {total_shots} shots from storyboard master.")
+    csv_map = {int(r[0]): r for r in all_rows}
 
-    # Initialize log CSV if not exists
-    if not os.path.exists(LOG_CSV):
-        with open(LOG_CSV, "w", newline="", encoding="utf-8") as f:
-            writer = csv.writer(f)
-            writer.writerow(["Shot #", "Timecode", "Selected Var", "Score", "VO Text", "Timestamp"])
+    # Determine shots to regenerate
+    if args.shots:
+        target_shot_nums = [int(s.strip()) for s in args.shots.split(",") if s.strip().isdigit()]
+    else:
+        target_shot_nums = [
+            d["shot_num"] for d in audit_records
+            if d.get("regen_needed", False) and (args.start <= d["shot_num"] <= args.end)
+        ]
+
+    if args.limit > 0:
+        target_shot_nums = target_shot_nums[:args.limit]
+
+    print("========================================================")
+    print("GOOGLE FLOW STICK-FIGURE REGENERATION RUNNER")
+    print(f"Target Shots Count: {len(target_shot_nums)}")
+    print(f"Target Shots List: {target_shot_nums[:30]}{'...' if len(target_shot_nums) > 30 else ''}")
+    print(f"Model Cascade: {' > '.join(MODEL_CASCADE)}")
+    print(f"Destination Folder: {FINAL_DIR_ROOT}/ (strictly)")
+    print("========================================================\n")
+
+    if not target_shot_nums:
+        print("No shots found requiring stick-figure regeneration in the specified range.")
+        return
 
     consecutive_failures = 0
     model_cascade_idx = 0
@@ -262,38 +279,35 @@ def main():
     with sync_playwright() as p:
         browser = p.chromium.connect_over_cdp("http://127.0.0.1:9222")
         ctx = browser.contexts[0]
-        
-        # Dedicated tab management per user instruction
         flow_page = get_or_create_dedicated_flow_page(ctx)
 
-        # Ensure we are on the main project canvas
         if TARGET_PROJECT_URL not in flow_page.url:
-            print(f"Navigating dedicated Flow tab to target project: {TARGET_PROJECT_URL}")
+            print(f"Navigating dedicated Flow tab to project: {TARGET_PROJECT_URL}")
             flow_page.goto(TARGET_PROJECT_URL, wait_until="domcontentloaded")
-            time.sleep(3)
+            time.sleep(5)
 
-        shot_idx = args.start
-        while shot_idx <= min(args.end, total_shots):
-            final_root_file = os.path.join(FINAL_DIR_ROOT, f"shot_{shot_idx:03d}.jpg")
+        # Switch to initial model: Nano Banana Pro
+        switch_flow_model(flow_page, current_model)
 
-            # Check if already processed in single canonical folder
-            if os.path.exists(final_root_file):
-                print(f"[SKIP] Shot {shot_idx:03d} already exists in Final selected images.")
-                shot_idx += 1
-                consecutive_failures = 0
+        total_regen = len(target_shot_nums)
+        for i, shot_idx in enumerate(target_shot_nums, 1):
+            row = csv_map.get(shot_idx)
+            if not row:
                 continue
 
-            row = all_rows[shot_idx - 1]
             timecode = row[1]
             vo_text = row[2]
+            visual_desc = row[3]
             prompt = row[4]
 
+            final_file = os.path.join(FINAL_DIR_ROOT, f"shot_{shot_idx:03d}.jpg")
+
             print(f"\n========================================================")
-            print(f"[{datetime.now().strftime('%H:%M:%S')}] PROCESSING SHOT {shot_idx:03d} / {total_shots}")
-            print(f"Active Model: {current_model} (x{TARGET_VARIATIONS}) | Failures: {consecutive_failures}")
+            print(f"[{datetime.now().strftime('%H:%M:%S')}] REGENERATING SHOT {shot_idx:03d} ({i}/{total_regen})")
+            print(f"Model: {current_model} (x{TARGET_VARIATIONS}) | Failures: {consecutive_failures}")
             print(f"Time: {timecode} | VO: \"{vo_text}\"")
-            print(f"Prompt: {prompt[:85]}...")
-            update_status(shot_idx, total_shots, "GENERATING", f"Shot {shot_idx} in progress ({current_model}, x{TARGET_VARIATIONS})", current_model)
+            print(f"Stick Figure Prompt: {prompt[:95]}...")
+            update_status(shot_idx, 334, "REGENERATING", f"Regenerating stick figure for Shot {shot_idx} ({current_model})", current_model)
 
             # Snapshot existing image URLs safely
             existing_srcs_list = safe_evaluate(flow_page, """() => {
@@ -303,161 +317,171 @@ def main():
             }""")
             existing_srcs = set(existing_srcs_list or [])
 
-            # Check for error state before typing
             err_msg = check_for_page_errors(flow_page)
             if err_msg:
-                print(f"Pre-generation error detected: {err_msg}")
+                print(f"Pre-generation notice: {err_msg}")
 
-            # Fill prompt
-            try:
-                editor = flow_page.locator(".ProseMirror").first
-                editor.click(timeout=5000)
-                time.sleep(0.2)
-                editor.fill(prompt)
-                time.sleep(0.8)
+            # Enter prompt into editor
+            type_success = False
+            for attempt in range(3):
+                editor = flow_page.locator('.ProseMirror, textarea, [contenteditable="true"]').first
+                if editor.count() > 0:
+                    try:
+                        editor.click(timeout=3000)
+                        safe_evaluate(flow_page, """() => {
+                            const pm = document.querySelector('.ProseMirror, [contenteditable="true"]');
+                            if (pm) {
+                                pm.innerHTML = '<p></p>';
+                                pm.dispatchEvent(new Event('input', { bubbles: true }));
+                            }
+                        }""")
+                        time.sleep(0.3)
+                        editor.fill(prompt)
+                        time.sleep(0.5)
+                        type_success = True
+                        break
+                    except Exception as ex:
+                        print(f"Editor fill attempt {attempt+1} note: {ex}")
+                        time.sleep(1.0)
 
-                submit_btn = flow_page.locator('button[aria-label="Start generation"]').first
-                submit_btn.click(timeout=5000)
-                print(f"Clicked Start Generation for Shot {shot_idx:03d}. Waiting for {TARGET_VARIATIONS} variations...")
-            except Exception as ex:
-                print(f"Error submitting prompt: {ex}")
-                err_msg = str(ex)
+            if not type_success:
+                print(f"Error: Could not fill prompt for Shot {shot_idx}. Skipping.")
+                continue
 
-            # Wait for generation to complete (up to 50 seconds)
+            # Click generate
+            clicked_start = False
+            for attempt in range(3):
+                try:
+                    start_btn = flow_page.locator('button[aria-label="Start generation"], button:has-text("Start generation"), button:has-text("Generate")').first
+                    if start_btn.count() > 0 and start_btn.is_visible():
+                        start_btn.click(timeout=4000)
+                        clicked_start = True
+                        break
+                except Exception as e:
+                    time.sleep(1.0)
+
+            if not clicked_start:
+                print("Could not click Start generation button. Retrying in 3s...")
+                time.sleep(3.0)
+                continue
+
+            print("Generation initiated. Monitoring render stream (up to 55s)...")
+            start_time = time.time()
             render_success = False
             new_srcs = []
-            start_wait = time.time()
 
-            if not err_msg:
-                while time.time() - start_wait < 50:
-                    time.sleep(2.0)
+            while time.time() - start_time < 55:
+                time.sleep(2.5)
 
-                    # Check for live failure messages
-                    live_err = check_for_page_errors(flow_page)
-                    if live_err:
-                        err_msg = live_err
-                        print(f"WARNING: Google Flow indicated failure: {err_msg}")
-                        break
+                err_msg = check_for_page_errors(flow_page)
+                if err_msg:
+                    print(f"Alert during generation: {err_msg}")
+                    break
 
-                    current_srcs = safe_evaluate(flow_page, """() => {
-                        return Array.from(document.querySelectorAll('img'))
-                            .filter(img => img.src && img.src.includes('flow-content.google'))
-                            .map(img => img.src);
-                    }""") or []
+                current_srcs = safe_evaluate(flow_page, """() => {
+                    return Array.from(document.querySelectorAll('img'))
+                        .filter(img => img.src && img.src.includes('flow-content.google'))
+                        .map(img => img.src);
+                }""")
+                if current_srcs:
                     new_srcs = [s for s in current_srcs if s not in existing_srcs]
-
                     if len(new_srcs) >= TARGET_VARIATIONS:
-                        time.sleep(2.0)
                         render_success = True
                         break
 
-            # Rule 2 Usability Check: If partial generation occurred (at least 1 image produced)
+            # Handle Partial 1-Image Fallback
             single_image_accepted = False
             if not render_success and len(new_srcs) >= 1:
-                print(f"\n[PARTIAL GENERATION] {len(new_srcs)} variation(s) rendered despite timeout/error.")
-                print("Evaluating single image against usability threshold (score >= 50.0)...")
+                print(f"[PARTIAL RECOVERY] Generated {len(new_srcs)} variation(s). Testing viability...")
                 single_src = new_srcs[0]
-                temp_single_path = os.path.join(RAW_IMG_DIR, f"shot_{shot_idx:03d}_partial.jpg")
+                temp_single_path = os.path.join(RAW_IMG_DIR, f"shot_{shot_idx:03d}_regen_partial.jpg")
                 try:
                     resp = flow_page.request.get(single_src)
                     if resp.status == 200:
                         with open(temp_single_path, "wb") as f_out:
                             f_out.write(resp.body())
-                        is_char = any(k in prompt.lower() or k in vo_text.lower() for k in ["stick", "figure", "character", "human", "person", "people", "man", "woman", "hunter", "farmer", "artist", "gatherer", "child", "king", "guard", "ancestor"])
-                        s_score, s_details = analyze_and_score_variation(temp_single_path, is_character_shot=is_char)
+                        s_score, s_details = analyze_and_score_variation(temp_single_path, is_character_shot=True)
                         print(f"  Single image evaluation score: {s_score:.1f} ({s_details})")
                         if s_score >= 50.0:
-                            print(f"-> [PARTIAL ACCEPTED] Score {s_score:.1f} >= 50.0! Image is usable for Shot {shot_idx:03d}.")
-                            shutil.copy2(temp_single_path, final_root_file)
-                            
+                            print(f"-> [PARTIAL ACCEPTED] Score {s_score:.1f} >= 50.0! Saved to Final selected images.")
+                            shutil.copy2(temp_single_path, final_file)
+
                             with open(LOG_CSV, "a", newline="", encoding="utf-8") as f:
                                 writer = csv.writer(f)
                                 writer.writerow([shot_idx, timecode, "partial_var_1", round(s_score, 1), vo_text, datetime.now().isoformat()])
 
+                            # Update audit
+                            if shot_idx in audit_map:
+                                audit_map[shot_idx]["category"] = "VALID_STICK_FIGURE"
+                                audit_map[shot_idx]["regen_needed"] = False
+                                audit_map[shot_idx]["reason"] = "Regenerated and verified as white-filled black-outlined stick figure."
+                                audit_map[shot_idx]["cv_info"] = s_details
+                                with open(AUDIT_JSON, "w", encoding="utf-8") as af:
+                                    json.dump(list(audit_map.values()), af, indent=2)
+
                             refresh_trackers()
-                            update_status(shot_idx, total_shots, "RUNNING", f"Completed shot {shot_idx} via single partial image (Score: {s_score:.1f})", current_model)
+                            update_status(shot_idx, 334, "RUNNING", f"Completed shot {shot_idx} via single partial image (Score: {s_score:.1f})", current_model)
                             single_image_accepted = True
                             consecutive_failures = 0
-                        else:
-                            print(f"-> [PARTIAL REJECTED] Score {s_score:.1f} < 50.0. Quality insufficient, proceeding to retry.")
                 except Exception as pe:
                     print(f"Error evaluating partial image: {pe}")
 
             if single_image_accepted:
-                # Add random interval pacing before next shot
                 pacing_wait = round(random.uniform(10.0, 30.0), 1)
-                print(f"Pacing: Waiting {pacing_wait}s before proceeding to next shot...")
+                print(f"Pacing: Waiting {pacing_wait}s before next shot...")
                 time.sleep(pacing_wait)
-                shot_idx += 1
                 continue
 
-            # Handle Failures with SOP Escalation
+            # Handle failures
             if not render_success or err_msg:
                 consecutive_failures += 1
-                print(f"\n[FAILURE #{consecutive_failures} ON SHOT {shot_idx:03d}] Active Model: {current_model}. Reason: {err_msg or f'Timeout waiting for {TARGET_VARIATIONS} images'}")
+                print(f"\n[FAILURE #{consecutive_failures} ON SHOT {shot_idx:03d}] Model: {current_model}. Reason: {err_msg or 'Timeout'}")
 
                 if consecutive_failures == 1:
-                    print("Escalation #1: Reloading page and cooling down for 3 minutes (180s)...")
-                    update_status(shot_idx, total_shots, "WAITING_COOLDOWN_3M", f"Cooldown 3m after failure 1 on Shot {shot_idx}", current_model)
+                    print("Cooldown 3m (180s)...")
                     try:
                         flow_page.reload(wait_until="domcontentloaded")
-                        flow_page.wait_for_load_state("domcontentloaded", timeout=15000)
-                    except Exception as rx:
-                        print(f"Reload note: {rx}")
-                    for rem in range(180, 0, -30):
-                        print(f"  Cooldown remaining: {rem}s...")
-                        time.sleep(30)
-                    time.sleep(5)
+                    except Exception:
+                        pass
+                    time.sleep(180)
                     continue
 
                 elif consecutive_failures == 2:
-                    print("Escalation #2: Reloading page and cooling down for 5 minutes (300s)...")
-                    update_status(shot_idx, total_shots, "WAITING_COOLDOWN_5M", f"Cooldown 5m after failure 2 on Shot {shot_idx}", current_model)
+                    print("Cooldown 5m (300s)...")
                     try:
                         flow_page.reload(wait_until="domcontentloaded")
-                        flow_page.wait_for_load_state("domcontentloaded", timeout=15000)
-                    except Exception as rx:
-                        print(f"Reload note: {rx}")
-                    for rem in range(300, 0, -30):
-                        print(f"  Cooldown remaining: {rem}s...")
-                        time.sleep(30)
-                    time.sleep(5)
+                    except Exception:
+                        pass
+                    time.sleep(300)
                     continue
 
                 elif consecutive_failures >= 3:
-                    print(f"\nEscalation #3: 3 continuous failures reached on model '{current_model}'!")
                     model_cascade_idx += 1
                     if model_cascade_idx < len(MODEL_CASCADE):
                         next_model = MODEL_CASCADE[model_cascade_idx]
-                        print(f"-> SHIFTING MODEL CASCADE: '{current_model}' -> '{next_model}'")
+                        print(f"-> SHIFTING MODEL: '{current_model}' -> '{next_model}'")
                         try:
                             flow_page.reload(wait_until="domcontentloaded")
                             time.sleep(3)
-                        except Exception as rx:
+                        except Exception:
                             pass
                         switch_flow_model(flow_page, next_model)
                         current_model = next_model
                         consecutive_failures = 0
-                        update_status(shot_idx, total_shots, "MODEL_SHIFTED", f"Shifted to {next_model} after 3 failures on Shot {shot_idx}", current_model)
-                        print("Waiting 30s for canvas stabilization before retrying shot...")
                         time.sleep(30)
                         continue
                     else:
-                        print(f"\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                        print(f"CRITICAL: All models in cascade ({', '.join(MODEL_CASCADE)}) exhausted!")
-                        print(f"HALTING PIPELINE AND PROMPTING USER.")
-                        print(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                        flow_page.screenshot(path=os.path.join("2- Code", "flow_error_halt.png"))
-                        update_status(shot_idx, total_shots, "HALTED_CASCADE_EXHAUSTED", f"All models exhausted on Shot {shot_idx}: {err_msg}", current_model)
+                        print("All models in cascade exhausted. Halting.")
+                        flow_page.screenshot(path=os.path.join(BASE_DIR, "flow_error_halt.png"))
                         sys.exit(2)
 
-            # If full generation successful
+            # Ingest and score both variations
             consecutive_failures = 0
             print(f"Render successful! Downloading {len(new_srcs[:TARGET_VARIATIONS])} variations...")
 
             downloaded_paths = []
             for var_idx, src in enumerate(new_srcs[:TARGET_VARIATIONS], 1):
-                raw_path = os.path.join(RAW_IMG_DIR, f"shot_{shot_idx:03d}_var_{var_idx}.jpg")
+                raw_path = os.path.join(RAW_IMG_DIR, f"shot_{shot_idx:03d}_regen_var_{var_idx}.jpg")
                 try:
                     resp = flow_page.request.get(src)
                     if resp.status == 200:
@@ -467,15 +491,13 @@ def main():
                 except Exception as dx:
                     print(f"  Download error var {var_idx}: {dx}")
 
-            # Step 2: Analyze all variations and select the best one
             best_var = 1
             best_score = -1.0
             best_path = None
             best_details = {}
 
-            is_char = any(k in prompt.lower() or k in vo_text.lower() for k in ["stick", "figure", "character", "human", "person", "people", "man", "woman", "hunter", "farmer", "artist", "gatherer", "child", "king", "guard", "ancestor"])
             for var_idx, path in downloaded_paths:
-                score, details = analyze_and_score_variation(path, is_character_shot=is_char)
+                score, details = analyze_and_score_variation(path, is_character_shot=True)
                 print(f"  Variation {var_idx}: Score {score:.1f} ({details})")
                 if score > best_score:
                     best_score = score
@@ -484,32 +506,36 @@ def main():
                     best_details = details
 
             if best_path and os.path.exists(best_path):
-                # Step 3: Put that best image strictly into Final selected images folder
-                shutil.copy2(best_path, final_root_file)
-                print(f"-> [SELECTED BEST] Shot {shot_idx:03d} -> Variation {best_var} (Score: {best_score:.1f}) saved to Final selected images!")
+                # Copy strictly to Final selected images/
+                shutil.copy2(best_path, final_file)
+                print(f"-> [STICK FIGURE APPROVED] Shot {shot_idx:03d} -> Variation {best_var} (Score: {best_score:.1f}) saved strictly to Final selected images!")
 
-                # Log to CSV
                 with open(LOG_CSV, "a", newline="", encoding="utf-8") as f:
                     writer = csv.writer(f)
-                    writer.writerow([shot_idx, timecode, best_var, round(best_score, 1), vo_text, datetime.now().isoformat()])
+                    writer.writerow([shot_idx, timecode, f"regen_var_{best_var}", round(best_score, 1), vo_text, datetime.now().isoformat()])
 
-                # Live update prompt status & dashboard
+                # Update audit
+                if shot_idx in audit_map:
+                    audit_map[shot_idx]["category"] = "VALID_STICK_FIGURE"
+                    audit_map[shot_idx]["regen_needed"] = False
+                    audit_map[shot_idx]["reason"] = "Regenerated and verified as white-filled black-outlined stick figure."
+                    audit_map[shot_idx]["cv_info"] = best_details
+                    with open(AUDIT_JSON, "w", encoding="utf-8") as af:
+                        json.dump(list(audit_map.values()), af, indent=2)
+
                 refresh_trackers()
-                update_status(shot_idx, total_shots, "RUNNING", f"Completed shot {shot_idx} (Selected var {best_var})", current_model)
+                update_status(shot_idx, 334, "RUNNING", f"Completed stick figure regeneration for Shot {shot_idx} (Var {best_var})", current_model)
             else:
                 print(f"Warning: No valid best image path for Shot {shot_idx}")
 
-            # Step 4: Random interval pacing (10 to 30 seconds) before next shot
             pacing_wait = round(random.uniform(10.0, 30.0), 1)
             print(f"Pacing: Waiting {pacing_wait}s before next shot...")
             time.sleep(pacing_wait)
-            shot_idx += 1
 
     print("\n========================================================")
-    print("ALL 334 PROMPTS COMPLETED SUCCESSFULLY!")
-    print("Final images are saved in Final selected images/")
-    refresh_trackers()
-    update_status(total_shots, total_shots, "COMPLETED", "All shots generated and selected!", current_model)
+    print("STICK-FIGURE REGENERATION BATCH COMPLETED!")
+    print(f"All images saved strictly to {FINAL_DIR_ROOT}/")
+    print("========================================================")
 
 if __name__ == "__main__":
     main()

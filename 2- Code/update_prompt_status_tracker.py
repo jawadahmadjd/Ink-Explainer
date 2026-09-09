@@ -12,17 +12,8 @@ LOG_CSV = os.path.join("3- Finals", "selection_log.csv")
 
 def refresh_trackers():
     os.makedirs(FINAL_DIR, exist_ok=True)
-    os.makedirs(os.path.join("3- Finals", "Final selected images"), exist_ok=True)
-    
-    # Mirror any existing images between the two folders
-    for f in os.listdir(FINAL_DIR):
-        if f.endswith(".jpg"):
-            shutil.copy2(os.path.join(FINAL_DIR, f), os.path.join("3- Finals", "Final selected images", f))
-    for f in os.listdir(os.path.join("3- Finals", "Final selected images")):
-        if f.endswith(".jpg"):
-            shutil.copy2(os.path.join("3- Finals", "Final selected images", f), os.path.join(FINAL_DIR, f))
 
-    # Existing completed shots
+    # Existing completed shots in canonical Final selected images/ folder
     completed_shots = set()
     for f in os.listdir(FINAL_DIR):
         if f.startswith("shot_") and f.endswith(".jpg"):

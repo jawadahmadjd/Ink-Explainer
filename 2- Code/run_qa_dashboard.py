@@ -17,15 +17,13 @@ PROJECT_ROOT = os.path.dirname(BASE_DIR)
 CSV_PATH = os.path.join(PROJECT_ROOT, "3- Finals", "storyboard_master.csv")
 RAW_IMG_DIR = os.path.join(PROJECT_ROOT, "3- Finals", "flow_generated_images")
 FINAL_DIR_ROOT = os.path.join(PROJECT_ROOT, "Final selected images")
-FINAL_DIR_FINALS = os.path.join(PROJECT_ROOT, "3- Finals", "Final selected images")
-FINAL_DIR_LEGACY = os.path.join(PROJECT_ROOT, "3- Finals", "final_selected_images")
 HTML_FILE = os.path.join(BASE_DIR, "storyboard_qa_dashboard.html")
 
 LEARNING_JSON = os.path.join(PROJECT_ROOT, "3- Finals", "ai_learning_log.json")
 REGEN_QUEUE_JSON = os.path.join(PROJECT_ROOT, "3- Finals", "regeneration_queue.json")
 SELECTION_LOG = os.path.join(PROJECT_ROOT, "3- Finals", "selection_log.csv")
 
-def analyze_and_score_variation(image_path):
+def analyze_and_score_variation(image_path, is_character_shot=False):
     """Calculates CV score on single image on-demand when selected or reviewed."""
     img = cv2.imread(image_path)
     if img is None:
@@ -63,18 +61,48 @@ def analyze_and_score_variation(image_path):
     entropy = -float(np.sum([p * np.log2(p) for p in hist.flatten() if p > 0]))
     entropy_score = min(100.0, (entropy / 7.5) * 100.0)
 
+    # 6. Stick-Figure Character Compliance (White-filled circular head detection)
+    stick_score = 70.0
+    stick_penalty = 0.0
+    head_detected = False
+    head_area = 0
+    if is_character_shot:
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        white_mask = cv2.inRange(hsv, np.array([0, 0, 220]), np.array([180, 30, 255]))
+        num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(white_mask)
+        for idx_c in range(1, num_labels):
+            area = stats[idx_c, cv2.CC_STAT_AREA]
+            cy = centroids[idx_c][1]
+            if 2000 < area < (h * w * 0.35) and cy < h * 0.75:
+                bw = stats[idx_c, cv2.CC_STAT_WIDTH]
+                bh = stats[idx_c, cv2.CC_STAT_HEIGHT]
+                aspect = float(bw) / float(bh)
+                if 0.6 <= aspect <= 1.6:
+                    head_detected = True
+                    head_area = int(area)
+                    break
+        if head_detected:
+            stick_score = 100.0
+        else:
+            stick_penalty = 30.0
+            stick_score = 40.0
+
     total_score = (
-        sharpness_score * 0.30 +
+        sharpness_score * 0.25 +
         center_score * 0.25 +
-        contrast_score * 0.25 +
-        entropy_score * 0.20
-    ) - border_penalty
+        contrast_score * 0.20 +
+        entropy_score * 0.15 +
+        stick_score * 0.15
+    ) - border_penalty - stick_penalty
 
     details = {
         "sharpness": round(sharpness_score, 1),
         "center_focus": round(center_score, 1),
         "contrast": round(contrast_score, 1),
         "entropy": round(entropy_score, 1),
+        "stick_head_detected": head_detected,
+        "head_area": head_area,
+        "stick_penalty": round(stick_penalty, 1),
         "border_penalty": border_penalty,
         "total_score": round(total_score, 1)
     }
@@ -250,12 +278,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             src_path = os.path.join(RAW_IMG_DIR, f"shot_{shot_num:03d}_var_{var_idx}.jpg")
             if os.path.exists(src_path):
                 dest_root = os.path.join(FINAL_DIR_ROOT, f"shot_{shot_num:03d}.jpg")
-                dest_finals = os.path.join(FINAL_DIR_FINALS, f"shot_{shot_num:03d}.jpg")
-                dest_legacy = os.path.join(FINAL_DIR_LEGACY, f"shot_{shot_num:03d}.jpg")
-
                 shutil.copy2(src_path, dest_root)
-                shutil.copy2(src_path, dest_finals)
-                shutil.copy2(src_path, dest_legacy)
 
                 # Compute on-demand CV comparison for learning
                 other_idx = 2 if var_idx == 1 else 1

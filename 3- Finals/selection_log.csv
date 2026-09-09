@@ -360,3 +360,6 @@ Shot #,Timecode,Selected Var,Score,VO Text,Timestamp
 135,MANUAL_SELECT,2,USER_PICK,Selected via QA Dashboard,2026-09-09T16:08:33.934417
 139,MANUAL_SELECT,1,USER_PICK,Selected via QA Dashboard,2026-09-09T16:08:55.572706
 139,MANUAL_SELECT,1,USER_PICK,Selected via QA Dashboard,2026-09-09T16:08:55.949617
+4,00:04.8 - 00:06.7,regen_var_1,28.2,"Before your feet hit the floor,",2026-09-09T18:38:22.083455
+17,00:29.2 - 00:31.1,regen_var_1,67.9,A man wakes in the morning light.,2026-09-09T18:42:29.323450
+9,00:13.9 - 00:16.0,regen_var_1,97.2,"You sprint through honking traffic,",2026-09-09T18:43:27.152280
