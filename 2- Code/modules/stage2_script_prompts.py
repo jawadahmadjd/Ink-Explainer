@@ -40,9 +40,17 @@ def format_stick_figure_prompt(visual_description: str, is_character: bool) -> s
         )
         return f"{non_char_prefix} Detailed illustration of: {clean_desc}"
 
-def run_stage2_script_prompts(video_title: str, custom_script_path: str = None) -> dict:
+from learning.learning_engine import (
+    find_matching_reference_video,
+    generate_script_and_shots,
+    split_script_into_fast_paced_shots
+)
+
+def run_stage2_script_prompts(video_title: str, custom_script_path: str = None, user_prompt: str = None) -> dict:
     """
     Generate or sync script, master storyboard CSV, all prompts, and character audit.
+    Enforces 16-32 character fast pacing with mandatory punctuation dividers.
+    If video title matches an existing reference, mirrors its ideation and narrative arc.
     """
     dirs = config.get_project_dirs(video_title)
     finals_dir = dirs["finals_dir"]
@@ -67,37 +75,66 @@ def run_stage2_script_prompts(video_title: str, custom_script_path: str = None) 
             header = next(reader, None)
             existing_rows = list(reader)
 
-    # If no existing master CSV, construct from postmortem cuts & transcript
+    # If no existing master CSV, construct using fast pacing & reference matching
     if not existing_rows:
         cuts_path = os.path.join(postmortem_dir, "cuts_data.json")
         transcript_path = custom_script_path or os.path.join(postmortem_dir, "clean_transcript.txt")
 
-        if not os.path.exists(cuts_path) or not os.path.exists(transcript_path):
-            raise FileNotFoundError(f"Missing postmortem files: {cuts_path} or {transcript_path}. Run Stage 1 first.")
-
-        with open(cuts_path, "r", encoding="utf-8") as f:
-            cuts = json.load(f)
-        with open(transcript_path, "r", encoding="utf-8") as f:
-            full_text = f.read()
-
-        words = full_text.split()
-        words_per_cut = max(1, len(words) // len(cuts))
+        # Check if reference video matches
+        match = find_matching_reference_video(video_title)
+        if match:
+            print(f"🎯 [REFERENCE MATCH FOUND] '{match['title']}' (Score: {match['score']})")
+            print(f"   Mirroring reference ideation, hook formula, and 7-act progression...")
 
         rows = []
-        for i, cut in enumerate(cuts, 1):
-            start_w = (i - 1) * words_per_cut
-            end_w = i * words_per_cut if i < len(cuts) else len(words)
-            cut_vo = " ".join(words[start_w:end_w])
-            
-            # Format timecode
-            s_min, s_sec = int(cut["start_sec"] // 60), cut["start_sec"] % 60
-            e_min, e_sec = int(cut["end_sec"] // 60), cut["end_sec"] % 60
-            tc_str = f"{s_min:02d}:{s_sec:04.1f} - {e_min:02d}:{e_sec:04.1f}"
+        if os.path.exists(transcript_path):
+            with open(transcript_path, "r", encoding="utf-8") as f:
+                full_text = f.read()
 
-            desc = f"Concept visual for narration: {cut_vo[:80]}"
-            is_char = is_likely_character_shot(cut_vo, desc)
-            prompt = format_stick_figure_prompt(desc, is_char)
-            rows.append([i, tc_str, cut_vo, desc, prompt])
+            # Split script into fast-paced shots (16-32 chars + punctuation dividers)
+            shot_texts = split_script_into_fast_paced_shots(full_text, target_min_chars=16, target_max_chars=32)
+            total_shots_count = len(shot_texts)
+
+            # Estimate or align timecodes
+            total_dur = 60.0
+            if os.path.exists(cuts_path):
+                try:
+                    with open(cuts_path, "r", encoding="utf-8") as f:
+                        cdata = json.load(f)
+                        cuts_list = cdata.get("cuts", [])
+                        if cuts_list: total_dur = cuts_list[-1]
+                except Exception:
+                    pass
+            
+            shot_dur = total_dur / float(max(1, total_shots_count))
+            for i, cut_vo in enumerate(shot_texts, 1):
+                s_time = (i - 1) * shot_dur
+                e_time = i * shot_dur
+                s_min, s_sec = int(s_time // 60), s_time % 60
+                e_min, e_sec = int(e_time // 60), e_time % 60
+                tc_str = f"{s_min:02d}:{s_sec:04.1f} - {e_min:02d}:{e_sec:04.1f}"
+
+                desc = f"Concept visual for narration: {cut_vo}"
+                is_char = is_likely_character_shot(cut_vo, desc)
+                prompt = format_stick_figure_prompt(desc, is_char)
+                rows.append([i, tc_str, cut_vo, desc, prompt])
+
+        else:
+            # Generate script and shots from user prompt and matched blueprint
+            print(f"Generating custom script & stick-figure storyboard from prompt...")
+            gen_shots = generate_script_and_shots(video_title, user_prompt or "", matched_blueprint=match)
+            total_shots_count = len(gen_shots)
+            shot_dur = 2.0  # nominal ~2s per micro-beat
+
+            for s in gen_shots:
+                i = s["shot_num"]
+                s_time = (i - 1) * shot_dur
+                e_time = i * shot_dur
+                s_min, s_sec = int(s_time // 60), s_time % 60
+                e_min, e_sec = int(e_time // 60), e_time % 60
+                tc_str = f"{s_min:02d}:{s_sec:04.1f} - {e_min:02d}:{e_sec:04.1f}"
+
+                rows.append([i, tc_str, s["voiceover"], s["description"], s["prompt"]])
 
         existing_rows = rows
         with open(master_csv_path, "w", newline="", encoding="utf-8") as f:

@@ -286,6 +286,53 @@
       transform: none !important;
     }
 
+    .tab-btn {
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+    .tab-btn:hover {
+      background: var(--bg-card-hover);
+      color: var(--text-main);
+    }
+    .tab-btn.active {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      color: #FFF;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+    }
+    .match-card {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      font-size: 12.5px;
+      animation: fadeIn 0.2s;
+    }
+    .match-card.neutral {
+      background: rgba(56, 189, 248, 0.08);
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+    .badge-pacing {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: var(--accent-amber);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
     /* STEPPER */
     .stepper {
       display: grid;
@@ -599,6 +646,12 @@
         <option value="">-- Start New Project (Fresh Canvas) --</option>
       </select>
 
+      <!-- CODEX STATS BADGE -->
+      <div class="status-badge" id="codexBadge" style="background: rgba(56, 189, 248, 0.08); border-color: rgba(56, 189, 248, 0.3);" title="AI Learning Codex active">
+        <span style="color: var(--accent-cyan);">🧠</span>
+        <span id="codexLabel" style="color: #BAE6FD; font-size: 11.5px; font-weight: 600;">Codex: Loading...</span>
+      </div>
+
       <div class="status-badge" id="statusBadge">
         <div class="status-dot" id="statusDot"></div>
         <span id="statusLabel">Idle</span>
@@ -608,28 +661,89 @@
 
   <main>
 
-    <!-- SECTION 1: VIDEO INGESTION & CONTROLS -->
+    <!-- SECTION 1: VIDEO INGESTION & CREATIVE SCRIPT PIPELINE -->
     <div class="panel">
       <div class="panel-header">
         <div>
-          <div class="panel-title">🎯 Start New Video Pipeline</div>
-          <div class="panel-desc">Paste YouTube link to create a new sequentially numbered project folder in <code>1- Postmartum/</code> and <code>3- Finals/</code>.</div>
+          <div class="panel-title">🎯 Start New Explainer Pipeline</div>
+          <div class="panel-desc">Ingest reference YouTube videos to train the learning codex, or enter a custom title & prompt to synthesize a high-retention 7-act script.</div>
+        </div>
+        <div class="badge-pacing">
+          <span>⚡ Fast Pacing: 16–32 chars / cut</span>
         </div>
       </div>
-      <div class="input-grid">
-        <input type="text" id="videoUrl" class="input-box" placeholder="Paste YouTube Link (e.g. https://www.youtube.com/watch?v=...)">
-        <select id="modelSelector" class="select-box">
-          <option value="Nano Banana Pro">🍌 Nano Banana Pro (Priority 1)</option>
-          <option value="Nano Banana 2">🍌 Nano Banana 2</option>
-          <option value="Nano Banana 2 Lite">🍌 Nano Banana 2 Lite</option>
-        </select>
-        <label class="checkbox-label" title="Automatically pauses after each stage for review">
-          <input type="checkbox" id="pauseAfterEachStage">
-          <span>Pause after each stage</span>
-        </label>
-        <button id="btnStartPipeline" class="btn btn-primary" onclick="startNewPipeline()">
-          <span>🚀 Start Pipeline</span>
+
+      <!-- DUAL-MODE TABS -->
+      <div style="display: flex; gap: 10px; margin-bottom: 18px; border-bottom: 1px solid var(--border); padding-bottom: 14px;">
+        <button id="tabModeLink" class="tab-btn active" onclick="switchLaunchMode('link')">
+          <span>🔗 Mode A: Video Link (Postmortem & Training)</span>
         </button>
+        <button id="tabModePrompt" class="tab-btn" onclick="switchLaunchMode('prompt')">
+          <span>✏️ Mode B: Manual Title & Creative Prompt (Remake / Original)</span>
+        </button>
+      </div>
+
+      <!-- MODE A: VIDEO LINK -->
+      <div id="panelModeLink">
+        <div class="input-grid">
+          <input type="text" id="videoUrl" class="input-box" placeholder="Paste YouTube Link (e.g. https://www.youtube.com/watch?v=...)">
+          <select id="modelSelector" class="select-box">
+            <option value="Nano Banana Pro">🍌 Nano Banana Pro (Priority 1)</option>
+            <option value="Nano Banana 2">🍌 Nano Banana 2</option>
+            <option value="Nano Banana 2 Lite">🍌 Nano Banana 2 Lite</option>
+          </select>
+          <label class="checkbox-label" title="Automatically pauses after each stage for review">
+            <input type="checkbox" id="pauseAfterEachStage">
+            <span>Pause after each stage</span>
+          </label>
+          <button id="btnStartPipeline" class="btn btn-primary" onclick="startNewPipeline()">
+            <span>🚀 Start Pipeline</span>
+          </button>
+        </div>
+        <div style="margin-top: 10px; font-size: 12px; color: var(--text-dim); display: flex; align-items: center; gap: 8px;">
+          <span>🧠 Video ingestion automatically extracts cuts, speech cadence, and trains the AI Learning Codex.</span>
+        </div>
+      </div>
+
+      <!-- MODE B: MANUAL TITLE & CREATIVE PROMPT -->
+      <div id="panelModePrompt" style="display: none; flex-direction: column; gap: 14px;">
+        <div>
+          <label style="font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; display: block;">Video Title (Real-time reference blueprint matching active):</label>
+          <input type="text" id="manualTitle" class="input-box" placeholder="e.g. What Did Ancient Humans Actually Do All Day? or Why Sleep Deprivation Ruins Your Brain" oninput="onManualTitleInput()">
+        </div>
+
+        <!-- REFERENCE MATCH RESULT BOX -->
+        <div id="matchResultBox" style="display: none;"></div>
+
+        <div>
+          <label style="font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; display: block;">Creative Direction / Story Prompt:</label>
+          <textarea id="creativePrompt" class="input-box" rows="3" placeholder="Describe the angle, specific historical/scientific evidence to feature, tone, or key questions to answer. If matched to an existing reference video, the AI will mirror its core ideation and 7-act progression..."></textarea>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-top: 6px;">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <select id="manualModelSelector" class="select-box">
+              <option value="Nano Banana Pro">🍌 Nano Banana Pro (Priority 1)</option>
+              <option value="Nano Banana 2">🍌 Nano Banana 2</option>
+              <option value="Nano Banana 2 Lite">🍌 Nano Banana 2 Lite</option>
+            </select>
+            <label class="checkbox-label" title="Uses distilled 7-act retention architecture">
+              <input type="checkbox" id="useCodexLearning" checked>
+              <span>Apply Learning Codex (7-Act Architecture)</span>
+            </label>
+            <label class="checkbox-label" title="Automatically pauses after each stage for review">
+              <input type="checkbox" id="pauseAfterEachStagePrompt">
+              <span>Pause after each stage</span>
+            </label>
+          </div>
+          <button id="btnStartFromPrompt" class="btn btn-primary" onclick="startFromManualPrompt()">
+            <span>✨ Synthesize Script & Launch Pipeline</span>
+          </button>
+        </div>
+
+        <div style="font-size: 11.5px; color: var(--text-dim); border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px;">
+          ⚡ <strong>Image Pacing Rule</strong>: Visual beats are generated every <strong>16 to 32 characters</strong> on average. Every <code>,</code>, <code>.</code>, <code>;</code>, <code>?</code>, <code>!</code> acts as a hard divider and creates an isolated shot no matter how short (e.g. <em>"Why?"</em> = 1 shot).
+        </div>
       </div>
     </div>
 
@@ -783,6 +897,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       fetchProjects();
       fetchStatus();
+      fetchLearningStats();
       startPolling();
     });
 
@@ -976,6 +1091,122 @@
         fetchStatus();
       } catch (err) {
         alert('Error starting pipeline: ' + err);
+      }
+    }
+
+    let titleMatchTimeout = null;
+
+    function switchLaunchMode(mode) {
+      const tabLink = document.getElementById('tabModeLink');
+      const tabPrompt = document.getElementById('tabModePrompt');
+      const panelLink = document.getElementById('panelModeLink');
+      const panelPrompt = document.getElementById('panelModePrompt');
+
+      if (mode === 'link') {
+        tabLink.classList.add('active');
+        tabPrompt.classList.remove('active');
+        panelLink.style.display = 'block';
+        panelPrompt.style.display = 'none';
+      } else {
+        tabPrompt.classList.add('active');
+        tabLink.classList.remove('active');
+        panelPrompt.style.display = 'flex';
+        panelLink.style.display = 'none';
+      }
+    }
+
+    function onManualTitleInput() {
+      clearTimeout(titleMatchTimeout);
+      const title = document.getElementById('manualTitle').value.trim();
+      const matchBox = document.getElementById('matchResultBox');
+
+      if (!title || title.length < 3) {
+        matchBox.style.display = 'none';
+        return;
+      }
+
+      titleMatchTimeout = setTimeout(async () => {
+        try {
+          const res = await fetch('/api/check-title-match', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: title })
+          });
+          const data = await res.json();
+          if (data.matched) {
+            matchBox.className = 'match-card';
+            matchBox.style.display = 'block';
+            matchBox.innerHTML = `
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                <span style="font-weight: 700; color: var(--accent-emerald);">🎯 Matched Reference Found: "${data.title}"</span>
+                <span style="font-size: 11px; font-family: monospace; background: rgba(16, 185, 129, 0.2); color: #A7F3D0; padding: 2px 6px; border-radius: 4px;">Score: ${(data.score * 100).toFixed(0)}%</span>
+              </div>
+              <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px;"><strong>Reference Hook:</strong> ${data.hook || 'Second-person trap opening'}</div>
+              <div style="font-size: 11.5px; color: #6EE7B7;">✓ Pipeline will mirror original ideation, hook formula, and 7-act story progression arc.</div>
+            `;
+          } else {
+            matchBox.className = 'match-card neutral';
+            matchBox.style.display = 'block';
+            matchBox.innerHTML = `
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color: var(--accent-cyan); font-weight: 600;">🧠 AI Learning Codex Active</span>
+                <span style="color: var(--text-dim); font-size: 11px;">(Original Title)</span>
+              </div>
+              <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Synthesizing original script conforming to running medians (224.6 WPM, 16-32 char cuts, 7-Act framework).</div>
+            `;
+          }
+        } catch (e) {
+          console.warn('Title match check failed:', e);
+        }
+      }, 300);
+    }
+
+    async function startFromManualPrompt() {
+      const title = document.getElementById('manualTitle').value.trim();
+      const prompt = document.getElementById('creativePrompt').value.trim();
+      const model = document.getElementById('manualModelSelector').value;
+      const pauseMode = document.getElementById('pauseAfterEachStagePrompt').checked;
+
+      if (!title) {
+        alert('Please enter a video title.');
+        return;
+      }
+
+      document.getElementById('btnStartFromPrompt').disabled = true;
+      try {
+        const res = await fetch('/api/start-from-prompt', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: title,
+            prompt: prompt,
+            model: model,
+            pause_after_each_stage: pauseMode
+          })
+        });
+        const data = await res.json();
+        alert(data.message || 'Pipeline launched from prompt!');
+        await fetchProjects();
+        fetchStatus();
+      } catch (err) {
+        alert('Error starting pipeline from prompt: ' + err);
+      } finally {
+        document.getElementById('btnStartFromPrompt').disabled = false;
+      }
+    }
+
+    async function fetchLearningStats() {
+      try {
+        const res = await fetch('/api/learning-stats');
+        const data = await res.json();
+        const lbl = document.getElementById('codexLabel');
+        if (lbl && data.total_analyzed !== undefined) {
+          const wpm = data.medians ? data.medians.wpm : 224.6;
+          lbl.textContent = `Codex: ${data.total_analyzed} Trained (${wpm} WPM)`;
+          lbl.parentElement.title = `Total Videos: ${data.total_analyzed} | Avg Cut: ${data.medians ? data.medians.avg_cut_interval_sec : 2.5}s | Pacing: 16-32 chars`;
+        }
+      } catch (e) {
+        console.warn('Failed to fetch learning stats:', e);
       }
     }
 

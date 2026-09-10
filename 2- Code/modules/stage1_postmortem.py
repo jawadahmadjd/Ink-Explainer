@@ -224,6 +224,13 @@ def run_stage1_postmortem(video_url: str, custom_title: str = None) -> dict:
     with open(report_md_path, "w", encoding="utf-8") as f:
         f.write(report_content.strip() + "\n")
 
+    # 8. Auto-ingest into AI Learning Codex
+    try:
+        from learning.learning_engine import ingest_postmortem_to_codex
+        ingest_postmortem_to_codex(pm_dir)
+    except Exception as e:
+        print(f"[CODEX INGEST NOTICE] {e}")
+
     print(f"\n-> [STAGE 1 COMPLETE] Postmortem Report generated at: {report_md_path}")
     return {
         "title": video_title,

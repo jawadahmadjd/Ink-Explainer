@@ -27,6 +27,11 @@ from modules.stage3_voiceover import run_stage3_voiceover
 from modules.stage4_image_gen import run_stage4_image_gen, safe_copy_file
 from modules.stage5_timeline_xml import run_stage5_timeline_xml
 from modules.stage6_reporter import PipelineReporter
+from learning.learning_engine import (
+    load_codex,
+    find_matching_reference_video,
+    ingest_postmortem_to_codex
+)
 
 app = Flask(__name__, template_folder=os.path.join(CODE_DIR, "templates"))
 
@@ -62,7 +67,7 @@ def add_log(msg: str):
             STATE["logs"].pop(0)
         print(entry)
 
-def run_pipeline_worker(url: str, custom_title: str, model: str, pause_mode: bool):
+def run_pipeline_worker(url: str, custom_title: str, model: str, pause_mode: bool, prompt: str = ""):
     """Background worker executing the pipeline step by step with ascending folder numbering."""
     global STATE
     STATE["pause_after_each_stage"] = pause_mode
@@ -87,28 +92,31 @@ def run_pipeline_worker(url: str, custom_title: str, model: str, pause_mode: boo
 
     try:
         # Step 1: Ingestion
-        STATE["state"] = "RUNNING_POSTMORTEM"
-        STATE["step1"] = "RUNNING"
-        STATE["task_description"] = f"Stage 1: Ingestion & Forensic Postmortem into '{project_folder}'..."
-        add_log(f"Starting Stage 1 for URL: {url}")
         if url:
+            STATE["state"] = "RUNNING_POSTMORTEM"
+            STATE["step1"] = "RUNNING"
+            STATE["task_description"] = f"Stage 1: Ingestion & Forensic Postmortem into '{project_folder}'..."
+            add_log(f"Starting Stage 1 for URL: {url}")
             run_stage1_postmortem(url, custom_title=project_folder)
-        STATE["step1"] = "COMPLETED"
-        add_log("Stage 1 Ingestion & Postmortem completed.")
+            STATE["step1"] = "COMPLETED"
+            add_log("Stage 1 Ingestion & Postmortem completed.")
 
-        if STATE["pause_after_each_stage"]:
-            STATE["state"] = "PAUSED_AFTER_STAGE_1"
-            STATE["task_description"] = "Stage 1 Complete. Paused for review. Click 'Continue' to advance to Stage 2."
-            add_log("PAUSED: Stage 1 complete. Awaiting user continue...")
-            PAUSE_EVENT.clear()
-            PAUSE_EVENT.wait()
+            if STATE["pause_after_each_stage"]:
+                STATE["state"] = "PAUSED_AFTER_STAGE_1"
+                STATE["task_description"] = "Stage 1 Complete. Paused for review. Click 'Continue' to advance to Stage 2."
+                add_log("PAUSED: Stage 1 complete. Awaiting user continue...")
+                PAUSE_EVENT.clear()
+                PAUSE_EVENT.wait()
+        else:
+            STATE["step1"] = "SKIPPED (Manual Prompt Mode)"
+            add_log("Mode B: Manual Title & Prompt Mode. Stage 1 Ingestion bypassed.")
 
         # Step 2: Script & Prompts
         STATE["state"] = "RUNNING_SCRIPT"
         STATE["step2"] = "RUNNING"
         STATE["task_description"] = "Stage 2: Script & Stick-Figure Prompts..."
-        add_log("Generating script and full-bleed stick-figure prompts...")
-        run_stage2_script_prompts(project_folder)
+        add_log("Generating script and full-bleed stick-figure prompts (16-32 char pacing)...")
+        run_stage2_script_prompts(project_folder, user_prompt=prompt)
         STATE["step2"] = "COMPLETED"
         add_log("Stage 2 Script & Storyboard Prompts ready.")
 
@@ -250,6 +258,71 @@ def start_pipeline():
     th.start()
 
     return jsonify({"success": True, "message": "Pipeline launched successfully!"})
+
+@app.route("/api/learning-stats")
+def get_learning_stats():
+    """Return learning codex stats and reference index."""
+    codex = load_codex()
+    medians = codex.get("running_medians", {})
+    metadata = codex.get("metadata", {})
+    blueprints = codex.get("reference_blueprints", {})
+    ref_list = []
+    for k, v in blueprints.items():
+        ref_list.append({
+            "title": v.get("title", k),
+            "folder_name": v.get("folder_name", ""),
+            "cuts_count": v.get("cuts_count", 0),
+            "duration_sec": v.get("duration_sec", 0),
+            "hook": v.get("hook", "")
+        })
+    return jsonify({
+        "total_analyzed": metadata.get("total_videos_analyzed", len(ref_list)),
+        "last_updated": metadata.get("last_updated", ""),
+        "medians": medians,
+        "references": ref_list
+    })
+
+@app.route("/api/check-title-match", methods=["POST"])
+def check_title_match():
+    """Check if input title matches an existing analyzed reference video."""
+    data = request.json or {}
+    title = data.get("title", "").strip()
+    if not title:
+        return jsonify({"matched": False})
+
+    match = find_matching_reference_video(title)
+    if match:
+        bp = match.get("blueprint", {})
+        return jsonify({
+            "matched": True,
+            "title": match.get("title", ""),
+            "score": match.get("score", 0),
+            "hook": bp.get("hook", ""),
+            "core_thesis": bp.get("core_thesis", ""),
+            "acts": bp.get("story_progression", [])
+        })
+    return jsonify({"matched": False})
+
+@app.route("/api/start-from-prompt", methods=["POST"])
+def start_from_prompt():
+    """Launch pipeline from manual title and creative prompt."""
+    data = request.json or {}
+    title = data.get("title", "").strip()
+    prompt = data.get("prompt", "").strip()
+    model = data.get("model", "Nano Banana Pro")
+    pause_mode = bool(data.get("pause_after_each_stage", False))
+
+    if not title:
+        return jsonify({"success": False, "message": "Video Title is required."}), 400
+
+    if STATE["state"].startswith("RUNNING_"):
+        return jsonify({"success": False, "message": "Pipeline is already running."}), 400
+
+    PAUSE_EVENT.set()
+    th = threading.Thread(target=run_pipeline_worker, args=("", title, model, pause_mode, prompt), daemon=True)
+    th.start()
+
+    return jsonify({"success": True, "message": "Pipeline launched from creative prompt!"})
 
 @app.route("/api/run-stage", methods=["POST"])
 def run_stage():

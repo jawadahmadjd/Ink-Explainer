@@ -130,12 +130,17 @@ The master pipeline orchestrator (`2- Code/pipeline_orchestrator.py`) automates 
   5. Emits comprehensive forensic postmortem report (`README_POSTMORTEM_REPORT.md`).
 
 ### Stage (iii): Script & Stick-Figure Storyboard Prompt Generation
-- **Command**: `python pipeline_orchestrator.py --title "[Video Title]" --stage 2`
+- **Command**: `python pipeline_orchestrator.py --title "[Video Title]" --stage 2 [--prompt "[Creative Prompt]"]`
 - **Output**: `3- Finals/[Video Title]/`
-- **Actions**:
-  1. Aligns spoken text with scene cuts to create 1-to-1 voiceover sentence mappings.
-  2. Compiles full-bleed stick-figure prompts enforcing MinutePhysics aesthetic (solid white head fill, bold comic ink outlines, 0 flesh tones, 0 realistic anatomy, grounded backgrounds).
-  3. Writes `storyboard_master.csv`, `all_prompts.txt`, and initializes `character_audit.json`.
+- **Execution Modes**:
+  1. **Mode A (Ingestion & Learning)**: Uses ingested postmortem transcript and auto-trains central codex.
+  2. **Mode B (Manual Title & Prompt)**: Synthesizes high-retention 7-act script conforming to running medians. If title matches an existing reference video, automatically mirrors its ideation, hook formula, and story progression arc.
+- **Fast-Paced Image Pacing Standard**:
+  - Paces visual cuts at an average cadence of **16 to 32 characters per beat** based on natural word boundaries.
+  - **Mandatory Punctuation Dividers**: Every comma (`,`), period (`.`), semicolon (`;`), question mark (`?`), exclamation point (`!`), colon (`:`), and dash (`—`) acts as a hard divider that creates a new shot beat immediately, **no matter how short that word is** (e.g. *"Why?"* is 4 characters, but receives its own isolated shot and image).
+- **Visual Prompt Standards**:
+  - Compiles full-bleed stick-figure prompts enforcing MinutePhysics aesthetic (solid white head fill, bold comic ink outlines, 0 flesh tones, 0 realistic anatomy, grounded backgrounds).
+  - Writes `storyboard_master.csv`, `all_prompts.txt`, and initializes `character_audit.json`.
 
 ### Stage (iv): Autonomous Image Generation & Combined Voiceover Production
 - **Voiceover**: `python pipeline_orchestrator.py --title "[Video Title]" --stage 3`

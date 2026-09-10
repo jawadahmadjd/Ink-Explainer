@@ -1,0 +1,105 @@
+{
+  "_version": "1.0.0",
+  "_description": "Distilled AI Learning Codex. Zero-bloat knowledge repository containing running statistical medians, pacing constraints, 7-act retention formulas, and reference video blueprints.",
+  "metadata": {
+    "total_videos_analyzed": 1,
+    "last_updated": "2026-09-10T15:30:00Z"
+  },
+  "running_medians": {
+    "wpm": 224.6,
+    "avg_cut_interval_sec": 2.51,
+    "hook_cut_interval_sec": 1.2,
+    "words_per_minute_range": [215.0, 235.0],
+    "target_chars_per_shot_min": 16,
+    "target_chars_per_shot_max": 32,
+    "lufs_integrated": -12.28,
+    "loudness_range_lra": 2.5,
+    "max_pause_between_shots_ms": 300
+  },
+  "pacing_rules": {
+    "target_char_range": [16, 32],
+    "punctuation_dividers": [",", ".", ";", "?", "!", ":", "—", "–", "\n"],
+    "divider_rule_description": "Every punctuation mark acts as a mandatory divider to create a new shot regardless of character shortness (e.g. 'Why?' is 4 chars, but gets its own shot). Non-punctuated text longer than 32 chars is subdivided at natural word boundaries targeting 16-32 chars per beat."
+  },
+  "narrative_framework": {
+    "name": "7-Act Retention Architecture",
+    "structure": [
+      {
+        "act": 1,
+        "name": "The Modern Trap (Opening Hook)",
+        "pacing": "Ultra-fast (1.0s - 1.5s per cut)",
+        "formula": "Second-person indictment ('You'), relatable modern friction (phone screens, alarms, desks), followed by a sudden contrast snap into deep time."
+      },
+      {
+        "act": 2,
+        "name": "Dismantling the Myth via Hard Evidence",
+        "pacing": "Moderate (2.0s - 2.5s per cut)",
+        "formula": "Take the standard conventional wisdom ('life was brutish and short') and shatter it using forensic or archaeological physical evidence (e.g. skeletal bioarchaeology, bone density vs. farmer arthritis)."
+      },
+      {
+        "act": 3,
+        "name": "Sensory Day-in-the-Life Immersion",
+        "pacing": "Dynamic (2.2s - 2.8s per cut)",
+        "formula": "Walk through a vivid chronological day. Highlight an evolutionary superpower (e.g. full-body sweating and persistence hunting, sensory acuity)."
+      },
+      {
+        "act": 4,
+        "name": "The Statistical Paradigm Shift",
+        "pacing": "Moderate (2.5s per cut)",
+        "formula": "Cite rigorous empirical studies (stopwatch field research, global comparative data across cultures) that mathematically prove the counter-intuitive truth."
+      },
+      {
+        "act": 5,
+        "name": "The Human Core (Art, Leisure & Storytelling)",
+        "pacing": "Lyrical (2.5s - 3.0s per cut)",
+        "formula": "Explore what humans did with their abundance of free time (cave paintings, intricate crafts, games, firelight storytelling)."
+      },
+      {
+        "act": 6,
+        "name": "The Biological Mismatch",
+        "pacing": "Intimate (2.0s - 2.5s per cut)",
+        "formula": "Connect a modern medical/psychological ailment (insomnia, anxiety, chronic fatigue) to an ancient biological adaptation (e.g. biphasic sleep, the 1 AM Watch)."
+      },
+      {
+        "act": 7,
+        "name": "The Trap Closes & Modern Irony",
+        "pacing": "Punchy (1.5s - 2.2s per cut)",
+        "formula": "Show how progress created unintended entrapment (agriculture, granaries, walls, taxes), ending on a poignant philosophical irony about modern life."
+      }
+    ]
+  },
+  "visual_style": {
+    "art_style": "Minimalist hand-drawn 2D vector line art, bold black ink comic contours, expressive stick-figure characters (MinutePhysics & Casually Explained aesthetic).",
+    "framing": "Full bleed edge-to-edge illustration, grounded environment completely filling 16:9 widescreen frame without white matted borders or floating boxes.",
+    "color_palette": "Flat muted earthy tones (charcoal ink, paper parchment, ochre, terracotta, slate blue)."
+  },
+  "reference_blueprints": {
+    "what did ancient humans actually do all day": {
+      "title": "What Did Ancient Humans Actually Do All Day?",
+      "folder_name": "1- What Did Ancient Humans Actually Do All Day",
+      "duration_sec": 672.08,
+      "word_count": 2516,
+      "cuts_count": 268,
+      "avg_cut_interval": 2.51,
+      "hook": "Second-person indictment waking up to smartphone buzzer, confronting 45-year career grind vs 45,000 years of human baseline.",
+      "core_thesis": "Foragers worked 15-17 hours a week, possessed superior bone health, enjoyed 120 hours of leisure, and practiced biphasic sleep until agriculture trapped civilization.",
+      "key_evidence": [
+        "Abu Hureyra skeletal biomechanics (hunter decathlete vs farmer spinal wear and tooth rot)",
+        "Richard Lee 1963 Kalahari Dobe !Kung stopwatch study (17.1 hrs/week)",
+        "Hadza (15 hrs), Gunwinggu (16 hrs), Aché (19 hrs) comparative verification",
+        "Chauvet Cave animation art & Sunghir 10,000 mammoth ivory beads",
+        "Polly Wiessner firelight storytelling transcript analysis",
+        "Biphasic sleep & prolactin surge during 'The Watch' (1:00 AM)"
+      ],
+      "story_progression": [
+        "Act 1: The Modern Alarm Clock Trap",
+        "Act 2: Forensic Skeletal Bioarchaeology",
+        "Act 3: The Evolutionary Hunting Superpower (Sweat)",
+        "Act 4: The 15-Hour Work Week Studies",
+        "Act 5: What To Do With 120 Free Hours",
+        "Act 6: Biphasic Sleep & Insomnia Truth",
+        "Act 7: Wheat Porridge Trap & Modern Retirement Irony"
+      ]
+    }
+  }
+}

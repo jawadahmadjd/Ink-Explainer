@@ -51,6 +51,7 @@ Examples:
     parser.add_argument("--mode", type=str, choices=["auto", "interactive"], default="auto", help="Execution mode: 'auto' (unattended) or 'interactive' (review gates)")
     parser.add_argument("--model", type=str, default="", help="Google Flow starting model ('Nano Banana Pro', 'Nano Banana 2', etc.)")
     parser.add_argument("--shots", type=str, default="", help="Comma-separated shot numbers for Stage 4 (e.g. '1,2,3')")
+    parser.add_argument("--prompt", type=str, default="", help="Creative direction or topic prompt for script synthesis")
     parser.add_argument("--skip-images", action="store_true", help="Skip Google Flow image generation (Stage 4)")
     parser.add_argument("--skip-vo", action="store_true", help="Skip ElevenLabs voiceover generation (Stage 3)")
     parser.add_argument("--force-vo", action="store_true", help="Force regenerate voiceover even if cached")
@@ -63,6 +64,10 @@ Examples:
         stages_to_run = all_stages
     else:
         stages_to_run = [s.strip() for s in args.stage.split(",") if s.strip() in all_stages]
+
+    # If user provided a creative prompt and no url, Stage 1 (URL download) is not required
+    if args.prompt and not args.url and "1" in stages_to_run:
+        stages_to_run.remove("1")
 
     if args.skip_images and "4" in stages_to_run:
         stages_to_run.remove("4")
@@ -88,6 +93,8 @@ Examples:
     print(f"Execution Mode:   {args.mode.upper()}")
     print(f"Active Stages:    {', '.join(stages_to_run)}")
     print(f"Destination:      {finals_dir}")
+    if args.prompt:
+        print(f"Creative Prompt:  {args.prompt[:60]}...")
     print(f"Start Timestamp:  {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("="*65)
 
@@ -116,7 +123,7 @@ Examples:
         # ---------------------------------------------------------------------
         if "2" in stages_to_run:
             reporter.start_stage(2, "Script & Stick-Figure Storyboard Prompts")
-            s2_res = run_stage2_script_prompts(video_title)
+            s2_res = run_stage2_script_prompts(video_title, user_prompt=args.prompt)
             reporter.record_stat("Total Storyboard Shots", s2_res["total_shots"])
             reporter.record_stat("Script Word Count", s2_res["word_count"])
             reporter.end_stage(2, s2_res)

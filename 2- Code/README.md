@@ -11,12 +11,15 @@ This directory contains the complete source code, stage modules, web interface, 
 ├── pipeline_orchestrator.py      # Master CLI runner orchestrating all stages
 ├── web_ui.py                     # Flask web server powering the interactive Web UI
 ├── config.py                     # Central configuration, .env loader, model cascades, silence rules
+├── learning/                     # Distilled AI Learning Engine (Zero Bloat Codex)
+│   ├── ai_learning_codex.json    # Statistical medians (224.6 WPM, 2.5s cuts), 7-act retention formulas, reference blueprints
+│   └── learning_engine.py        # Pacing divider engine (16-32 chars), fuzzy title matcher, prompt context builder
 ├── templates/
-│   └── index.html                # Single-page modern responsive UI with visual image review gate
+│   └── index.html                # Single-page modern responsive UI with dual-mode switch & image review gate
 ├── modules/
 │   ├── __init__.py
-│   ├── stage1_postmortem.py      # Stage 1: Ingestion, yt-dlp download, ffmpeg cuts, audio LUFS
-│   ├── stage2_script_prompts.py  # Stage 2: Script formatting & MinutePhysics stick-figure prompt compiler
+│   ├── stage1_postmortem.py      # Stage 1: Ingestion, yt-dlp download, ffmpeg cuts, audio LUFS & auto-codex training
+│   ├── stage2_script_prompts.py  # Stage 2: Script formatting, reference matching & 16-32 char stick-figure prompt compiler
 │   ├── stage3_voiceover.py       # Stage 3: ElevenLabs combined VO production & silence normalization
 │   ├── stage4_image_gen.py       # Stage 4: Google Flow CDP runner, model cascade, CV evaluator
 │   ├── stage5_timeline_xml.py    # Stage 5: Apple xmeml v4 XML sequence timeline generator
@@ -28,6 +31,13 @@ This directory contains the complete source code, stage modules, web interface, 
 ---
 
 ## 2. Stage Modules & Workflow
+
+### Distilled AI Learning Engine (`learning/learning_engine.py`)
+- **Zero Context Bloating**: Maintains running mathematical medians and modular narrative blueprints rather than dumping raw transcripts into LLM context (~1,500 token budget).
+- **Reference Title Matching**: Automatically detects if an input video title matches an existing analyzed project in `1- Postmartum/` (using combined token containment and fuzzy string similarity). When matched, mirrors the original video's ideation thesis, opening hook formula, and 7-act progression arc.
+- **Fast-Paced Image Pacing Standard**:
+  - Enforces an average cadence of **1 image cut every 16 to 32 characters** based on natural word boundaries.
+  - **Mandatory Punctuation Dividers**: Every comma (`,`), period (`.`), semicolon (`;`), question mark (`?`), exclamation point (`!`), colon (`:`), and dash (`—`) acts as a hard divider that creates a new shot beat immediately, **no matter how short that word or clause is** (e.g. *"Why?"* is 4 characters, but receives its own isolated shot beat and image).
 
 ### Stage 1: Ingestion & Forensic Postmortem (`modules/stage1_postmortem.py`)
 - **Purpose**: Ingests any reference YouTube video URL and extracts complete forensic data.
