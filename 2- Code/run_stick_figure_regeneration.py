@@ -28,15 +28,36 @@ TARGET_PROJECT_URL = "https://flow.google.com/u/0/project/8a28cfa5-fddf-4528-b18
 TARGET_VARIATIONS = 2
 MODEL_CASCADE = ["Nano Banana Pro", "Nano Banana 2", "Nano Banana 2 Lite"]
 
-CSV_PATH = os.path.join(PROJECT_ROOT, "3- Finals", "storyboard_master.csv")
-AUDIT_JSON = os.path.join(PROJECT_ROOT, "3- Finals", "character_audit.json")
-RAW_IMG_DIR = os.path.join(PROJECT_ROOT, "3- Finals", "flow_generated_images")
-FINAL_DIR_ROOT = os.path.join(PROJECT_ROOT, "Final selected images")
-LOG_CSV = os.path.join(PROJECT_ROOT, "3- Finals", "selection_log.csv")
-STATUS_JSON = os.path.join(PROJECT_ROOT, "3- Finals", "production_status.json")
+VIDEO_SUBDIR = "1- What Did Ancient Humans Actually Do All Day"
+FINALS_DIR = os.path.join(PROJECT_ROOT, "3- Finals", VIDEO_SUBDIR)
+CSV_PATH = os.path.join(FINALS_DIR, "storyboard_master.csv")
+AUDIT_JSON = os.path.join(FINALS_DIR, "character_audit.json")
+RAW_IMG_DIR = os.path.join(FINALS_DIR, "flow_generated_images")
+FINAL_DIR_ROOT = os.path.join(FINALS_DIR, "Final selected images")
+LOG_CSV = os.path.join(FINALS_DIR, "selection_log.csv")
+STATUS_JSON = os.path.join(FINALS_DIR, "production_status.json")
 
 os.makedirs(RAW_IMG_DIR, exist_ok=True)
 os.makedirs(FINAL_DIR_ROOT, exist_ok=True)
+
+def safe_copy_file(src, dst, max_attempts=5):
+    for attempt in range(max_attempts):
+        try:
+            with open(src, "rb") as f_src:
+                content = f_src.read()
+            with open(dst, "wb") as f_dst:
+                f_dst.write(content)
+            return True
+        except Exception as e:
+            if attempt < max_attempts - 1:
+                time.sleep(1.0)
+            else:
+                try:
+                    shutil.copy2(src, dst)
+                    return True
+                except Exception as fe:
+                    print(f"File copy error ({src} -> {dst}): {fe}")
+                    return False
 
 def safe_evaluate(page, js_code, max_retries=3):
     for attempt in range(max_retries):
@@ -426,7 +447,7 @@ def main():
                         print(f"  Single image evaluation score: {s_score:.1f} ({s_details})")
                         if s_score >= 50.0:
                             print(f"-> [PARTIAL ACCEPTED] Score {s_score:.1f} >= 50.0! Saved to Final selected images.")
-                            shutil.copy2(temp_single_path, final_file)
+                            safe_copy_file(temp_single_path, final_file)
 
                             with open(LOG_CSV, "a", newline="", encoding="utf-8") as f:
                                 writer = csv.writer(f)
@@ -529,7 +550,7 @@ def main():
 
             if best_path and os.path.exists(best_path):
                 # Copy strictly to Final selected images/
-                shutil.copy2(best_path, final_file)
+                safe_copy_file(best_path, final_file)
                 print(f"-> [STICK FIGURE APPROVED] Shot {shot_idx:03d} -> Variation {best_var} (Score: {best_score:.1f}) saved strictly to Final selected images!")
 
                 with open(LOG_CSV, "a", newline="", encoding="utf-8") as f:
