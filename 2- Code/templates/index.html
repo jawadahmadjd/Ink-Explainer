@@ -13,7 +13,6 @@
       --bg-surface: #0F172A;
       --bg-card: #1E293B;
       --bg-card-hover: #273549;
-      --bg-card-selected: #1E3A5F;
       --border: rgba(255, 255, 255, 0.09);
       --border-accent: rgba(56, 189, 248, 0.4);
       --text-main: #F8FAFC;
@@ -45,7 +44,7 @@
     header {
       background: var(--bg-surface);
       border-bottom: 1px solid var(--border);
-      padding: 14px 28px;
+      padding: 12px 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -88,10 +87,21 @@
       letter-spacing: 0.05em;
     }
 
-    .header-status {
+    .header-controls {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
+    }
+    .project-picker {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 8px 14px;
+      color: var(--text-main);
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      min-width: 260px;
     }
     .status-badge {
       display: flex;
@@ -115,8 +125,8 @@
       box-shadow: 0 0 10px var(--accent-cyan);
       animation: pulse 1.8s infinite;
     }
+    .status-dot.paused { background: var(--accent-amber); box-shadow: 0 0 10px var(--accent-amber); }
     .status-dot.completed { background: var(--accent-emerald); }
-    .status-dot.waiting { background: var(--accent-amber); box-shadow: 0 0 8px var(--accent-amber); }
     .status-dot.error { background: var(--accent-rose); }
 
     @keyframes pulse {
@@ -147,7 +157,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
     .panel-title {
       font-size: 16px;
@@ -165,11 +175,11 @@
     /* INPUT CONTROLS */
     .input-grid {
       display: grid;
-      grid-template-columns: 1fr auto auto;
+      grid-template-columns: 1fr auto auto auto;
       gap: 12px;
       align-items: center;
     }
-    @media (max-width: 900px) {
+    @media (max-width: 1000px) {
       .input-grid { grid-template-columns: 1fr; }
     }
     .input-box {
@@ -181,12 +191,11 @@
       font-size: 14px;
       font-family: inherit;
       width: 100%;
-      transition: border-color 0.15s, box-shadow 0.15s;
+      transition: border-color 0.15s;
     }
     .input-box:focus {
       outline: none;
       border-color: var(--accent-cyan);
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
     }
     .select-box {
       background: var(--bg-card);
@@ -199,14 +208,30 @@
       cursor: pointer;
     }
 
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+    }
+    .checkbox-label input {
+      accent-color: var(--accent-cyan);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 12px 22px;
+      padding: 10px 18px;
       border-radius: var(--radius-md);
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 600;
       font-family: inherit;
       cursor: pointer;
@@ -222,12 +247,10 @@
     .btn-primary:hover:not(:disabled) {
       background: linear-gradient(135deg, #38BDF8, #0284C7);
       transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(2, 132, 199, 0.4);
     }
     .btn-success {
       background: linear-gradient(135deg, #059669, #10B981);
       color: #FFF;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
     }
     .btn-success:hover:not(:disabled) {
       background: linear-gradient(135deg, #10B981, #34D399);
@@ -242,8 +265,23 @@
       background: var(--bg-card-hover);
       border-color: rgba(255, 255, 255, 0.2);
     }
+    .btn-stage {
+      padding: 6px 12px;
+      font-size: 11.5px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-top: 8px;
+    }
+    .btn-stage:hover:not(:disabled) {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      color: #FFF;
+    }
     .btn:disabled {
-      opacity: 0.5;
+      opacity: 0.4;
       cursor: not-allowed;
       transform: none !important;
     }
@@ -254,10 +292,10 @@
       grid-template-columns: repeat(6, 1fr);
       gap: 12px;
     }
-    @media (max-width: 1000px) {
+    @media (max-width: 1100px) {
       .stepper { grid-template-columns: repeat(3, 1fr); }
     }
-    @media (max-width: 600px) {
+    @media (max-width: 650px) {
       .stepper { grid-template-columns: 1fr; }
     }
     .step-card {
@@ -296,10 +334,26 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      margin-top: 4px;
     }
 
-    /* GALLERY CONTROLS */
+    /* PAUSED BANNER */
+    .paused-banner {
+      display: none;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05));
+      border: 1px solid var(--accent-amber);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      align-items: center;
+      justify-content: space-between;
+      animation: fadeIn 0.3s;
+    }
+    .paused-banner.open { display: flex; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* GALLERY */
     .gallery-controls {
       display: flex;
       flex-wrap: wrap;
@@ -310,10 +364,7 @@
       padding-bottom: 14px;
       border-bottom: 1px solid var(--border);
     }
-    .filter-tabs {
-      display: flex;
-      gap: 6px;
-    }
+    .filter-tabs { display: flex; gap: 6px; }
     .filter-tab {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -323,7 +374,6 @@
       font-size: 12px;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.15s;
     }
     .filter-tab.active {
       background: var(--accent-blue);
@@ -331,22 +381,16 @@
       border-color: var(--accent-blue);
     }
 
-    /* SHOT CARDS GRID */
     .shots-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
       gap: 16px;
-      max-height: 700px;
+      max-height: 650px;
       overflow-y: auto;
       padding-right: 6px;
     }
-    .shots-grid::-webkit-scrollbar {
-      width: 8px;
-    }
-    .shots-grid::-webkit-scrollbar-thumb {
-      background: var(--bg-card);
-      border-radius: 4px;
-    }
+    .shots-grid::-webkit-scrollbar { width: 8px; }
+    .shots-grid::-webkit-scrollbar-thumb { background: var(--bg-card); border-radius: 4px; }
 
     .shot-card {
       background: var(--bg-card);
@@ -395,10 +439,6 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.2s ease;
-    }
-    .shot-preview-container:hover .shot-preview-img {
-      transform: scale(1.03);
     }
     .shot-badge-score {
       position: absolute;
@@ -414,7 +454,6 @@
       padding: 2px 8px;
       border-radius: var(--radius-sm);
     }
-
     .shot-body {
       padding: 12px 14px;
       flex: 1;
@@ -431,8 +470,6 @@
       overflow: hidden;
       font-style: italic;
     }
-
-    /* VARIATIONS ROW */
     .variations-row {
       display: flex;
       align-items: center;
@@ -453,25 +490,32 @@
       overflow: hidden;
       border: 2px solid transparent;
       cursor: pointer;
-      position: relative;
-      transition: border-color 0.15s, transform 0.1s;
       background: #000;
     }
-    .var-thumb-btn img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .var-thumb-btn img { width: 100%; height: 100%; object-fit: cover; }
     .var-thumb-btn.active {
       border-color: var(--accent-cyan);
       box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
     }
-    .var-thumb-btn:hover {
-      transform: scale(1.06);
+
+    /* EMPTY CANVAS STATE */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-dim);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
     }
+    .empty-icon { font-size: 40px; opacity: 0.8; }
+    .empty-title { font-size: 16px; font-weight: 600; color: var(--text-muted); }
+    .empty-subtitle { font-size: 13px; max-width: 480px; }
 
     /* STICKY APPROVAL FOOTER */
     .sticky-approval-bar {
+      display: none;
       position: sticky;
       bottom: 20px;
       background: rgba(15, 23, 42, 0.95);
@@ -479,32 +523,14 @@
       border: 1px solid var(--border-accent);
       border-radius: var(--radius-lg);
       padding: 16px 24px;
-      display: flex;
       align-items: center;
       justify-content: space-between;
       box-shadow: var(--shadow-lg);
       z-index: 50;
-      animation: floatUp 0.3s ease-out;
     }
-    @keyframes floatUp {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    .approval-info {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .approval-title {
-      font-size: 15px;
-      font-weight: 700;
-    }
-    .approval-subtitle {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
+    .sticky-approval-bar.open { display: flex; }
 
-    /* CONSOLE LOG TERMINAL */
+    /* LOG TERMINAL */
     .log-terminal {
       background: #060B18;
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -514,15 +540,12 @@
       font-size: 12px;
       line-height: 1.6;
       color: #A5F3FC;
-      max-height: 260px;
+      max-height: 220px;
       overflow-y: auto;
       white-space: pre-wrap;
-      word-break: break-all;
     }
-    .log-terminal::-webkit-scrollbar { width: 6px; }
-    .log-terminal::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 3px; }
 
-    /* MODAL LIGHTBOX */
+    /* MODAL */
     .modal-backdrop {
       display: none;
       position: fixed;
@@ -542,9 +565,6 @@
       max-width: 1000px;
       width: 100%;
       overflow: hidden;
-      box-shadow: var(--shadow-lg);
-      display: flex;
-      flex-direction: column;
     }
     .modal-img-wrap {
       width: 100%;
@@ -554,25 +574,13 @@
       align-items: center;
       justify-content: center;
     }
-    .modal-img-wrap img {
-      max-width: 100%;
-      max-height: 560px;
-      object-fit: contain;
-    }
+    .modal-img-wrap img { max-width: 100%; max-height: 560px; object-fit: contain; }
     .modal-footer {
       padding: 16px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-top: 1px solid var(--border);
-    }
-
-    .pulse-glow {
-      animation: pulseGlow 2s infinite;
-    }
-    @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 0 12px rgba(16, 185, 129, 0.4); }
-      50% { box-shadow: 0 0 24px rgba(16, 185, 129, 0.8); transform: scale(1.02); }
     }
   </style>
 </head>
@@ -585,14 +593,16 @@
       <div class="brand-title">Ink Explainer Studio</div>
       <span class="brand-tag">Autonomous</span>
     </div>
-    <div class="header-status">
+    <div class="header-controls">
+      <!-- PROJECT SELECTOR -->
+      <select id="projectSelector" class="project-picker" onchange="onProjectChange()">
+        <option value="">-- Start New Project (Fresh Canvas) --</option>
+      </select>
+
       <div class="status-badge" id="statusBadge">
         <div class="status-dot" id="statusDot"></div>
         <span id="statusLabel">Idle</span>
       </div>
-      <button class="btn btn-secondary" onclick="loadActiveProject()" style="padding: 6px 14px; font-size: 12px;">
-        📂 Load Active Project
-      </button>
     </div>
   </header>
 
@@ -603,58 +613,88 @@
       <div class="panel-header">
         <div>
           <div class="panel-title">🎯 Start New Video Pipeline</div>
-          <div class="panel-desc">Paste a YouTube reference link to automatically execute postmortem research, script, stick-figure prompts, VO, and images.</div>
+          <div class="panel-desc">Paste YouTube link to create a new sequentially numbered project folder in <code>1- Postmartum/</code> and <code>3- Finals/</code>.</div>
         </div>
       </div>
       <div class="input-grid">
-        <input type="text" id="videoUrl" class="input-box" placeholder="https://www.youtube.com/watch?v=..." value="">
+        <input type="text" id="videoUrl" class="input-box" placeholder="Paste YouTube Link (e.g. https://www.youtube.com/watch?v=...)">
         <select id="modelSelector" class="select-box">
           <option value="Nano Banana Pro">🍌 Nano Banana Pro (Priority 1)</option>
           <option value="Nano Banana 2">🍌 Nano Banana 2</option>
           <option value="Nano Banana 2 Lite">🍌 Nano Banana 2 Lite</option>
         </select>
-        <button id="btnStartPipeline" class="btn btn-primary" onclick="startPipeline()">
-          <span>🚀 Start Autonomous Pipeline</span>
+        <label class="checkbox-label" title="Automatically pauses after each stage for review">
+          <input type="checkbox" id="pauseAfterEachStage">
+          <span>Pause after each stage</span>
+        </label>
+        <button id="btnStartPipeline" class="btn btn-primary" onclick="startNewPipeline()">
+          <span>🚀 Start Pipeline</span>
         </button>
       </div>
     </div>
 
-    <!-- SECTION 2: STEPPER -->
+    <!-- PAUSED INTERACTIVE BANNER -->
+    <div class="paused-banner" id="pausedBanner">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="font-size: 22px;">⏸</span>
+        <div>
+          <div style="font-weight: 700; color: var(--accent-amber);" id="pausedTitle">Stage Paused for Review</div>
+          <div style="font-size: 12px; color: var(--text-muted);" id="pausedMsg">Output ready. Click 'Continue' to advance to next stage or review assets.</div>
+        </div>
+      </div>
+      <button class="btn btn-success" onclick="resumePipeline()">
+        <span>▶ Continue to Next Stage</span>
+      </button>
+    </div>
+
+    <!-- SECTION 2: STEPPER & STANDALONE STAGE RUNNERS -->
     <div class="panel">
       <div class="panel-header">
-        <div class="panel-title">⚡ Pipeline Progress</div>
-        <div class="panel-desc" id="currentTaskDesc">System ready. Enter URL or load existing project to begin.</div>
+        <div class="panel-title">⚡ Pipeline Progress & Standalone Stages</div>
+        <div class="panel-desc" id="currentTaskDesc">Select a project or paste a URL to run the pipeline or standalone stages.</div>
       </div>
       <div class="stepper">
+        <!-- STAGE 1 -->
         <div class="step-card" id="step1">
           <span class="step-num">STAGE 01</span>
           <span class="step-title">Ingestion & Postmortem</span>
           <span class="step-status-text" id="step1Status">Waiting</span>
+          <button class="btn btn-stage" id="btnRunStage1" onclick="runStandaloneStage(1)" title="Runs postmortem on URL and creates ascending folder">▶ Run Postmortem</button>
         </div>
+        <!-- STAGE 2 -->
         <div class="step-card" id="step2">
           <span class="step-num">STAGE 02</span>
           <span class="step-title">Script & Stick Prompts</span>
           <span class="step-status-text" id="step2Status">Waiting</span>
+          <button class="btn btn-stage" id="btnRunStage2" onclick="runStandaloneStage(2)" disabled title="Requires selected project with Postmortem complete">▶ Compile Prompts</button>
         </div>
+        <!-- STAGE 3 -->
         <div class="step-card" id="step3">
           <span class="step-num">STAGE 03</span>
           <span class="step-title">Combined Voiceover</span>
           <span class="step-status-text" id="step3Status">Waiting</span>
+          <button class="btn btn-stage" id="btnRunStage3" onclick="runStandaloneStage(3)" disabled title="Requires selected project with Script complete">▶ Generate VO</button>
         </div>
+        <!-- STAGE 4 -->
         <div class="step-card" id="step4">
           <span class="step-num">STAGE 04</span>
           <span class="step-title">Google Flow Images</span>
           <span class="step-status-text" id="step4Status">Waiting</span>
+          <button class="btn btn-stage" id="btnRunStage4" onclick="runStandaloneStage(4)" disabled title="Requires selected project with Prompts complete">▶ Generate Images</button>
         </div>
+        <!-- STAGE 5 -->
         <div class="step-card" id="step5">
           <span class="step-num">STAGE 05</span>
           <span class="step-title">Visual Image Gate</span>
           <span class="step-status-text" id="step5Status">Waiting</span>
+          <button class="btn btn-stage" id="btnRunStage5" onclick="scrollToGallery()" title="Review and swap image variations">🔍 Review Images</button>
         </div>
+        <!-- STAGE 6 -->
         <div class="step-card" id="step6">
           <span class="step-num">STAGE 06</span>
           <span class="step-title">NLE Timeline XML</span>
           <span class="step-status-text" id="step6Status">Waiting</span>
+          <button class="btn btn-stage" id="btnRunStage6" onclick="runStandaloneStage(6)" disabled title="Requires VO and Images complete">🎬 Assemble XML</button>
         </div>
       </div>
     </div>
@@ -664,28 +704,30 @@
       <div class="panel-header">
         <div>
           <div class="panel-title">🖼️ Storyboard Image Selection Gate</div>
-          <div class="panel-desc">Review approved shots, switch variations, and verify stick-figure quality before generating the XML timeline.</div>
+          <div class="panel-desc" id="galleryDesc">No project active. Select a project from the top dropdown or start a new video.</div>
         </div>
-        <button class="btn btn-secondary" onclick="fetchShots()" style="padding: 6px 14px; font-size: 12px;">
+        <button class="btn btn-secondary" onclick="fetchShots()" id="btnRefreshShots" style="display: none; padding: 6px 14px; font-size: 12px;">
           🔄 Refresh Images
         </button>
       </div>
 
-      <div class="gallery-controls">
+      <div class="gallery-controls" id="galleryControls" style="display: none;">
         <div class="filter-tabs">
           <button class="filter-tab active" onclick="setFilter('all', this)">All Shots (<span id="countAll">0</span>)</button>
           <button class="filter-tab" onclick="setFilter('stick', this)">Stick Figures (<span id="countStick">0</span>)</button>
           <button class="filter-tab" onclick="setFilter('nonchar', this)">Objects & Maps (<span id="countNonChar">0</span>)</button>
         </div>
-        <div style="display: flex; gap: 8px;">
+        <div>
           <input type="text" id="searchBox" class="input-box" placeholder="Search shot or VO text..." style="width: 240px; padding: 6px 12px; font-size: 12px;" oninput="applySearch()">
         </div>
       </div>
 
       <!-- SHOTS GRID -->
       <div class="shots-grid" id="shotsGrid">
-        <div style="grid-column: 1 / -1; text-align: center; padding: 48px; color: var(--text-dim);">
-          Loading shots... Click "Load Active Project" above to browse the 334 generated images.
+        <div class="empty-state">
+          <div class="empty-icon">🎨</div>
+          <div class="empty-title">Clean Canvas (No Project Active)</div>
+          <div class="empty-subtitle">Paste a YouTube URL above to start a fresh project with sequential numbering, or select an existing project from the dropdown in the header.</div>
         </div>
       </div>
     </div>
@@ -694,9 +736,7 @@
     <div class="panel">
       <div class="panel-header">
         <div class="panel-title">💻 Live Execution Telemetry</div>
-        <div style="display: flex; gap: 8px;">
-          <button class="btn btn-secondary" onclick="clearLogs()" style="padding: 4px 10px; font-size: 11px;">Clear</button>
-        </div>
+        <button class="btn btn-secondary" onclick="clearLogs()" style="padding: 4px 10px; font-size: 11px;">Clear</button>
       </div>
       <div class="log-terminal" id="logTerminal">Ready. Waiting for command...</div>
     </div>
@@ -705,18 +745,16 @@
 
   <!-- STICKY APPROVAL FOOTER -->
   <div class="sticky-approval-bar" id="stickyApprovalBar">
-    <div class="approval-info">
-      <div style="font-size: 28px;">🎬</div>
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <div style="font-size: 26px;">🎬</div>
       <div>
-        <div class="approval-title">Image Selection Approved & Ready</div>
-        <div class="approval-subtitle" id="approvalSubtitle">All 334 images verified. Ready to build Apple xmeml XML sequence.</div>
+        <div style="font-weight: 700; font-size: 14px;" id="approvalTitle">Image Review & Selection Complete</div>
+        <div style="font-size: 12px; color: var(--text-muted);" id="approvalSubtitle">All images verified. Ready to assemble the final Apple xmeml XML sequence.</div>
       </div>
     </div>
-    <div style="display: flex; gap: 12px;">
-      <button class="btn btn-success pulse-glow" id="btnBuildXml" onclick="approveAndBuildXml()">
-        <span>✨ Approve Selection & Assemble Timeline XML</span>
-      </button>
-    </div>
+    <button class="btn btn-success" id="btnBuildXml" onclick="approveAndBuildXml()">
+      <span>✨ Approve Selection & Assemble Timeline XML</span>
+    </button>
   </div>
 
   <!-- LIGHTBOX MODAL -->
@@ -736,15 +774,15 @@
   </div>
 
   <script>
+    let activeProjectFolder = '';
     let allShotsData = [];
     let currentFilter = 'all';
-    let activeProjectTitle = '1- What Did Ancient Humans Actually Do All Day';
     let pollingInterval = null;
+    let availableProjects = [];
 
-    // Load active project on startup
     window.addEventListener('DOMContentLoaded', () => {
+      fetchProjects();
       fetchStatus();
-      loadActiveProject();
       startPolling();
     });
 
@@ -753,63 +791,151 @@
       pollingInterval = setInterval(fetchStatus, 2500);
     }
 
+    async function fetchProjects() {
+      try {
+        const res = await fetch('/api/projects');
+        availableProjects = await res.json();
+        const sel = document.getElementById('projectSelector');
+        
+        sel.innerHTML = '<option value="">-- Start New Project (Fresh Canvas) --</option>';
+        availableProjects.forEach(p => {
+          const opt = document.createElement('option');
+          opt.value = p.folder_name;
+          const statusTags = [];
+          if (p.has_postmortem) statusTags.push('PM✓');
+          if (p.has_script) statusTags.push('Script✓');
+          if (p.has_vo) statusTags.push('VO✓');
+          if (p.has_images) statusTags.push(`Images (${p.image_count})`);
+          if (p.has_xml) statusTags.push('XML✓');
+          opt.textContent = `${p.folder_name} [${statusTags.join(' ')}]`;
+          sel.appendChild(opt);
+        });
+
+        if (activeProjectFolder) {
+          sel.value = activeProjectFolder;
+        }
+      } catch (err) {
+        console.warn('Failed to fetch projects:', err);
+      }
+    }
+
+    function onProjectChange() {
+      const sel = document.getElementById('projectSelector');
+      activeProjectFolder = sel.value;
+      if (!activeProjectFolder) {
+        // Fresh canvas
+        allShotsData = [];
+        document.getElementById('galleryControls').style.display = 'none';
+        document.getElementById('btnRefreshShots').style.display = 'none';
+        document.getElementById('stickyApprovalBar').classList.remove('open');
+        document.getElementById('galleryDesc').textContent = 'No project active. Select a project from the top dropdown or start a new video.';
+        document.getElementById('shotsGrid').innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🎨</div>
+            <div class="empty-title">Clean Canvas (No Project Active)</div>
+            <div class="empty-subtitle">Paste a YouTube URL above to start a fresh project with sequential numbering, or select an existing project from the dropdown in the header.</div>
+          </div>
+        `;
+        resetStepper();
+      } else {
+        document.getElementById('galleryControls').style.display = 'flex';
+        document.getElementById('btnRefreshShots').style.display = 'inline-flex';
+        document.getElementById('galleryDesc').textContent = `Reviewing assets for: ${activeProjectFolder}`;
+        fetchShots();
+        updateStepperForSelectedProject();
+      }
+    }
+
+    function updateStepperForSelectedProject() {
+      const p = availableProjects.find(x => x.folder_name === activeProjectFolder);
+      if (!p) return;
+
+      document.getElementById('btnRunStage1').disabled = false;
+      document.getElementById('btnRunStage2').disabled = !p.has_postmortem;
+      document.getElementById('btnRunStage3').disabled = !p.has_script;
+      document.getElementById('btnRunStage4').disabled = !p.has_script;
+      document.getElementById('btnRunStage6').disabled = !(p.has_vo && p.has_images);
+
+      updateStepCard('step1', p.has_postmortem ? 'COMPLETED' : 'WAITING');
+      updateStepCard('step2', p.has_script ? 'COMPLETED' : 'WAITING');
+      updateStepCard('step3', p.has_vo ? 'COMPLETED' : 'WAITING');
+      updateStepCard('step4', p.has_images ? 'COMPLETED' : 'WAITING');
+      updateStepCard('step5', p.has_images ? 'COMPLETED' : 'WAITING');
+      updateStepCard('step6', p.has_xml ? 'COMPLETED' : 'WAITING');
+
+      if (p.has_images) {
+        document.getElementById('stickyApprovalBar').classList.add('open');
+      } else {
+        document.getElementById('stickyApprovalBar').classList.remove('open');
+      }
+    }
+
+    function resetStepper() {
+      ['step1', 'step2', 'step3', 'step4', 'step5', 'step6'].forEach(id => {
+        updateStepCard(id, 'WAITING');
+      });
+      document.getElementById('btnRunStage1').disabled = false;
+      document.getElementById('btnRunStage2').disabled = true;
+      document.getElementById('btnRunStage3').disabled = true;
+      document.getElementById('btnRunStage4').disabled = true;
+      document.getElementById('btnRunStage6').disabled = true;
+    }
+
     async function fetchStatus() {
       try {
         const res = await fetch('/api/status');
         const data = await res.json();
-        updateStatusUI(data);
+        const dot = document.getElementById('statusDot');
+        const label = document.getElementById('statusLabel');
+        const desc = document.getElementById('currentTaskDesc');
+
+        label.textContent = data.state;
+        dot.className = 'status-dot';
+
+        if (data.state.startsWith('RUNNING_')) {
+          dot.classList.add('active');
+          document.getElementById('btnStartPipeline').disabled = true;
+          document.getElementById('pausedBanner').classList.remove('open');
+        } else if (data.state.includes('PAUSED')) {
+          dot.classList.add('paused');
+          document.getElementById('btnStartPipeline').disabled = false;
+          document.getElementById('pausedBanner').classList.add('open');
+          document.getElementById('pausedTitle').textContent = `Stage Paused: ${data.state}`;
+        } else if (data.state === 'COMPLETED') {
+          dot.classList.add('completed');
+          document.getElementById('btnStartPipeline').disabled = false;
+          document.getElementById('pausedBanner').classList.remove('open');
+        } else {
+          document.getElementById('btnStartPipeline').disabled = false;
+          document.getElementById('pausedBanner').classList.remove('open');
+        }
+
+        if (data.task_description) {
+          desc.textContent = data.task_description;
+        }
+
+        // Active project syncing
+        if (data.project_title && data.project_title !== activeProjectFolder) {
+          activeProjectFolder = data.project_title;
+          await fetchProjects();
+          document.getElementById('projectSelector').value = activeProjectFolder;
+          onProjectChange();
+        }
+
+        if (data.logs && data.logs.length > 0) {
+          const term = document.getElementById('logTerminal');
+          term.textContent = data.logs.join('\n');
+          term.scrollTop = term.scrollHeight;
+        }
       } catch (err) {
-        console.warn('Status poll failed:', err);
+        console.warn('Poll failed:', err);
       }
     }
 
-    function updateStatusUI(data) {
-      const dot = document.getElementById('statusDot');
-      const label = document.getElementById('statusLabel');
-      const desc = document.getElementById('currentTaskDesc');
-      const startBtn = document.getElementById('btnStartPipeline');
-
-      label.textContent = data.state;
-      dot.className = 'status-dot';
-
-      if (data.state.startsWith('RUNNING_')) {
-        dot.classList.add('active');
-        startBtn.disabled = true;
-      } else if (data.state === 'AWAITING_IMAGE_SELECTION') {
-        dot.classList.add('waiting');
-        startBtn.disabled = false;
-        document.getElementById('stickyApprovalBar').style.display = 'flex';
-      } else if (data.state === 'COMPLETED') {
-        dot.classList.add('completed');
-        startBtn.disabled = false;
-      } else {
-        startBtn.disabled = false;
-      }
-
-      if (data.task_description) {
-        desc.textContent = data.task_description;
-      }
-
-      // Update stepper
-      updateStep('step1', data.step1);
-      updateStep('step2', data.step2);
-      updateStep('step3', data.step3);
-      updateStep('step4', data.step4);
-      updateStep('step5', data.step5);
-      updateStep('step6', data.step6);
-
-      // Append logs
-      if (data.logs && data.logs.length > 0) {
-        const term = document.getElementById('logTerminal');
-        term.textContent = data.logs.join('\n');
-        term.scrollTop = term.scrollHeight;
-      }
-    }
-
-    function updateStep(elemId, status) {
+    function updateStepCard(elemId, status) {
       const el = document.getElementById(elemId);
       const textEl = document.getElementById(elemId + 'Status');
-      if (!el || !textEl || !status) return;
+      if (!el || !textEl) return;
 
       el.className = 'step-card';
       if (status === 'RUNNING') {
@@ -818,25 +944,18 @@
       } else if (status === 'COMPLETED') {
         el.classList.add('completed');
         textEl.textContent = '✓ Done';
-      } else if (status === 'WAITING') {
-        el.classList.add('active');
-        textEl.textContent = '⚡ Awaiting Review';
       } else {
         textEl.textContent = 'Waiting';
       }
     }
 
-    async function loadActiveProject() {
-      activeProjectTitle = '1- What Did Ancient Humans Actually Do All Day';
-      document.getElementById('videoUrl').value = 'https://www.youtube.com/watch?v=49_Ph2q6uIM';
-      await fetchShots();
-    }
-
-    async function startPipeline() {
+    async function startNewPipeline() {
       const url = document.getElementById('videoUrl').value.trim();
       const model = document.getElementById('modelSelector').value;
+      const pauseMode = document.getElementById('pauseAfterEachStage').checked;
+
       if (!url) {
-        alert('Please enter a YouTube video URL.');
+        alert('Please paste a YouTube video URL.');
         return;
       }
 
@@ -845,19 +964,63 @@
         const res = await fetch('/api/start', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url: url, model: model, title: activeProjectTitle })
+          body: JSON.stringify({
+            url: url,
+            model: model,
+            pause_after_each_stage: pauseMode
+          })
         });
         const data = await res.json();
-        alert(data.message || 'Pipeline started!');
+        alert(data.message || 'Pipeline launched!');
+        await fetchProjects();
         fetchStatus();
       } catch (err) {
-        alert('Failed to start pipeline: ' + err);
+        alert('Error starting pipeline: ' + err);
+      }
+    }
+
+    async function runStandaloneStage(stageNum) {
+      const url = document.getElementById('videoUrl').value.trim();
+      const model = document.getElementById('modelSelector').value;
+
+      try {
+        const res = await fetch('/api/run-stage', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            folder_name: activeProjectFolder,
+            stage_num: stageNum,
+            url: url,
+            model: model
+          })
+        });
+        const data = await res.json();
+        if (!data.success) {
+          alert('Failed to run stage: ' + data.message);
+        } else {
+          alert(`Stage ${stageNum} started!`);
+          await fetchProjects();
+          fetchStatus();
+        }
+      } catch (err) {
+        alert('Request failed: ' + err);
+      }
+    }
+
+    async function resumePipeline() {
+      try {
+        const res = await fetch('/api/resume', { method: 'POST' });
+        const data = await res.json();
+        fetchStatus();
+      } catch (err) {
+        alert('Resume failed: ' + err);
       }
     }
 
     async function fetchShots() {
+      if (!activeProjectFolder) return;
       try {
-        const res = await fetch(`/api/shots?title=${encodeURIComponent(activeProjectTitle)}`);
+        const res = await fetch(`/api/shots?title=${encodeURIComponent(activeProjectFolder)}`);
         const data = await res.json();
         allShotsData = data.shots || [];
         renderShots();
@@ -881,21 +1044,19 @@
         return true;
       });
 
-      // Update counters
       document.getElementById('countAll').textContent = allShotsData.length;
       document.getElementById('countStick').textContent = allShotsData.filter(s => s.category === 'VALID_STICK_FIGURE').length;
       document.getElementById('countNonChar').textContent = allShotsData.filter(s => s.category !== 'VALID_STICK_FIGURE').length;
-      document.getElementById('approvalSubtitle').textContent = `${allShotsData.length} shots mapped. Ready to build Apple xmeml XML sequence.`;
 
       if (filtered.length === 0) {
-        grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-dim);">No shots matching current filter.</div>';
+        grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-dim);">No shots matching filter.</div>';
         return;
       }
 
       grid.innerHTML = filtered.map(shot => {
         const score = shot.score ? shot.score.toFixed(1) : '95.0';
         const varsHtml = (shot.variations || []).map(v => `
-          <div class="var-thumb-btn ${v.is_selected ? 'active' : ''}" title="Variation ${v.var_idx} (Score: ${v.score})" onclick="selectVariation(${shot.shot_num}, '${v.filename}')">
+          <div class="var-thumb-btn ${v.is_selected ? 'active' : ''}" title="Var ${v.var_idx} (Score: ${v.score})" onclick="selectVariation(${shot.shot_num}, '${v.filename}')">
             <img src="${v.url}" alt="Var ${v.var_idx}">
           </div>
         `).join('');
@@ -930,17 +1091,16 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            title: activeProjectTitle,
+            title: activeProjectFolder,
             shot_num: shotNum,
             filename: varFilename
           })
         });
         const data = await res.json();
         if (data.success) {
-          // Update local data
           const shot = allShotsData.find(s => s.shot_num === shotNum);
           if (shot) {
-            shot.image_url = `/images/${encodeURIComponent(activeProjectTitle)}/Final selected images/shot_${String(shotNum).padStart(3, '0')}.jpg?t=${Date.now()}`;
+            shot.image_url = `/images/${encodeURIComponent(activeProjectFolder)}/Final selected images/shot_${String(shotNum).padStart(3, '0')}.jpg?t=${Date.now()}`;
             if (shot.variations) {
               shot.variations.forEach(v => v.is_selected = (v.filename === varFilename));
             }
@@ -961,10 +1121,11 @@
         const res = await fetch('/api/approve-and-build-xml', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title: activeProjectTitle })
+          body: JSON.stringify({ title: activeProjectFolder })
         });
         const data = await res.json();
-        alert(data.message || 'Timeline XML Sequence built successfully!');
+        alert(data.message || 'Timeline XML built successfully!');
+        await fetchProjects();
         fetchStatus();
       } catch (err) {
         alert('Error building XML: ' + err);
@@ -983,6 +1144,10 @@
 
     function applySearch() {
       renderShots();
+    }
+
+    function scrollToGallery() {
+      document.getElementById('galleryPanel').scrollIntoView({ behavior: 'smooth' });
     }
 
     function openModal(imgUrl, title, vo) {

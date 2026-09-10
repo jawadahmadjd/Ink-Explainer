@@ -1,9 +1,10 @@
 """
 Interactive Autonomous Pipeline Web UI
 Provides a web application to:
-1. Input video link and trigger the pipeline step-by-step.
-2. Interactive visual image gallery and selection gate before XML generation.
-3. Live status and real-time execution telemetry logs.
+1. Input video link and trigger the pipeline step-by-step with ascending project numbering (N- Title).
+2. Per-stage pause and standalone execution controls.
+3. Interactive visual image gallery and selection gate before XML generation.
+4. Clean canvas startup without pre-loaded images.
 """
 
 import os
@@ -12,6 +13,7 @@ import json
 import csv
 import threading
 import time
+import subprocess
 from datetime import datetime
 from flask import Flask, render_template, request, jsonify, send_from_directory
 
@@ -31,23 +33,25 @@ app = Flask(__name__, template_folder=os.path.join(CODE_DIR, "templates"))
 # Global pipeline state
 STATE = {
     "state": "IDLE",
-    "project_title": "1- What Did Ancient Humans Actually Do All Day",
-    "task_description": "Ready to launch pipeline.",
-    "step1": "COMPLETED",
-    "step2": "COMPLETED",
-    "step3": "COMPLETED",
-    "step4": "COMPLETED",
-    "step5": "COMPLETED",
-    "step6": "COMPLETED",
-    "current_shot": 334,
-    "total_shots": 334,
+    "project_title": "",
+    "task_description": "Clean canvas ready. Select a project or paste a URL to begin.",
+    "pause_after_each_stage": False,
+    "pause_requested": False,
+    "step1": "WAITING",
+    "step2": "WAITING",
+    "step3": "WAITING",
+    "step4": "WAITING",
+    "step5": "WAITING",
+    "step6": "WAITING",
     "logs": [
         f"[{datetime.now().strftime('%H:%M:%S')}] Ink Explainer Studio initialized.",
-        f"[{datetime.now().strftime('%H:%M:%S')}] All 334 shots verified in '1- What Did Ancient Humans Actually Do All Day'."
+        f"[{datetime.now().strftime('%H:%M:%S')}] Clean canvas ready. Paste a video link or select an existing project."
     ]
 }
 
 LOG_LOCK = threading.Lock()
+PAUSE_EVENT = threading.Event()
+PAUSE_EVENT.set()  # set means running; cleared means paused
 
 def add_log(msg: str):
     with LOG_LOCK:
@@ -58,60 +62,160 @@ def add_log(msg: str):
             STATE["logs"].pop(0)
         print(entry)
 
-def run_pipeline_worker(url: str, custom_title: str, model: str):
-    """Background worker executing the pipeline step by step."""
+def run_pipeline_worker(url: str, custom_title: str, model: str, pause_mode: bool):
+    """Background worker executing the pipeline step by step with ascending folder numbering."""
     global STATE
-    title = custom_title or "1- What Did Ancient Humans Actually Do All Day"
-    dirs = config.get_project_dirs(title)
+    STATE["pause_after_each_stage"] = pause_mode
+
+    # Auto-number project if new URL
+    if not custom_title and url:
+        add_log("Fetching video metadata to determine ascending project folder...")
+        try:
+            res = subprocess.run(["yt-dlp", "--dump-json", "--no-warnings", url], capture_output=True, text=True, check=True)
+            info = json.loads(res.stdout)
+            raw_title = info.get("title", "Ink Explainer Video")
+        except Exception as e:
+            raw_title = "Ink Explainer Video"
+        project_folder = config.get_next_project_folder_name(raw_title)
+    elif custom_title:
+        project_folder = config.get_next_project_folder_name(custom_title)
+    else:
+        project_folder = config.get_next_project_folder_name("Ink Explainer Video")
+
+    STATE["project_title"] = project_folder
+    add_log(f"Assigned project folder: '{project_folder}'")
 
     try:
         # Step 1: Ingestion
         STATE["state"] = "RUNNING_POSTMORTEM"
         STATE["step1"] = "RUNNING"
-        STATE["task_description"] = "Executing Stage 1: Ingestion & Forensic Postmortem..."
+        STATE["task_description"] = f"Stage 1: Ingestion & Forensic Postmortem into '{project_folder}'..."
         add_log(f"Starting Stage 1 for URL: {url}")
         if url:
-            run_stage1_postmortem(url, custom_title=title)
+            run_stage1_postmortem(url, custom_title=project_folder)
         STATE["step1"] = "COMPLETED"
         add_log("Stage 1 Ingestion & Postmortem completed.")
+
+        if STATE["pause_after_each_stage"]:
+            STATE["state"] = "PAUSED_AFTER_STAGE_1"
+            STATE["task_description"] = "Stage 1 Complete. Paused for review. Click 'Continue' to advance to Stage 2."
+            add_log("PAUSED: Stage 1 complete. Awaiting user continue...")
+            PAUSE_EVENT.clear()
+            PAUSE_EVENT.wait()
 
         # Step 2: Script & Prompts
         STATE["state"] = "RUNNING_SCRIPT"
         STATE["step2"] = "RUNNING"
-        STATE["task_description"] = "Executing Stage 2: Script & Stick-Figure Prompts..."
+        STATE["task_description"] = "Stage 2: Script & Stick-Figure Prompts..."
         add_log("Generating script and full-bleed stick-figure prompts...")
-        run_stage2_script_prompts(title)
+        run_stage2_script_prompts(project_folder)
         STATE["step2"] = "COMPLETED"
         add_log("Stage 2 Script & Storyboard Prompts ready.")
+
+        if STATE["pause_after_each_stage"]:
+            STATE["state"] = "PAUSED_AFTER_STAGE_2"
+            STATE["task_description"] = "Stage 2 Complete. Paused for review. Click 'Continue' to advance to Stage 3."
+            add_log("PAUSED: Stage 2 complete. Awaiting user continue...")
+            PAUSE_EVENT.clear()
+            PAUSE_EVENT.wait()
 
         # Step 3: Voiceover
         STATE["state"] = "RUNNING_VOICEOVER"
         STATE["step3"] = "RUNNING"
-        STATE["task_description"] = "Executing Stage 3: ElevenLabs Combined VO & Silence Normalization..."
-        add_log("Generating ElevenLabs combined voiceover and normalizing silence (>300ms trimmed)...")
-        run_stage3_voiceover(title)
+        STATE["task_description"] = "Stage 3: ElevenLabs Combined VO & Silence Normalization..."
+        add_log("Generating ElevenLabs combined VO and normalizing silence (>300ms trimmed)...")
+        run_stage3_voiceover(project_folder)
         STATE["step3"] = "COMPLETED"
         add_log("Stage 3 Voiceover master audio and millisecond alignments created.")
+
+        if STATE["pause_after_each_stage"]:
+            STATE["state"] = "PAUSED_AFTER_STAGE_3"
+            STATE["task_description"] = "Stage 3 Complete. Paused for review. Click 'Continue' to advance to Stage 4."
+            add_log("PAUSED: Stage 3 complete. Awaiting user continue...")
+            PAUSE_EVENT.clear()
+            PAUSE_EVENT.wait()
 
         # Step 4: Images
         STATE["state"] = "RUNNING_IMAGES"
         STATE["step4"] = "RUNNING"
-        STATE["task_description"] = "Executing Stage 4: Google Flow Autonomous Image Generation..."
+        STATE["task_description"] = "Stage 4: Google Flow Autonomous Image Generation..."
         add_log(f"Starting Google Flow image generation with model {model}...")
-        run_stage4_image_gen(title, model=model)
+        run_stage4_image_gen(project_folder, model=model)
         STATE["step4"] = "COMPLETED"
         add_log("Stage 4 Image generation complete.")
 
         # Step 5: PAUSE FOR IMAGE SELECTION GATE!
         STATE["state"] = "AWAITING_IMAGE_SELECTION"
         STATE["step5"] = "WAITING"
-        STATE["task_description"] = "Awaiting Image Review: Inspect shots and click 'Approve & Build XML'."
-        add_log("Pipeline reached Image Selection Gate. Review shots in the gallery above!")
+        STATE["task_description"] = "Image Selection Gate: Review shots in gallery below and click 'Approve & Build XML'."
+        add_log("Pipeline reached Image Selection Gate. Review shots and approve!")
 
     except Exception as ex:
         STATE["state"] = "ERROR"
         STATE["task_description"] = f"Pipeline Error: {ex}"
         add_log(f"ERROR: {ex}")
+
+def run_single_stage_worker(folder_name: str, stage_num: int, url: str, model: str):
+    """Execute a single standalone stage."""
+    global STATE
+    title = folder_name
+    dirs = config.get_project_dirs(title)
+
+    try:
+        if stage_num == 1:
+            if not url:
+                add_log("Error: Stage 1 requires a YouTube URL.")
+                return
+            new_folder = config.get_next_project_folder_name("Ink Explainer Video")
+            STATE["project_title"] = new_folder
+            STATE["state"] = "RUNNING_POSTMORTEM"
+            STATE["step1"] = "RUNNING"
+            add_log(f"Running standalone Stage 1 into '{new_folder}'...")
+            run_stage1_postmortem(url, custom_title=new_folder)
+            STATE["step1"] = "COMPLETED"
+            STATE["state"] = "COMPLETED"
+            add_log(f"Standalone Stage 1 complete in '{new_folder}'.")
+
+        elif stage_num == 2:
+            STATE["state"] = "RUNNING_SCRIPT"
+            STATE["step2"] = "RUNNING"
+            add_log(f"Running standalone Stage 2 for '{title}'...")
+            run_stage2_script_prompts(title)
+            STATE["step2"] = "COMPLETED"
+            STATE["state"] = "COMPLETED"
+            add_log(f"Standalone Stage 2 complete for '{title}'.")
+
+        elif stage_num == 3:
+            STATE["state"] = "RUNNING_VOICEOVER"
+            STATE["step3"] = "RUNNING"
+            add_log(f"Running standalone Stage 3 for '{title}'...")
+            run_stage3_voiceover(title, force_regenerate=True)
+            STATE["step3"] = "COMPLETED"
+            STATE["state"] = "COMPLETED"
+            add_log(f"Standalone Stage 3 complete for '{title}'.")
+
+        elif stage_num == 4:
+            STATE["state"] = "RUNNING_IMAGES"
+            STATE["step4"] = "RUNNING"
+            add_log(f"Running standalone Stage 4 for '{title}' on {model}...")
+            run_stage4_image_gen(title, model=model)
+            STATE["step4"] = "COMPLETED"
+            STATE["state"] = "COMPLETED"
+            add_log(f"Standalone Stage 4 complete for '{title}'.")
+
+        elif stage_num == 6:
+            STATE["state"] = "ASSEMBLING_XML"
+            STATE["step6"] = "RUNNING"
+            add_log(f"Running standalone Stage 6 for '{title}'...")
+            run_stage5_timeline_xml(title)
+            STATE["step6"] = "COMPLETED"
+            STATE["state"] = "COMPLETED"
+            add_log(f"Standalone Stage 6 Timeline XML assembled for '{title}'.")
+
+    except Exception as ex:
+        STATE["state"] = "ERROR"
+        STATE["task_description"] = f"Stage {stage_num} Error: {ex}"
+        add_log(f"ERROR in Stage {stage_num}: {ex}")
 
 # -----------------------------------------------------------------------------
 # FLASK ROUTES
@@ -119,6 +223,12 @@ def run_pipeline_worker(url: str, custom_title: str, model: str):
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/api/projects")
+def get_projects():
+    """Return all available project folders."""
+    projects = config.list_all_projects()
+    return jsonify(projects)
 
 @app.route("/api/status")
 def get_status():
@@ -130,18 +240,51 @@ def start_pipeline():
     url = data.get("url", "").strip()
     title = data.get("title", "").strip()
     model = data.get("model", "Nano Banana Pro")
+    pause_mode = bool(data.get("pause_after_each_stage", False))
 
     if STATE["state"].startswith("RUNNING_"):
         return jsonify({"success": False, "message": "Pipeline is already running."}), 400
 
-    th = threading.Thread(target=run_pipeline_worker, args=(url, title, model), daemon=True)
+    PAUSE_EVENT.set()
+    th = threading.Thread(target=run_pipeline_worker, args=(url, title, model, pause_mode), daemon=True)
     th.start()
 
     return jsonify({"success": True, "message": "Pipeline launched successfully!"})
 
+@app.route("/api/run-stage", methods=["POST"])
+def run_stage():
+    """Run a specific standalone stage."""
+    data = request.json or {}
+    folder_name = data.get("folder_name", "").strip()
+    stage_num = int(data.get("stage_num", 1))
+    url = data.get("url", "").strip()
+    model = data.get("model", "Nano Banana Pro")
+
+    if stage_num != 1 and not folder_name:
+        return jsonify({"success": False, "message": f"Stage {stage_num} requires an existing project folder to be selected."}), 400
+
+    if STATE["state"].startswith("RUNNING_"):
+        return jsonify({"success": False, "message": "Another task is already running."}), 400
+
+    PAUSE_EVENT.set()
+    th = threading.Thread(target=run_single_stage_worker, args=(folder_name, stage_num, url, model), daemon=True)
+    th.start()
+
+    return jsonify({"success": True, "message": f"Stage {stage_num} launched!"})
+
+@app.route("/api/resume", methods=["POST"])
+def resume_pipeline():
+    """Resume execution when paused after a stage."""
+    add_log("Resuming pipeline execution to next stage...")
+    PAUSE_EVENT.set()
+    return jsonify({"success": True, "message": "Resumed."})
+
 @app.route("/api/shots")
 def get_shots():
-    title = request.args.get("title", STATE["project_title"])
+    title = request.args.get("title", STATE["project_title"]).strip()
+    if not title:
+        return jsonify({"shots": [], "total": 0})
+
     dirs = config.get_project_dirs(title)
     csv_path = dirs["master_csv"]
     final_img_dir = dirs["final_images_dir"]
@@ -149,7 +292,7 @@ def get_shots():
     audit_json = dirs["character_audit"]
 
     if not os.path.exists(csv_path):
-        return jsonify({"shots": []})
+        return jsonify({"shots": [], "total": 0})
 
     audit_map = {}
     if os.path.exists(audit_json):
@@ -171,14 +314,11 @@ def get_shots():
         prompt = r[4] if len(r) > 4 else desc
 
         img_name = f"shot_{shot_num:03d}.jpg"
-        img_full_path = os.path.join(final_img_dir, img_name)
-        img_exists = os.path.exists(img_full_path)
-
         rec = audit_map.get(shot_num, {})
         category = rec.get("category", "VALID_STICK_FIGURE")
         score = rec.get("cv_info", {}).get("total_score", 95.0)
 
-        # Detect any variations in flow_generated_images
+        # Detect variations
         variations = []
         for v_idx in range(1, 4):
             var_file = f"shot_{shot_num:03d}_regen_var_{v_idx}.jpg"
@@ -212,7 +352,6 @@ def get_shots():
 
 @app.route("/api/select-image", methods=["POST"])
 def select_image():
-    """Replace active shot image with a selected variation."""
     data = request.json or {}
     title = data.get("title", STATE["project_title"])
     shot_num = int(data.get("shot_num", 0))
@@ -227,7 +366,6 @@ def select_image():
 
     if os.path.exists(src):
         safe_copy_file(src, dst)
-        # Also copy to root junction if present
         root_dst = os.path.join(config.ROOT_CANONICAL_IMAGES_DIR, f"shot_{shot_num:03d}.jpg")
         if os.path.exists(config.ROOT_CANONICAL_IMAGES_DIR):
             safe_copy_file(src, root_dst)
@@ -239,14 +377,12 @@ def select_image():
 
 @app.route("/api/approve-and-build-xml", methods=["POST"])
 def approve_and_build_xml():
-    """Proceed from Image Selection Gate to XML Assembly and Reporting."""
     data = request.json or {}
     title = data.get("title", STATE["project_title"])
 
     STATE["state"] = "ASSEMBLING_XML"
     STATE["step5"] = "COMPLETED"
     STATE["step6"] = "RUNNING"
-    STATE["task_description"] = "Assembling Apple xmeml XML sequence timeline..."
     add_log(f"Assembling Apple xmeml v4 timeline XML for '{title}'...")
 
     try:
@@ -255,7 +391,7 @@ def approve_and_build_xml():
 
         STATE["step6"] = "COMPLETED"
         STATE["state"] = "COMPLETED"
-        STATE["task_description"] = "Pipeline Completed Successfully! All 334 shots assembled in XML."
+        STATE["task_description"] = "Production complete! Apple xmeml XML timeline ready."
         add_log("Production complete! XML timeline ready for Premiere Pro / DaVinci Resolve.")
 
         return jsonify({
@@ -272,7 +408,6 @@ def approve_and_build_xml():
 
 @app.route("/images/<project_title>/<path:subpath>")
 def serve_image(project_title, subpath):
-    """Serve images from project Finals directory."""
     dirs = config.get_project_dirs(project_title)
     base = dirs["finals_dir"]
     full_path = os.path.join(base, subpath)
@@ -287,6 +422,5 @@ if __name__ == "__main__":
     print("="*65)
     print(f"  INK EXPLAINER STUDIO WEB UI RUNNING")
     print(f"  Access local URL: http://localhost:{port}")
-    print(f"  Press Ctrl+C to stop server")
     print("="*65)
     app.run(host="0.0.0.0", port=port, debug=False)

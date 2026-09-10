@@ -4,6 +4,7 @@ Defines directories, API credentials, silence rules, model cascades, and scoring
 """
 
 import os
+import re
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -22,6 +23,82 @@ ROOT_CANONICAL_IMAGES_DIR = os.path.join(PROJECT_ROOT, "Final selected images")
 def sanitize_title(title: str) -> str:
     clean = "".join(c for c in title if c.isalnum() or c in (" ", "-", "_", "'", "?", "!", ".", "(", ")")).strip()
     return clean
+
+def get_next_project_folder_name(raw_title: str) -> str:
+    """
+    Scans 1- Postmartum/ and 3- Finals/ to find the highest integer prefix,
+    and returns '{next_index}- {clean_title}'.
+    If raw_title already starts with an index (e.g. '1- Title'), keeps it.
+    """
+    clean = sanitize_title(raw_title)
+    m = re.match(r"^(\d+)\s*-\s*(.+)$", clean)
+    if m:
+        return clean
+
+    existing_indices = []
+    for root_dir in [POSTMORTEM_ROOT, FINALS_ROOT]:
+        if os.path.exists(root_dir):
+            for entry in os.listdir(root_dir):
+                if os.path.isdir(os.path.join(root_dir, entry)):
+                    match = re.match(r"^(\d+)\s*-\s*", entry)
+                    if match:
+                        existing_indices.append(int(match.group(1)))
+
+    next_idx = (max(existing_indices) + 1) if existing_indices else 1
+    return f"{next_idx}- {clean}"
+
+def list_all_projects() -> list:
+    """
+    Discover all projects in 1- Postmartum and 3- Finals with stage readiness metadata.
+    """
+    project_names = set()
+    for root_dir in [POSTMORTEM_ROOT, FINALS_ROOT]:
+        if os.path.exists(root_dir):
+            for entry in os.listdir(root_dir):
+                if os.path.isdir(os.path.join(root_dir, entry)):
+                    project_names.add(entry)
+
+    def sort_key(name):
+        m = re.match(r"^(\d+)\s*-\s*", name)
+        return int(m.group(1)) if m else 9999
+
+    sorted_names = sorted(list(project_names), key=sort_key)
+    projects = []
+    for name in sorted_names:
+        dirs = get_project_dirs(name)
+        pm_dir = dirs["postmortem_dir"]
+        finals_dir = dirs["finals_dir"]
+        
+        has_pm = os.path.exists(os.path.join(pm_dir, "cuts_data.json")) or os.path.exists(os.path.join(pm_dir, "clean_transcript.txt"))
+        has_script = os.path.exists(dirs["master_csv"])
+        has_vo = (
+            os.path.exists(os.path.join(dirs["voiceovers_dir"], "voiceover_master_normalized.mp3")) or 
+            os.path.exists(os.path.join(dirs["voiceovers_dir"], "shots_timing_alignment.json"))
+        )
+        
+        img_count = 0
+        if os.path.exists(dirs["final_images_dir"]):
+            img_count = len([f for f in os.listdir(dirs["final_images_dir"]) if f.lower().endswith((".jpg", ".png"))])
+            
+        has_xml = os.path.exists(dirs["timeline_xml"])
+        
+        m = re.match(r"^(\d+)\s*-\s*(.+)$", name)
+        display_title = m.group(2) if m else name
+        idx = int(m.group(1)) if m else None
+
+        projects.append({
+            "folder_name": name,
+            "index": idx,
+            "display_title": display_title,
+            "has_postmortem": has_pm,
+            "has_script": has_script,
+            "has_vo": has_vo,
+            "image_count": img_count,
+            "has_images": img_count > 0,
+            "has_xml": has_xml
+        })
+
+    return projects
 
 def get_project_dirs(video_title: str):
     clean_title = sanitize_title(video_title)
