@@ -4,6 +4,12 @@ __pycache__/
 *$py.class
 .pytest_cache/
 
+# Project Folders (Kept locally, empty on GitHub for fresh start)
+1- Postmartum/*/
+3- Finals/*/
+!1- Postmartum/.gitkeep
+!3- Finals/.gitkeep
+
 # Generated Storyboard Images & Variations (Kept locally)
 Final selected images/
 **/Final selected images/
