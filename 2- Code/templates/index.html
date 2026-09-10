@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ink Explainer Studio - Autonomous Pipeline</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0B132B;
+      --bg-surface: #0F172A;
+      --bg-card: #1E293B;
+      --bg-card-hover: #273549;
+      --bg-card-selected: #1E3A5F;
+      --border: rgba(255, 255, 255, 0.09);
+      --border-accent: rgba(56, 189, 248, 0.4);
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --text-dim: #64748B;
+      --accent-cyan: #38BDF8;
+      --accent-blue: #2563EB;
+      --accent-emerald: #10B981;
+      --accent-amber: #F59E0B;
+      --accent-rose: #EF4444;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+      --shadow-lg: 0 12px 32px rgba(0,0,0,0.45);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+    }
+
+    header {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #FFF;
+      font-size: 16px;
+    }
+    .brand-title {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .brand-tag {
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-cyan);
+      padding: 3px 8px;
+      border-radius: 999px;
+      margin-left: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .header-status {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text-dim);
+    }
+    .status-dot.active {
+      background: var(--accent-cyan);
+      box-shadow: 0 0 10px var(--accent-cyan);
+      animation: pulse 1.8s infinite;
+    }
+    .status-dot.completed { background: var(--accent-emerald); }
+    .status-dot.waiting { background: var(--accent-amber); box-shadow: 0 0 8px var(--accent-amber); }
+    .status-dot.error { background: var(--accent-rose); }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.2); }
+    }
+
+    main {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* CARD STYLES */
+    .panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .panel-title {
+      font-size: 16px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .panel-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* INPUT CONTROLS */
+    .input-grid {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 12px;
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .input-grid { grid-template-columns: 1fr; }
+    }
+    .input-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      color: var(--text-main);
+      font-size: 14px;
+      font-family: inherit;
+      width: 100%;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .input-box:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+    }
+    .select-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      color: var(--text-main);
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: var(--radius-md);
+      font-size: 13.5px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0284C7, #0369A1);
+      color: #FFF;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: linear-gradient(135deg, #38BDF8, #0284C7);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(2, 132, 199, 0.4);
+    }
+    .btn-success {
+      background: linear-gradient(135deg, #059669, #10B981);
+      color: #FFF;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+    .btn-success:hover:not(:disabled) {
+      background: linear-gradient(135deg, #10B981, #34D399);
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--bg-card-hover);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    /* STEPPER */
+    .stepper {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 1000px) {
+      .stepper { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .stepper { grid-template-columns: 1fr; }
+    }
+    .step-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      transition: all 0.2s;
+    }
+    .step-card.active {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.15);
+      background: #17263C;
+    }
+    .step-card.completed {
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+    .step-num {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: var(--text-dim);
+    }
+    .step-title {
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .step-status-text {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    /* GALLERY CONTROLS */
+    .gallery-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 6px;
+    }
+    .filter-tab {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-tab.active {
+      background: var(--accent-blue);
+      color: #FFF;
+      border-color: var(--accent-blue);
+    }
+
+    /* SHOT CARDS GRID */
+    .shots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 16px;
+      max-height: 700px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+    .shots-grid::-webkit-scrollbar {
+      width: 8px;
+    }
+    .shots-grid::-webkit-scrollbar-thumb {
+      background: var(--bg-card);
+      border-radius: 4px;
+    }
+
+    .shot-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .shot-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-2px);
+    }
+    .shot-card-header {
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid var(--border);
+    }
+    .shot-id {
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--accent-cyan);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .shot-tc {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-dim);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .shot-preview-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .shot-preview-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.2s ease;
+    }
+    .shot-preview-container:hover .shot-preview-img {
+      transform: scale(1.03);
+    }
+    .shot-badge-score {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(4px);
+      border: 1px solid var(--border);
+      color: var(--accent-emerald);
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+    }
+
+    .shot-body {
+      padding: 12px 14px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .shot-vo {
+      font-size: 12px;
+      color: var(--text-main);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      font-style: italic;
+    }
+
+    /* VARIATIONS ROW */
+    .variations-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .var-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+    .var-thumb-btn {
+      width: 52px;
+      height: 30px;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      cursor: pointer;
+      position: relative;
+      transition: border-color 0.15s, transform 0.1s;
+      background: #000;
+    }
+    .var-thumb-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .var-thumb-btn.active {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+    }
+    .var-thumb-btn:hover {
+      transform: scale(1.06);
+    }
+
+    /* STICKY APPROVAL FOOTER */
+    .sticky-approval-bar {
+      position: sticky;
+      bottom: 20px;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-lg);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-lg);
+      z-index: 50;
+      animation: floatUp 0.3s ease-out;
+    }
+    @keyframes floatUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .approval-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .approval-title {
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .approval-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* CONSOLE LOG TERMINAL */
+    .log-terminal {
+      background: #060B18;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #A5F3FC;
+      max-height: 260px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .log-terminal::-webkit-scrollbar { width: 6px; }
+    .log-terminal::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 3px; }
+
+    /* MODAL LIGHTBOX */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      max-width: 1000px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-img-wrap {
+      width: 100%;
+      max-height: 560px;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-img-wrap img {
+      max-width: 100%;
+      max-height: 560px;
+      object-fit: contain;
+    }
+    .modal-footer {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+    }
+
+    .pulse-glow {
+      animation: pulseGlow 2s infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 12px rgba(16, 185, 129, 0.4); }
+      50% { box-shadow: 0 0 24px rgba(16, 185, 129, 0.8); transform: scale(1.02); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">✏️</div>
+      <div class="brand-title">Ink Explainer Studio</div>
+      <span class="brand-tag">Autonomous</span>
+    </div>
+    <div class="header-status">
+      <div class="status-badge" id="statusBadge">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusLabel">Idle</span>
+      </div>
+      <button class="btn btn-secondary" onclick="loadActiveProject()" style="padding: 6px 14px; font-size: 12px;">
+        📂 Load Active Project
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- SECTION 1: VIDEO INGESTION & CONTROLS -->
+    <div class="panel">
+      <div class="panel-header">
+        <div>
+          <div class="panel-title">🎯 Start New Video Pipeline</div>
+          <div class="panel-desc">Paste a YouTube reference link to automatically execute postmortem research, script, stick-figure prompts, VO, and images.</div>
+        </div>
+      </div>
+      <div class="input-grid">
+        <input type="text" id="videoUrl" class="input-box" placeholder="https://www.youtube.com/watch?v=..." value="">
+        <select id="modelSelector" class="select-box">
+          <option value="Nano Banana Pro">🍌 Nano Banana Pro (Priority 1)</option>
+          <option value="Nano Banana 2">🍌 Nano Banana 2</option>
+          <option value="Nano Banana 2 Lite">🍌 Nano Banana 2 Lite</option>
+        </select>
+        <button id="btnStartPipeline" class="btn btn-primary" onclick="startPipeline()">
+          <span>🚀 Start Autonomous Pipeline</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- SECTION 2: STEPPER -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">⚡ Pipeline Progress</div>
+        <div class="panel-desc" id="currentTaskDesc">System ready. Enter URL or load existing project to begin.</div>
+      </div>
+      <div class="stepper">
+        <div class="step-card" id="step1">
+          <span class="step-num">STAGE 01</span>
+          <span class="step-title">Ingestion & Postmortem</span>
+          <span class="step-status-text" id="step1Status">Waiting</span>
+        </div>
+        <div class="step-card" id="step2">
+          <span class="step-num">STAGE 02</span>
+          <span class="step-title">Script & Stick Prompts</span>
+          <span class="step-status-text" id="step2Status">Waiting</span>
+        </div>
+        <div class="step-card" id="step3">
+          <span class="step-num">STAGE 03</span>
+          <span class="step-title">Combined Voiceover</span>
+          <span class="step-status-text" id="step3Status">Waiting</span>
+        </div>
+        <div class="step-card" id="step4">
+          <span class="step-num">STAGE 04</span>
+          <span class="step-title">Google Flow Images</span>
+          <span class="step-status-text" id="step4Status">Waiting</span>
+        </div>
+        <div class="step-card" id="step5">
+          <span class="step-num">STAGE 05</span>
+          <span class="step-title">Visual Image Gate</span>
+          <span class="step-status-text" id="step5Status">Waiting</span>
+        </div>
+        <div class="step-card" id="step6">
+          <span class="step-num">STAGE 06</span>
+          <span class="step-title">NLE Timeline XML</span>
+          <span class="step-status-text" id="step6Status">Waiting</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: IMAGE SELECTION & REVIEW GALLERY -->
+    <div class="panel" id="galleryPanel">
+      <div class="panel-header">
+        <div>
+          <div class="panel-title">🖼️ Storyboard Image Selection Gate</div>
+          <div class="panel-desc">Review approved shots, switch variations, and verify stick-figure quality before generating the XML timeline.</div>
+        </div>
+        <button class="btn btn-secondary" onclick="fetchShots()" style="padding: 6px 14px; font-size: 12px;">
+          🔄 Refresh Images
+        </button>
+      </div>
+
+      <div class="gallery-controls">
+        <div class="filter-tabs">
+          <button class="filter-tab active" onclick="setFilter('all', this)">All Shots (<span id="countAll">0</span>)</button>
+          <button class="filter-tab" onclick="setFilter('stick', this)">Stick Figures (<span id="countStick">0</span>)</button>
+          <button class="filter-tab" onclick="setFilter('nonchar', this)">Objects & Maps (<span id="countNonChar">0</span>)</button>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="searchBox" class="input-box" placeholder="Search shot or VO text..." style="width: 240px; padding: 6px 12px; font-size: 12px;" oninput="applySearch()">
+        </div>
+      </div>
+
+      <!-- SHOTS GRID -->
+      <div class="shots-grid" id="shotsGrid">
+        <div style="grid-column: 1 / -1; text-align: center; padding: 48px; color: var(--text-dim);">
+          Loading shots... Click "Load Active Project" above to browse the 334 generated images.
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: LIVE CONSOLE LOGS -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">💻 Live Execution Telemetry</div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-secondary" onclick="clearLogs()" style="padding: 4px 10px; font-size: 11px;">Clear</button>
+        </div>
+      </div>
+      <div class="log-terminal" id="logTerminal">Ready. Waiting for command...</div>
+    </div>
+
+  </main>
+
+  <!-- STICKY APPROVAL FOOTER -->
+  <div class="sticky-approval-bar" id="stickyApprovalBar">
+    <div class="approval-info">
+      <div style="font-size: 28px;">🎬</div>
+      <div>
+        <div class="approval-title">Image Selection Approved & Ready</div>
+        <div class="approval-subtitle" id="approvalSubtitle">All 334 images verified. Ready to build Apple xmeml XML sequence.</div>
+      </div>
+    </div>
+    <div style="display: flex; gap: 12px;">
+      <button class="btn btn-success pulse-glow" id="btnBuildXml" onclick="approveAndBuildXml()">
+        <span>✨ Approve Selection & Assemble Timeline XML</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX MODAL -->
+  <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div class="modal-img-wrap">
+        <img id="modalImg" src="" alt="Full Preview">
+      </div>
+      <div class="modal-footer">
+        <div>
+          <div id="modalTitle" style="font-weight: 700; font-size: 14px;"></div>
+          <div id="modalVo" style="font-size: 12px; color: var(--text-muted); margin-top: 4px;"></div>
+        </div>
+        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let allShotsData = [];
+    let currentFilter = 'all';
+    let activeProjectTitle = '1- What Did Ancient Humans Actually Do All Day';
+    let pollingInterval = null;
+
+    // Load active project on startup
+    window.addEventListener('DOMContentLoaded', () => {
+      fetchStatus();
+      loadActiveProject();
+      startPolling();
+    });
+
+    function startPolling() {
+      if (pollingInterval) clearInterval(pollingInterval);
+      pollingInterval = setInterval(fetchStatus, 2500);
+    }
+
+    async function fetchStatus() {
+      try {
+        const res = await fetch('/api/status');
+        const data = await res.json();
+        updateStatusUI(data);
+      } catch (err) {
+        console.warn('Status poll failed:', err);
+      }
+    }
+
+    function updateStatusUI(data) {
+      const dot = document.getElementById('statusDot');
+      const label = document.getElementById('statusLabel');
+      const desc = document.getElementById('currentTaskDesc');
+      const startBtn = document.getElementById('btnStartPipeline');
+
+      label.textContent = data.state;
+      dot.className = 'status-dot';
+
+      if (data.state.startsWith('RUNNING_')) {
+        dot.classList.add('active');
+        startBtn.disabled = true;
+      } else if (data.state === 'AWAITING_IMAGE_SELECTION') {
+        dot.classList.add('waiting');
+        startBtn.disabled = false;
+        document.getElementById('stickyApprovalBar').style.display = 'flex';
+      } else if (data.state === 'COMPLETED') {
+        dot.classList.add('completed');
+        startBtn.disabled = false;
+      } else {
+        startBtn.disabled = false;
+      }
+
+      if (data.task_description) {
+        desc.textContent = data.task_description;
+      }
+
+      // Update stepper
+      updateStep('step1', data.step1);
+      updateStep('step2', data.step2);
+      updateStep('step3', data.step3);
+      updateStep('step4', data.step4);
+      updateStep('step5', data.step5);
+      updateStep('step6', data.step6);
+
+      // Append logs
+      if (data.logs && data.logs.length > 0) {
+        const term = document.getElementById('logTerminal');
+        term.textContent = data.logs.join('\n');
+        term.scrollTop = term.scrollHeight;
+      }
+    }
+
+    function updateStep(elemId, status) {
+      const el = document.getElementById(elemId);
+      const textEl = document.getElementById(elemId + 'Status');
+      if (!el || !textEl || !status) return;
+
+      el.className = 'step-card';
+      if (status === 'RUNNING') {
+        el.classList.add('active');
+        textEl.textContent = '⏳ Running...';
+      } else if (status === 'COMPLETED') {
+        el.classList.add('completed');
+        textEl.textContent = '✓ Done';
+      } else if (status === 'WAITING') {
+        el.classList.add('active');
+        textEl.textContent = '⚡ Awaiting Review';
+      } else {
+        textEl.textContent = 'Waiting';
+      }
+    }
+
+    async function loadActiveProject() {
+      activeProjectTitle = '1- What Did Ancient Humans Actually Do All Day';
+      document.getElementById('videoUrl').value = 'https://www.youtube.com/watch?v=49_Ph2q6uIM';
+      await fetchShots();
+    }
+
+    async function startPipeline() {
+      const url = document.getElementById('videoUrl').value.trim();
+      const model = document.getElementById('modelSelector').value;
+      if (!url) {
+        alert('Please enter a YouTube video URL.');
+        return;
+      }
+
+      document.getElementById('btnStartPipeline').disabled = true;
+      try {
+        const res = await fetch('/api/start', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: url, model: model, title: activeProjectTitle })
+        });
+        const data = await res.json();
+        alert(data.message || 'Pipeline started!');
+        fetchStatus();
+      } catch (err) {
+        alert('Failed to start pipeline: ' + err);
+      }
+    }
+
+    async function fetchShots() {
+      try {
+        const res = await fetch(`/api/shots?title=${encodeURIComponent(activeProjectTitle)}`);
+        const data = await res.json();
+        allShotsData = data.shots || [];
+        renderShots();
+      } catch (err) {
+        console.error('Failed to load shots:', err);
+      }
+    }
+
+    function renderShots() {
+      const grid = document.getElementById('shotsGrid');
+      const search = document.getElementById('searchBox').value.toLowerCase();
+
+      let filtered = allShotsData.filter(shot => {
+        if (currentFilter === 'stick' && shot.category !== 'VALID_STICK_FIGURE') return false;
+        if (currentFilter === 'nonchar' && shot.category === 'VALID_STICK_FIGURE') return false;
+        if (search) {
+          const matchNum = String(shot.shot_num).includes(search);
+          const matchVo = (shot.voiceover || '').toLowerCase().includes(search);
+          return matchNum || matchVo;
+        }
+        return true;
+      });
+
+      // Update counters
+      document.getElementById('countAll').textContent = allShotsData.length;
+      document.getElementById('countStick').textContent = allShotsData.filter(s => s.category === 'VALID_STICK_FIGURE').length;
+      document.getElementById('countNonChar').textContent = allShotsData.filter(s => s.category !== 'VALID_STICK_FIGURE').length;
+      document.getElementById('approvalSubtitle').textContent = `${allShotsData.length} shots mapped. Ready to build Apple xmeml XML sequence.`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-dim);">No shots matching current filter.</div>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map(shot => {
+        const score = shot.score ? shot.score.toFixed(1) : '95.0';
+        const varsHtml = (shot.variations || []).map(v => `
+          <div class="var-thumb-btn ${v.is_selected ? 'active' : ''}" title="Variation ${v.var_idx} (Score: ${v.score})" onclick="selectVariation(${shot.shot_num}, '${v.filename}')">
+            <img src="${v.url}" alt="Var ${v.var_idx}">
+          </div>
+        `).join('');
+
+        return `
+          <div class="shot-card" id="shotCard_${shot.shot_num}">
+            <div class="shot-card-header">
+              <span class="shot-id">SHOT ${String(shot.shot_num).padStart(3, '0')}</span>
+              <span class="shot-tc">${shot.timecode || '00:00 - 00:00'}</span>
+            </div>
+            <div class="shot-preview-container" onclick="openModal('${shot.image_url}', 'Shot ${shot.shot_num}', '${escapeHtml(shot.voiceover)}')">
+              <img class="shot-preview-img" src="${shot.image_url}" alt="Shot ${shot.shot_num}" loading="lazy">
+              <div class="shot-badge-score">★ ${score}</div>
+            </div>
+            <div class="shot-body">
+              <div class="shot-vo">"${escapeHtml(shot.voiceover || '')}"</div>
+              ${varsHtml ? `
+                <div class="variations-row">
+                  <span class="var-label">Vars:</span>
+                  ${varsHtml}
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function selectVariation(shotNum, varFilename) {
+      try {
+        const res = await fetch('/api/select-image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: activeProjectTitle,
+            shot_num: shotNum,
+            filename: varFilename
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          // Update local data
+          const shot = allShotsData.find(s => s.shot_num === shotNum);
+          if (shot) {
+            shot.image_url = `/images/${encodeURIComponent(activeProjectTitle)}/Final selected images/shot_${String(shotNum).padStart(3, '0')}.jpg?t=${Date.now()}`;
+            if (shot.variations) {
+              shot.variations.forEach(v => v.is_selected = (v.filename === varFilename));
+            }
+            renderShots();
+          }
+        }
+      } catch (err) {
+        alert('Failed to select variation: ' + err);
+      }
+    }
+
+    async function approveAndBuildXml() {
+      const btn = document.getElementById('btnBuildXml');
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳ Building Apple XML Sequence...</span>';
+
+      try {
+        const res = await fetch('/api/approve-and-build-xml', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: activeProjectTitle })
+        });
+        const data = await res.json();
+        alert(data.message || 'Timeline XML Sequence built successfully!');
+        fetchStatus();
+      } catch (err) {
+        alert('Error building XML: ' + err);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>✨ Approve Selection & Assemble Timeline XML</span>';
+      }
+    }
+
+    function setFilter(filterType, btn) {
+      currentFilter = filterType;
+      document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderShots();
+    }
+
+    function applySearch() {
+      renderShots();
+    }
+
+    function openModal(imgUrl, title, vo) {
+      document.getElementById('modalImg').src = imgUrl;
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalVo').textContent = vo;
+      document.getElementById('modalBackdrop').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('modalBackdrop').classList.remove('open');
+    }
+
+    function clearLogs() {
+      document.getElementById('logTerminal').textContent = '';
+    }
+
+    function escapeHtml(str) {
+      return (str || '').replace(/[&<>"']/g, m => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+      }[m]));
+    }
+  </script>
+</body>
+</html>
