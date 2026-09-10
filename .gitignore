@@ -22,6 +22,10 @@ Final selected images/
 2- Code/test.txt
 2- Code/test_out.txt
 
+# Environment Variables & Secrets
+.env
+*.env.local
+
 # OS & Editor files
 .DS_Store
 Thumbs.db

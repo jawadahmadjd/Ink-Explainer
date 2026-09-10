@@ -277,11 +277,33 @@ def main():
     current_model = MODEL_CASCADE[model_cascade_idx]
 
     with sync_playwright() as p:
-        browser = p.chromium.connect_over_cdp("http://127.0.0.1:9222")
-        ctx = browser.contexts[0]
+        browser = None
+        ctx = None
+        for cdp_url in ["http://[::1]:9222", "http://127.0.0.1:9222", "http://localhost:9222"]:
+            try:
+                b = p.chromium.connect_over_cdp(cdp_url)
+                for c in b.contexts:
+                    if any("flow.google.com" in pg.url for pg in c.pages):
+                        browser = b
+                        ctx = c
+                        print(f"Connected to Google Flow Chrome via {cdp_url}")
+                        break
+                if browser:
+                    break
+                if not browser and len(b.contexts) > 0:
+                    browser = b
+                    ctx = b.contexts[0]
+            except Exception:
+                continue
+
+        if not browser:
+            print("Error: Could not connect to Chrome on port 9222. Ensure Chrome is running with remote debugging.")
+            return
+
         flow_page = get_or_create_dedicated_flow_page(ctx)
 
-        if TARGET_PROJECT_URL not in flow_page.url:
+        PROJECT_ID = "8a28cfa5-fddf-4528-b188-6deb5ce5e0e5"
+        if PROJECT_ID not in flow_page.url:
             print(f"Navigating dedicated Flow tab to project: {TARGET_PROJECT_URL}")
             flow_page.goto(TARGET_PROJECT_URL, wait_until="domcontentloaded")
             time.sleep(5)
