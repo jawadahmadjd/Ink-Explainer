@@ -23,6 +23,7 @@ Final selected images/
 2- Code/*.png
 2- Code/test.txt
 2- Code/test_out.txt
+2- Code/archive/
 
 # Environment Variables & Secrets
 .env

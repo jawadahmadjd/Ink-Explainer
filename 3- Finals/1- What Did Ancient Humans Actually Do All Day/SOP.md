@@ -112,3 +112,54 @@ For each Shot $N$ from 1 to 334:
 - **NLE XML Sequence Assembly**: An Apple `xmeml` XML sequence (`storyboard_timeline.xml`) places the master normalized audio on Audio Track 1 and maps every storyboard image to Video Track 1 aligned to its exact voiceover sentence timing with zero black gaps.
 - **Target Directory**: `3- Finals/[Video Title]/Voiceovers/`.
 - **Environment Source**: All API credentials, voice IDs, and audio settings are strictly sourced from `.env`.
+
+---
+
+## 7. End-to-End Pipeline Execution Lifecycle (Stages i through vii)
+
+The master pipeline orchestrator (`2- Code/pipeline_orchestrator.py`) automates end-to-end video production across 7 sequential stages:
+
+### Stage (i) & (ii): Ingestion & Forensic Postmortem
+- **Command**: `python pipeline_orchestrator.py --url "<YOUTUBE_URL>" --stage 1`
+- **Output**: `1- Postmartum/[Video Title]/`
+- **Actions**:
+  1. Downloads metadata (`video_info.json`), low-res video (`video_low.mp4`), and subtitles (`transcript.en-orig.vtt`) via `yt-dlp`.
+  2. Cleans and deduplicates transcript into `clean_transcript.txt`.
+  3. Detects scene cuts and durations via `ffmpeg` scene filter into `cuts_data.json`.
+  4. Analyzes audio loudness (Integrated LUFS, LRA, True Peak).
+  5. Emits comprehensive forensic postmortem report (`README_POSTMORTEM_REPORT.md`).
+
+### Stage (iii): Script & Stick-Figure Storyboard Prompt Generation
+- **Command**: `python pipeline_orchestrator.py --title "[Video Title]" --stage 2`
+- **Output**: `3- Finals/[Video Title]/`
+- **Actions**:
+  1. Aligns spoken text with scene cuts to create 1-to-1 voiceover sentence mappings.
+  2. Compiles full-bleed stick-figure prompts enforcing MinutePhysics aesthetic (solid white head fill, bold comic ink outlines, 0 flesh tones, 0 realistic anatomy, grounded backgrounds).
+  3. Writes `storyboard_master.csv`, `all_prompts.txt`, and initializes `character_audit.json`.
+
+### Stage (iv): Autonomous Image Generation & Combined Voiceover Production
+- **Voiceover**: `python pipeline_orchestrator.py --title "[Video Title]" --stage 3`
+  - Generates full combined script via ElevenLabs API using credentials from `.env`.
+  - Maps words with millisecond precision (`words_alignment.json`).
+- **Images**: `python pipeline_orchestrator.py --title "[Video Title]" --stage 4`
+  - Connects to Google Flow via Chrome DevTools CDP (port 9222).
+  - Uses model cascade: `Nano Banana Pro > Nano Banana 2 > Nano Banana 2 Lite`.
+  - Instantly cascades on usage limit banners to prevent stalled runs.
+  - Multi-metric computer vision scoring evaluates variations; winning images are saved strictly to `Final selected images/`.
+
+### Stage (v): Millisecond Timeline Mapping & Silence Normalization
+- Integrated within Stage 3:
+  - Scans all pauses between sentences. If pause $> 300\text{ms}$, crops excess, leaving **150ms tail cushion after current sentence** and **150ms head cushion before next sentence** (total 300ms natural cushion).
+  - Recalibrates downstream timestamps sample-accurately and generates `shots_timing_alignment.json`.
+
+### Stage (vi): NLE Timeline XML Assembly
+- **Command**: `python pipeline_orchestrator.py --title "[Video Title]" --stage 5`
+- **Output**: `3- Finals/[Video Title]/storyboard_timeline.xml`
+- **Actions**:
+  - Builds Apple `xmeml` v4 XML sequence @ 24 fps.
+  - Places master normalized audio on Audio Track 1.
+  - Places all storyboard images on Video Track 1 timed to VO sentence cuts with zero black frames.
+
+### Stage (vii): Execution Telemetry & Work Report
+- **Command**: Included automatically in all orchestrator runs (`EXECUTION_REPORT.md`).
+- **Output**: Detailed report recording start time, end time, elapsed stage durations, total word count, total shot count, and quality audit verification.
