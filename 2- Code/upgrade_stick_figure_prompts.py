@@ -12,9 +12,11 @@ import re
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(BASE_DIR)
 
-CSV_PATH = os.path.join(PROJECT_ROOT, "3- Finals", "storyboard_master.csv")
-ALL_PROMPTS_TXT = os.path.join(PROJECT_ROOT, "3- Finals", "all_prompts.txt")
-AUDIT_JSON = os.path.join(PROJECT_ROOT, "3- Finals", "character_audit.json")
+VIDEO_SUBDIR = "1- What Did Ancient Humans Actually Do All Day"
+FINALS_DIR = os.path.join(PROJECT_ROOT, "3- Finals", VIDEO_SUBDIR)
+CSV_PATH = os.path.join(FINALS_DIR, "storyboard_master.csv")
+ALL_PROMPTS_TXT = os.path.join(FINALS_DIR, "all_prompts.txt")
+AUDIT_JSON = os.path.join(FINALS_DIR, "character_audit.json")
 
 STICK_PREFIX = (
     "Minimalist hand-drawn 2D vector illustration, clean bold black ink comic line art. "
@@ -154,3 +156,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

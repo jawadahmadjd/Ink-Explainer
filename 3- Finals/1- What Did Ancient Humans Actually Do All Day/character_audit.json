@@ -369,13 +369,19 @@
       "hunter"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.6269,
-      "white_ratio": 0.0001,
-      "ink_ratio": 0.045
+      "sharpness": 72.2,
+      "center_focus": 85.0,
+      "contrast": 100.0,
+      "entropy": 78.8,
+      "stick_head_detected": true,
+      "head_area": 9296,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 86.1
     }
   },
   {
@@ -423,13 +429,19 @@
       "hunter"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.8495,
-      "white_ratio": 0.0001,
-      "ink_ratio": 0.0496
+      "sharpness": 67.8,
+      "center_focus": 99.8,
+      "contrast": 100.0,
+      "entropy": 64.0,
+      "stick_head_detected": true,
+      "head_area": 30597,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 86.5
     }
   },
   {
@@ -500,13 +512,19 @@
       "stick figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.7516,
-      "white_ratio": 0.004,
-      "ink_ratio": 0.1505
+      "sharpness": 86.2,
+      "center_focus": 79.8,
+      "contrast": 100.0,
+      "entropy": 68.8,
+      "stick_head_detected": true,
+      "head_area": 15033,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 86.8
     }
   },
   {
@@ -540,13 +558,19 @@
       "stick figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.3113,
-      "white_ratio": 0.0276,
-      "ink_ratio": 0.3483
+      "sharpness": 23.8,
+      "center_focus": 87.3,
+      "contrast": 51.0,
+      "entropy": 69.9,
+      "stick_head_detected": true,
+      "head_area": 28071,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 63.4
     }
   },
   {
@@ -598,13 +622,19 @@
       "stick figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.1362,
-      "white_ratio": 0.0283,
-      "ink_ratio": 0.195
+      "sharpness": 87.3,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 83.0,
+      "stick_head_detected": true,
+      "head_area": 11898,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 94.3
     }
   },
   {
@@ -654,13 +684,19 @@
       "figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.24,
-      "white_ratio": 0.0006,
-      "ink_ratio": 0.0847
+      "sharpness": 54.1,
+      "center_focus": 92.9,
+      "contrast": 100.0,
+      "entropy": 73.1,
+      "stick_head_detected": true,
+      "head_area": 22481,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 82.7
     }
   },
   {
@@ -673,13 +709,19 @@
       "stick figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.1641,
-      "white_ratio": 0.0101,
-      "ink_ratio": 0.1753
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 84.7,
+      "stick_head_detected": true,
+      "head_area": 16131,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 97.7
     }
   },
   {
@@ -841,13 +883,19 @@
       "stick-figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.7174,
-      "white_ratio": 0.0189,
-      "ink_ratio": 0.1061
+      "sharpness": 82.0,
+      "center_focus": 93.6,
+      "contrast": 100.0,
+      "entropy": 72.1,
+      "stick_head_detected": true,
+      "head_area": 13518,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 89.7
     }
   },
   {
@@ -860,13 +908,19 @@
       "human"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (human) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.8353,
-      "white_ratio": 0.0007,
-      "ink_ratio": 0.1279
+      "sharpness": 100.0,
+      "center_focus": 87.1,
+      "contrast": 93.5,
+      "entropy": 83.4,
+      "stick_head_detected": true,
+      "head_area": 2502,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 93.0
     }
   },
   {
@@ -879,13 +933,19 @@
       "human"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (human) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5129,
-      "white_ratio": 0.0099,
-      "ink_ratio": 0.1122
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 83.2,
+      "stick_head_detected": true,
+      "head_area": 24239,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 97.5
     }
   },
   {
@@ -899,13 +959,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (farmer, hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2854,
-      "white_ratio": 0.1092,
-      "ink_ratio": 0.1006
+      "sharpness": 60.6,
+      "center_focus": 96.5,
+      "contrast": 100.0,
+      "entropy": 47.3,
+      "stick_head_detected": true,
+      "head_area": 6584,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 81.4
     }
   },
   {
@@ -919,13 +985,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (farmer, hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5539,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.078
+      "sharpness": 100.0,
+      "center_focus": 91.8,
+      "contrast": 92.0,
+      "entropy": 82.8,
+      "stick_head_detected": true,
+      "head_area": 37247,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 93.8
     }
   },
   {
@@ -989,13 +1061,19 @@
       "human"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (human) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.0496,
-      "white_ratio": 0.1473,
-      "ink_ratio": 0.1339
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 77.5,
+      "stick_head_detected": true,
+      "head_area": 13554,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 96.6
     }
   },
   {
@@ -1044,13 +1122,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.0986,
-      "white_ratio": 0.0027,
-      "ink_ratio": 0.1036
+      "sharpness": 61.0,
+      "center_focus": 92.7,
+      "contrast": 78.5,
+      "entropy": 56.7,
+      "stick_head_detected": true,
+      "head_area": 3195,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 77.6
     }
   },
   {
@@ -1064,13 +1148,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (figures, hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.102,
-      "white_ratio": 0.5992,
-      "ink_ratio": 0.0811
+      "sharpness": 93.2,
+      "center_focus": 93.5,
+      "contrast": 100.0,
+      "entropy": 58.1,
+      "stick_head_detected": true,
+      "head_area": 14028,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 90.4
     }
   },
   {
@@ -1084,13 +1174,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (human, hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.3882,
-      "white_ratio": 0.3725,
-      "ink_ratio": 0.1197
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 71.2,
+      "stick_head_detected": true,
+      "head_area": 5654,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 95.7
     }
   },
   {
@@ -1122,13 +1218,19 @@
       "stick figure"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (stick figure) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.1361,
-      "white_ratio": 0.0007,
-      "ink_ratio": 0.1629
+      "sharpness": 100.0,
+      "center_focus": 92.5,
+      "contrast": 100.0,
+      "entropy": 78.7,
+      "stick_head_detected": true,
+      "head_area": 3249,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 94.9
     }
   },
   {
@@ -1162,13 +1264,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (human, hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.0601,
-      "white_ratio": 0.719,
-      "ink_ratio": 0.0945
+      "sharpness": 88.7,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 71.1,
+      "stick_head_detected": true,
+      "head_area": 224824,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 92.8
     }
   },
   {
@@ -1181,13 +1289,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.0352,
-      "white_ratio": 0.284,
-      "ink_ratio": 0.0636
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 68.6,
+      "stick_head_detected": true,
+      "head_area": 131889,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 95.3
     }
   },
   {
@@ -1200,13 +1314,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.3893,
-      "white_ratio": 0.0123,
-      "ink_ratio": 0.1329
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 72.9,
+      "stick_head_detected": true,
+      "head_area": 2956,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 95.9
     }
   },
   {
@@ -1305,13 +1425,19 @@
       "farmer"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.4515,
-      "white_ratio": 0.0018,
-      "ink_ratio": 0.152
+      "sharpness": 69.0,
+      "center_focus": 95.2,
+      "contrast": 100.0,
+      "entropy": 65.6,
+      "stick_head_detected": true,
+      "head_area": 19581,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 85.9
     }
   },
   {
@@ -1341,13 +1467,19 @@
       "farmer"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (farmer) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.0167,
-      "white_ratio": 0.1387,
-      "ink_ratio": 0.055
+      "sharpness": 86.4,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 56.2,
+      "stick_head_detected": true,
+      "head_area": 25262,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 90.0
     }
   },
   {
@@ -1378,13 +1510,19 @@
       "stick figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.8296,
-      "white_ratio": 0.0046,
-      "ink_ratio": 0.0962
+      "sharpness": 80.0,
+      "center_focus": 92.6,
+      "contrast": 85.5,
+      "entropy": 68.1,
+      "stick_head_detected": true,
+      "head_area": 12185,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 85.4
     }
   },
   {
@@ -1397,13 +1535,19 @@
       "human"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (human) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.022,
-      "white_ratio": 0.5059,
-      "ink_ratio": 0.1139
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 71.1,
+      "stick_head_detected": true,
+      "head_area": 225520,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 95.7
     }
   },
   {
@@ -1417,13 +1561,19 @@
       "figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2738,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.0911
+      "sharpness": 57.0,
+      "center_focus": 72.4,
+      "contrast": 78.5,
+      "entropy": 63.5,
+      "stick_head_detected": true,
+      "head_area": 2215,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 72.6
     }
   },
   {
@@ -1453,13 +1603,19 @@
       "human"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (human) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.025,
-      "white_ratio": 0.2675,
-      "ink_ratio": 0.0835
+      "sharpness": 100.0,
+      "center_focus": 94.0,
+      "contrast": 100.0,
+      "entropy": 70.5,
+      "stick_head_detected": true,
+      "head_area": 3768,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 94.1
     }
   },
   {
@@ -1472,13 +1628,19 @@
       "farmer"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (farmer) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.1901,
-      "white_ratio": 0.3789,
-      "ink_ratio": 0.0508
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 71.7,
+      "stick_head_detected": true,
+      "head_area": 20503,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 95.8
     }
   },
   {
@@ -1577,13 +1739,19 @@
       "stick figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.832,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.0843
+      "sharpness": 59.0,
+      "center_focus": 96.6,
+      "contrast": 100.0,
+      "entropy": 66.9,
+      "stick_head_detected": true,
+      "head_area": 31582,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 83.9
     }
   },
   {
@@ -1614,13 +1782,19 @@
       "stick figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5979,
-      "white_ratio": 0.0148,
-      "ink_ratio": 0.1148
+      "sharpness": 30.4,
+      "center_focus": 69.6,
+      "contrast": 81.5,
+      "entropy": 65.3,
+      "stick_head_detected": true,
+      "head_area": 16166,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 66.1
     }
   },
   {
@@ -1741,13 +1915,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.4042,
-      "white_ratio": 0.01,
-      "ink_ratio": 0.0673
+      "sharpness": 44.8,
+      "center_focus": 84.5,
+      "contrast": 52.0,
+      "entropy": 51.0,
+      "stick_head_detected": true,
+      "head_area": 13770,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 65.4
     }
   },
   {
@@ -1782,13 +1962,19 @@
       "elder"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (elder) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.6268,
-      "white_ratio": 0.0568,
-      "ink_ratio": 0.125
+      "sharpness": 96.3,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 68.5,
+      "stick_head_detected": true,
+      "head_area": 28511,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 94.4
     }
   },
   {
@@ -1891,13 +2077,19 @@
       "stick figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.756,
-      "white_ratio": 0.0352,
-      "ink_ratio": 0.1436
+      "sharpness": 100.0,
+      "center_focus": 99.6,
+      "contrast": 94.5,
+      "entropy": 81.2,
+      "stick_head_detected": true,
+      "head_area": 4413,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 96.0
     }
   },
   {
@@ -1948,13 +2140,19 @@
       "figures"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5998,
-      "white_ratio": 0.0223,
-      "ink_ratio": 0.1474
+      "sharpness": 73.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 81.1,
+      "stick_head_detected": true,
+      "head_area": 11865,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 90.4
     }
   },
   {
@@ -1986,13 +2184,19 @@
       "family"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5939,
-      "white_ratio": 0.0118,
-      "ink_ratio": 0.1584
+      "sharpness": 70.6,
+      "center_focus": 100.0,
+      "contrast": 96.0,
+      "entropy": 82.4,
+      "stick_head_detected": true,
+      "head_area": 14855,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 89.2
     }
   },
   {
@@ -2041,13 +2245,19 @@
       "hunters"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunters) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5227,
-      "white_ratio": 0.0575,
-      "ink_ratio": 0.0882
+      "sharpness": 74.9,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 74.4,
+      "stick_head_detected": true,
+      "head_area": 11924,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 89.9
     }
   },
   {
@@ -2077,13 +2287,19 @@
       "hunters"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunters) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.8826,
-      "white_ratio": 0.0002,
-      "ink_ratio": 0.0938
+      "sharpness": 58.6,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 58.5,
+      "stick_head_detected": true,
+      "head_area": 10456,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 83.4
     }
   },
   {
@@ -2098,13 +2314,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (elder, stick figure, hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5741,
-      "white_ratio": 0.0001,
-      "ink_ratio": 0.1078
+      "sharpness": 64.2,
+      "center_focus": 98.0,
+      "contrast": 84.5,
+      "entropy": 52.2,
+      "stick_head_detected": true,
+      "head_area": 21593,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 80.3
     }
   },
   {
@@ -2117,13 +2339,19 @@
       "hunters"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunters) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5592,
-      "white_ratio": 0.0273,
-      "ink_ratio": 0.07
+      "sharpness": 68.1,
+      "center_focus": 100.0,
+      "contrast": 96.5,
+      "entropy": 81.7,
+      "stick_head_detected": true,
+      "head_area": 4724,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 88.6
     }
   },
   {
@@ -2136,13 +2364,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.6032,
-      "white_ratio": 0.1094,
-      "ink_ratio": 0.1471
+      "sharpness": 100.0,
+      "center_focus": 98.9,
+      "contrast": 100.0,
+      "entropy": 71.3,
+      "stick_head_detected": true,
+      "head_area": 2020,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 95.4
     }
   },
   {
@@ -2155,13 +2389,19 @@
       "human"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (human) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5546,
-      "white_ratio": 0.1661,
-      "ink_ratio": 0.0709
+      "sharpness": 100.0,
+      "center_focus": 95.0,
+      "contrast": 100.0,
+      "entropy": 70.8,
+      "stick_head_detected": true,
+      "head_area": 15954,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 94.4
     }
   },
   {
@@ -2174,13 +2414,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.7535,
-      "white_ratio": 0.015,
-      "ink_ratio": 0.205
+      "sharpness": 27.7,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 61.2,
+      "stick_head_detected": true,
+      "head_area": 156404,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 76.1
     }
   },
   {
@@ -2194,13 +2440,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunters, hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.6398,
-      "white_ratio": 0.0056,
-      "ink_ratio": 0.0581
+      "sharpness": 45.4,
+      "center_focus": 97.8,
+      "contrast": 43.5,
+      "entropy": 49.9,
+      "stick_head_detected": true,
+      "head_area": 5197,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 67.0
     }
   },
   {
@@ -2230,13 +2482,19 @@
       "hunters"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunters) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5093,
-      "white_ratio": 0.0179,
-      "ink_ratio": 0.0268
+      "sharpness": 36.2,
+      "center_focus": 77.4,
+      "contrast": 100.0,
+      "entropy": 54.6,
+      "stick_head_detected": true,
+      "head_area": 7138,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 71.6
     }
   },
   {
@@ -2251,13 +2509,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (figures, hunters, hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2554,
-      "white_ratio": 0.011,
-      "ink_ratio": 0.0893
+      "sharpness": 55.9,
+      "center_focus": 73.1,
+      "contrast": 69.5,
+      "entropy": 34.4,
+      "stick_head_detected": true,
+      "head_area": 4020,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 66.3
     }
   },
   {
@@ -2288,13 +2552,19 @@
       "children"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (women, children) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.3292,
-      "white_ratio": 0.0012,
-      "ink_ratio": 0.1519
+      "sharpness": 100.0,
+      "center_focus": 91.4,
+      "contrast": 100.0,
+      "entropy": 85.1,
+      "stick_head_detected": true,
+      "head_area": 4989,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 95.6
     }
   },
   {
@@ -2358,13 +2628,19 @@
       "boy"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (boy) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5673,
-      "white_ratio": 0.008,
-      "ink_ratio": 0.208
+      "sharpness": 66.5,
+      "center_focus": 82.8,
+      "contrast": 88.0,
+      "entropy": 73.8,
+      "stick_head_detected": true,
+      "head_area": 18896,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 81.0
     }
   },
   {
@@ -2377,13 +2653,19 @@
       "child"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (child) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.301,
-      "white_ratio": 0.0003,
-      "ink_ratio": 0.1301
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 98.1,
+      "stick_head_detected": true,
+      "head_area": 3730,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 99.7
     }
   },
   {
@@ -2414,13 +2696,19 @@
       "children"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (women, children) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.1686,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.1867
+      "sharpness": 100.0,
+      "center_focus": 77.8,
+      "contrast": 86.5,
+      "entropy": 88.6,
+      "stick_head_detected": true,
+      "head_area": 3657,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 90.0
     }
   },
   {
@@ -2451,13 +2739,19 @@
       "hunters"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (foragers, hunters) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.3084,
-      "white_ratio": 0.0222,
-      "ink_ratio": 0.1215
+      "sharpness": 100.0,
+      "center_focus": 93.5,
+      "contrast": 100.0,
+      "entropy": 73.6,
+      "stick_head_detected": true,
+      "head_area": 8292,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 94.4
     }
   },
   {
@@ -2489,13 +2783,19 @@
       "figures"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (elders, children, figures) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.4571,
-      "white_ratio": 0.0002,
-      "ink_ratio": 0.1504
+      "sharpness": 99.3,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 69.9,
+      "stick_head_detected": true,
+      "head_area": 10247,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 95.3
     }
   },
   {
@@ -2510,13 +2810,19 @@
       "tribe"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.617,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.1786
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 82.5,
+      "stick_head_detected": true,
+      "head_area": 9039,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 97.4
     }
   },
   {
@@ -2530,13 +2836,19 @@
       "hunter"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.3007,
-      "white_ratio": 0.0172,
-      "ink_ratio": 0.1199
+      "sharpness": 100.0,
+      "center_focus": 95.3,
+      "contrast": 100.0,
+      "entropy": 82.8,
+      "stick_head_detected": true,
+      "head_area": 13549,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 96.3
     }
   },
   {
@@ -2600,13 +2912,19 @@
       "tribe"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (tribe) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.6536,
-      "white_ratio": 0.0019,
-      "ink_ratio": 0.1232
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 78.1,
+      "stick_head_detected": true,
+      "head_area": 3296,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 96.7
     }
   },
   {
@@ -2653,13 +2971,19 @@
       "humans"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (humans) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.3385,
-      "white_ratio": 0.3267,
-      "ink_ratio": 0.1165
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 64.9,
+      "stick_head_detected": true,
+      "head_area": 4962,
+      "stick_penalty": 0.0,
+      "border_penalty": 50.0,
+      "total_score": 44.7
     }
   },
   {
@@ -2740,13 +3064,19 @@
       "stick figure"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (stick figure) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5441,
-      "white_ratio": 0.0011,
-      "ink_ratio": 0.2242
+      "sharpness": 48.7,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 57.8,
+      "stick_head_detected": true,
+      "head_area": 14555,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 80.9
     }
   },
   {
@@ -2778,13 +3108,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.0795,
-      "white_ratio": 0.6454,
-      "ink_ratio": 0.0879
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 67.7,
+      "stick_head_detected": true,
+      "head_area": 245453,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 95.2
     }
   },
   {
@@ -2797,13 +3133,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.9041,
-      "white_ratio": 0.0013,
-      "ink_ratio": 0.0727
+      "sharpness": 64.9,
+      "center_focus": 85.9,
+      "contrast": 98.5,
+      "entropy": 63.4,
+      "stick_head_detected": true,
+      "head_area": 21547,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 81.9
     }
   },
   {
@@ -2850,13 +3192,19 @@
       "men"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (men) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.6625,
-      "white_ratio": 0.1026,
-      "ink_ratio": 0.1196
+      "sharpness": 100.0,
+      "center_focus": 78.5,
+      "contrast": 100.0,
+      "entropy": 64.4,
+      "stick_head_detected": true,
+      "head_area": 5359,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 89.3
     }
   },
   {
@@ -2869,13 +3217,19 @@
       "men"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (men) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.3981,
-      "white_ratio": 0.1263,
-      "ink_ratio": 0.1484
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 84.3,
+      "stick_head_detected": true,
+      "head_area": 61130,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 97.6
     }
   },
   {
@@ -2906,13 +3260,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (gatherers, hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5077,
-      "white_ratio": 0.0265,
-      "ink_ratio": 0.0817
+      "sharpness": 100.0,
+      "center_focus": 95.8,
+      "contrast": 100.0,
+      "entropy": 71.5,
+      "stick_head_detected": true,
+      "head_area": 238896,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 94.7
     }
   },
   {
@@ -2976,13 +3336,19 @@
       "foragers"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (foragers) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2771,
-      "white_ratio": 0.0145,
-      "ink_ratio": 0.0838
+      "sharpness": 100.0,
+      "center_focus": 90.6,
+      "contrast": 100.0,
+      "entropy": 72.6,
+      "stick_head_detected": false,
+      "head_area": 0,
+      "stick_penalty": 30.0,
+      "border_penalty": 0.0,
+      "total_score": 54.5
     }
   },
   {
@@ -3046,13 +3412,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.6277,
-      "white_ratio": 0.0708,
-      "ink_ratio": 0.1234
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 79.4,
+      "stick_head_detected": true,
+      "head_area": 6888,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 96.9
     }
   },
   {
@@ -3065,13 +3437,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2809,
-      "white_ratio": 0.0077,
-      "ink_ratio": 0.1091
+      "sharpness": 100.0,
+      "center_focus": 94.0,
+      "contrast": 100.0,
+      "entropy": 69.5,
+      "stick_head_detected": true,
+      "head_area": 8253,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 93.9
     }
   },
   {
@@ -3101,13 +3479,19 @@
       "stick figure"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (stick figure) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.8782,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.052
+      "sharpness": 100.0,
+      "center_focus": 86.8,
+      "contrast": 100.0,
+      "entropy": 91.1,
+      "stick_head_detected": true,
+      "head_area": 2393,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 95.3
     }
   },
   {
@@ -3142,13 +3526,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (worker, hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2281,
-      "white_ratio": 0.0716,
-      "ink_ratio": 0.0488
+      "sharpness": 66.0,
+      "center_focus": 100.0,
+      "contrast": 56.0,
+      "entropy": 62.4,
+      "stick_head_detected": true,
+      "head_area": 3915,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 77.1
     }
   },
   {
@@ -3161,13 +3551,19 @@
       "stick figure"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (stick figure) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.1167,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.3275
+      "sharpness": 82.1,
+      "center_focus": 81.5,
+      "contrast": 100.0,
+      "entropy": 84.1,
+      "stick_head_detected": true,
+      "head_area": 2160,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 88.5
     }
   },
   {
@@ -3233,13 +3629,19 @@
       "stick figure"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (stick figure) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.1446,
-      "white_ratio": 0.0453,
-      "ink_ratio": 0.1295
+      "sharpness": 100.0,
+      "center_focus": 87.6,
+      "contrast": 100.0,
+      "entropy": 73.7,
+      "stick_head_detected": true,
+      "head_area": 4152,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 92.9
     }
   },
   {
@@ -3273,13 +3675,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2101,
-      "white_ratio": 0.034,
-      "ink_ratio": 0.1504
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 86.8,
+      "stick_head_detected": true,
+      "head_area": 19326,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 98.0
     }
   },
   {
@@ -3292,13 +3700,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.8013,
-      "white_ratio": 0.001,
-      "ink_ratio": 0.1535
+      "sharpness": 55.2,
+      "center_focus": 61.4,
+      "contrast": 40.5,
+      "entropy": 55.2,
+      "stick_head_detected": true,
+      "head_area": 18989,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 60.5
     }
   },
   {
@@ -3311,13 +3725,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.0641,
-      "white_ratio": 0.0019,
-      "ink_ratio": 0.2108
+      "sharpness": 83.3,
+      "center_focus": 95.0,
+      "contrast": 70.0,
+      "entropy": 80.2,
+      "stick_head_detected": true,
+      "head_area": 28777,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 85.6
     }
   },
   {
@@ -3330,13 +3750,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.0232,
-      "white_ratio": 0.0125,
-      "ink_ratio": 0.0752
+      "sharpness": 100.0,
+      "center_focus": 89.4,
+      "contrast": 100.0,
+      "entropy": 68.1,
+      "stick_head_detected": true,
+      "head_area": 2441,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 92.5
     }
   },
   {
@@ -3350,13 +3776,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (stick figure, hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.0713,
-      "white_ratio": 0.0258,
-      "ink_ratio": 0.0952
+      "sharpness": 67.7,
+      "center_focus": 91.4,
+      "contrast": 92.0,
+      "entropy": 59.3,
+      "stick_head_detected": true,
+      "head_area": 21939,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 82.1
     }
   },
   {
@@ -3390,13 +3822,19 @@
       "children"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (stick figures, children) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.3154,
-      "white_ratio": 0.0362,
-      "ink_ratio": 0.0973
+      "sharpness": 100.0,
+      "center_focus": 93.2,
+      "contrast": 100.0,
+      "entropy": 98.9,
+      "stick_head_detected": true,
+      "head_area": 7061,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 98.1
     }
   },
   {
@@ -3445,13 +3883,19 @@
       "stick figures"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (stick figures) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.8918,
-      "white_ratio": 0.0058,
-      "ink_ratio": 0.0578
+      "sharpness": 88.9,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 68.9,
+      "stick_head_detected": true,
+      "head_area": 16600,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 92.6
     }
   },
   {
@@ -3484,13 +3928,19 @@
       "tribe"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (tribe) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2897,
-      "white_ratio": 0.004,
-      "ink_ratio": 0.1118
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 78.1,
+      "stick_head_detected": true,
+      "head_area": 2686,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 96.7
     }
   },
   {
@@ -3520,13 +3970,19 @@
       "artist"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (artist) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.4372,
-      "white_ratio": 0.17,
-      "ink_ratio": 0.1147
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 80.0,
+      "stick_head_detected": true,
+      "head_area": 27190,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 97.0
     }
   },
   {
@@ -3539,13 +3995,19 @@
       "artist"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (artist) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.4041,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.3814
+      "sharpness": 16.6,
+      "center_focus": 100.0,
+      "contrast": 82.5,
+      "entropy": 60.5,
+      "stick_head_detected": true,
+      "head_area": 7780,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 69.7
     }
   },
   {
@@ -3558,13 +4020,19 @@
       "artist"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (artist) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.3518,
-      "white_ratio": 0.0076,
-      "ink_ratio": 0.1846
+      "sharpness": 94.2,
+      "center_focus": 69.8,
+      "contrast": 96.0,
+      "entropy": 75.7,
+      "stick_head_detected": false,
+      "head_area": 0,
+      "stick_penalty": 30.0,
+      "border_penalty": 0.0,
+      "total_score": 47.6
     }
   },
   {
@@ -3577,13 +4045,19 @@
       "artist"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (artist) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.4058,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.4711
+      "sharpness": 56.6,
+      "center_focus": 95.9,
+      "contrast": 80.0,
+      "entropy": 75.9,
+      "stick_head_detected": true,
+      "head_area": 14278,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 80.5
     }
   },
   {
@@ -3596,13 +4070,19 @@
       "artist"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (artist) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2641,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.0916
+      "sharpness": 42.4,
+      "center_focus": 66.0,
+      "contrast": 73.5,
+      "entropy": 85.8,
+      "stick_head_detected": true,
+      "head_area": 2869,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 69.7
     }
   },
   {
@@ -3683,13 +4163,19 @@
       "artist"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (artist) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.8573,
-      "white_ratio": 0.0011,
-      "ink_ratio": 0.0906
+      "sharpness": 91.6,
+      "center_focus": 97.9,
+      "contrast": 71.0,
+      "entropy": 86.7,
+      "stick_head_detected": true,
+      "head_area": 32963,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 89.6
     }
   },
   {
@@ -3719,13 +4205,19 @@
       "artist"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (artist) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.8001,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.178
+      "sharpness": 54.9,
+      "center_focus": 90.9,
+      "contrast": 86.5,
+      "entropy": 100.0,
+      "stick_head_detected": true,
+      "head_area": 7431,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 83.7
     }
   },
   {
@@ -3773,13 +4265,19 @@
       "people"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunters, people) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.0452,
-      "white_ratio": 0.2602,
-      "ink_ratio": 0.0955
+      "sharpness": 97.9,
+      "center_focus": 100.0,
+      "contrast": 98.5,
+      "entropy": 81.6,
+      "stick_head_detected": true,
+      "head_area": 3072,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 96.4
     }
   },
   {
@@ -3911,13 +4409,19 @@
       "stick figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.8995,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.0703
+      "sharpness": 100.0,
+      "center_focus": 91.8,
+      "contrast": 100.0,
+      "entropy": 80.5,
+      "stick_head_detected": true,
+      "head_area": 7217,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 95.0
     }
   },
   {
@@ -3930,13 +4434,19 @@
       "elder"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (elder) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.6289,
-      "white_ratio": 0.0019,
-      "ink_ratio": 0.1723
+      "sharpness": 74.6,
+      "center_focus": 98.2,
+      "contrast": 89.5,
+      "entropy": 90.7,
+      "stick_head_detected": true,
+      "head_area": 22853,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 89.7
     }
   },
   {
@@ -3949,13 +4459,19 @@
       "child"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (child) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.8284,
-      "white_ratio": 0.001,
-      "ink_ratio": 0.1445
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 93.9,
+      "stick_head_detected": true,
+      "head_area": 37921,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 99.1
     }
   },
   {
@@ -4005,13 +4521,19 @@
       "tribe"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (family, tribe) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.4851,
-      "white_ratio": 0.0555,
-      "ink_ratio": 0.1769
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 85.6,
+      "stick_head_detected": true,
+      "head_area": 40847,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 97.8
     }
   },
   {
@@ -4129,13 +4651,19 @@
       "stick figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.6671,
-      "white_ratio": 0.0267,
-      "ink_ratio": 0.1118
+      "sharpness": 66.8,
+      "center_focus": 94.8,
+      "contrast": 83.5,
+      "entropy": 90.0,
+      "stick_head_detected": true,
+      "head_area": 15541,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 85.6
     }
   },
   {
@@ -4204,13 +4732,19 @@
       "figures"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.4274,
-      "white_ratio": 0.0006,
-      "ink_ratio": 0.3076
+      "sharpness": 61.4,
+      "center_focus": 100.0,
+      "contrast": 93.5,
+      "entropy": 88.3,
+      "stick_head_detected": true,
+      "head_area": 4144,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 87.3
     }
   },
   {
@@ -4224,13 +4758,19 @@
       "stick figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.1951,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.776
+      "sharpness": 25.3,
+      "center_focus": 90.2,
+      "contrast": 58.0,
+      "entropy": 60.8,
+      "stick_head_detected": true,
+      "head_area": 11649,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 64.6
     }
   },
   {
@@ -4244,13 +4784,19 @@
       "hunters"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (elder, hunters) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.0818,
-      "white_ratio": 0.0052,
-      "ink_ratio": 0.4862
+      "sharpness": 72.2,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 82.0,
+      "stick_head_detected": true,
+      "head_area": 11227,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 90.3
     }
   },
   {
@@ -4265,13 +4811,19 @@
       "tribe"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.6956,
-      "white_ratio": 0.0001,
-      "ink_ratio": 0.2547
+      "sharpness": 65.8,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 71.7,
+      "stick_head_detected": true,
+      "head_area": 17204,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 87.2
     }
   },
   {
@@ -4284,13 +4836,19 @@
       "women"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (women) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.3365,
-      "white_ratio": 0.0003,
-      "ink_ratio": 0.4951
+      "sharpness": 25.0,
+      "center_focus": 90.8,
+      "contrast": 85.0,
+      "entropy": 76.7,
+      "stick_head_detected": true,
+      "head_area": 17890,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 72.5
     }
   },
   {
@@ -4303,13 +4861,19 @@
       "men"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (men) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.332,
-      "white_ratio": 0.0001,
-      "ink_ratio": 0.5058
+      "sharpness": 80.2,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 91.0,
+      "stick_head_detected": true,
+      "head_area": 25019,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 93.7
     }
   },
   {
@@ -4356,13 +4920,19 @@
       "human"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (human) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5557,
-      "white_ratio": 0.0003,
-      "ink_ratio": 0.4002
+      "sharpness": 57.2,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 90.6,
+      "stick_head_detected": true,
+      "head_area": 8360,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 87.9
     }
   },
   {
@@ -4393,13 +4963,19 @@
       "figures"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (tribe, figures) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2422,
-      "white_ratio": 0.0001,
-      "ink_ratio": 0.7006
+      "sharpness": 29.8,
+      "center_focus": 89.7,
+      "contrast": 59.0,
+      "entropy": 55.7,
+      "stick_head_detected": true,
+      "head_area": 6058,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 65.0
     }
   },
   {
@@ -4412,13 +4988,19 @@
       "tribe"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (tribe) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2507,
-      "white_ratio": 0.0008,
-      "ink_ratio": 0.276
+      "sharpness": 37.8,
+      "center_focus": 56.5,
+      "contrast": 41.5,
+      "entropy": 76.9,
+      "stick_head_detected": true,
+      "head_area": 2227,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 58.4
     }
   },
   {
@@ -4592,13 +5174,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5145,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.2746
+      "sharpness": 26.9,
+      "center_focus": 84.3,
+      "contrast": 69.0,
+      "entropy": 75.9,
+      "stick_head_detected": true,
+      "head_area": 15872,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 68.0
     }
   },
   {
@@ -4611,13 +5199,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.321,
-      "white_ratio": 0.0003,
-      "ink_ratio": 0.2201
+      "sharpness": 63.6,
+      "center_focus": 87.2,
+      "contrast": 75.0,
+      "entropy": 81.3,
+      "stick_head_detected": true,
+      "head_area": 23066,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 79.9
     }
   },
   {
@@ -4684,13 +5278,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2951,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.4102
+      "sharpness": 24.5,
+      "center_focus": 100.0,
+      "contrast": 89.5,
+      "entropy": 54.7,
+      "stick_head_detected": true,
+      "head_area": 37832,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 72.2
     }
   },
   {
@@ -4757,13 +5357,19 @@
       "stick figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.1462,
-      "white_ratio": 0.0272,
-      "ink_ratio": 0.4836
+      "sharpness": 29.3,
+      "center_focus": 100.0,
+      "contrast": 93.5,
+      "entropy": 75.3,
+      "stick_head_detected": true,
+      "head_area": 6946,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 77.3
     }
   },
   {
@@ -4776,13 +5382,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5208,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.2458
+      "sharpness": 68.7,
+      "center_focus": 94.8,
+      "contrast": 89.5,
+      "entropy": 82.2,
+      "stick_head_detected": true,
+      "head_area": 14758,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 86.1
     }
   },
   {
@@ -4795,13 +5407,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.121,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.1564
+      "sharpness": 42.0,
+      "center_focus": 69.1,
+      "contrast": 88.0,
+      "entropy": 76.6,
+      "stick_head_detected": true,
+      "head_area": 17835,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 71.9
     }
   },
   {
@@ -4867,13 +5485,19 @@
       "stick figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.1494,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.5825
+      "sharpness": 19.1,
+      "center_focus": 94.4,
+      "contrast": 90.0,
+      "entropy": 62.6,
+      "stick_head_detected": true,
+      "head_area": 23880,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 70.8
     }
   },
   {
@@ -4903,13 +5527,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.0,
-      "white_ratio": 0.0006,
-      "ink_ratio": 0.2849
+      "sharpness": 42.9,
+      "center_focus": 80.7,
+      "contrast": 66.5,
+      "entropy": 75.1,
+      "stick_head_detected": true,
+      "head_area": 10909,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 70.5
     }
   },
   {
@@ -4940,13 +5570,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (family, hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2706,
-      "white_ratio": 0.1473,
-      "ink_ratio": 0.0545
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 88.5,
+      "stick_head_detected": true,
+      "head_area": 33789,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 98.3
     }
   },
   {
@@ -4977,13 +5613,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (farmer, hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.3767,
-      "white_ratio": 0.0278,
-      "ink_ratio": 0.1097
+      "sharpness": 100.0,
+      "center_focus": 99.4,
+      "contrast": 100.0,
+      "entropy": 90.4,
+      "stick_head_detected": true,
+      "head_area": 10061,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 98.4
     }
   },
   {
@@ -5151,13 +5793,19 @@
       "stick figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2777,
-      "white_ratio": 0.034,
-      "ink_ratio": 0.1024
+      "sharpness": 100.0,
+      "center_focus": 98.4,
+      "contrast": 100.0,
+      "entropy": 73.0,
+      "stick_head_detected": true,
+      "head_area": 21944,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 95.5
     }
   },
   {
@@ -5205,13 +5853,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (child, hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.3027,
-      "white_ratio": 0.0076,
-      "ink_ratio": 0.144
+      "sharpness": 67.7,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 79.5,
+      "stick_head_detected": true,
+      "head_area": 20295,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 88.9
     }
   },
   {
@@ -5225,13 +5879,19 @@
       "child"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (forager, child) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.077,
-      "white_ratio": 0.7108,
-      "ink_ratio": 0.109
+      "sharpness": 100.0,
+      "center_focus": 87.3,
+      "contrast": 96.5,
+      "entropy": 55.4,
+      "stick_head_detected": true,
+      "head_area": 3700,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 89.4
     }
   },
   {
@@ -5353,13 +6013,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.3304,
-      "white_ratio": 0.0407,
-      "ink_ratio": 0.0895
+      "sharpness": 100.0,
+      "center_focus": 77.6,
+      "contrast": 100.0,
+      "entropy": 81.3,
+      "stick_head_detected": false,
+      "head_area": 0,
+      "stick_penalty": 30.0,
+      "border_penalty": 0.0,
+      "total_score": 52.6
     }
   },
   {
@@ -5372,13 +6038,19 @@
       "people"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (people) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.7661,
-      "white_ratio": 0.008,
-      "ink_ratio": 0.1414
+      "sharpness": 100.0,
+      "center_focus": 88.3,
+      "contrast": 91.0,
+      "entropy": 88.0,
+      "stick_head_detected": false,
+      "head_area": 0,
+      "stick_penalty": 30.0,
+      "border_penalty": 0.0,
+      "total_score": 54.5
     }
   },
   {
@@ -5408,13 +6080,19 @@
       "hunters"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunters) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.3684,
-      "white_ratio": 0.0072,
-      "ink_ratio": 0.113
+      "sharpness": 92.2,
+      "center_focus": 91.3,
+      "contrast": 98.0,
+      "entropy": 59.5,
+      "stick_head_detected": true,
+      "head_area": 11553,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 89.4
     }
   },
   {
@@ -5446,13 +6124,19 @@
       "crowd"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2737,
-      "white_ratio": 0.0339,
-      "ink_ratio": 0.1542
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 77.6,
+      "stick_head_detected": true,
+      "head_area": 190388,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 96.6
     }
   },
   {
@@ -5465,13 +6149,19 @@
       "children"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (children) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.7842,
-      "white_ratio": 0.0003,
-      "ink_ratio": 0.1519
+      "sharpness": 55.5,
+      "center_focus": 98.9,
+      "contrast": 100.0,
+      "entropy": 73.2,
+      "stick_head_detected": true,
+      "head_area": 14546,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 84.6
     }
   },
   {
@@ -5484,13 +6174,19 @@
       "stick figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.6963,
-      "white_ratio": 0.0027,
-      "ink_ratio": 0.1032
+      "sharpness": 100.0,
+      "center_focus": 92.3,
+      "contrast": 70.5,
+      "entropy": 81.2,
+      "stick_head_detected": true,
+      "head_area": 11209,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 89.3
     }
   },
   {
@@ -5504,13 +6200,19 @@
       "men"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (farmers, men) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5371,
-      "white_ratio": 0.169,
-      "ink_ratio": 0.1141
+      "sharpness": 36.5,
+      "center_focus": 99.8,
+      "contrast": 100.0,
+      "entropy": 69.3,
+      "stick_head_detected": true,
+      "head_area": 10349,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 79.5
     }
   },
   {
@@ -5580,13 +6282,19 @@
       "workers"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (workers) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2076,
-      "white_ratio": 0.0001,
-      "ink_ratio": 0.1123
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 80.7,
+      "stick_head_detected": true,
+      "head_area": 2273,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 97.1
     }
   },
   {
@@ -5633,13 +6341,19 @@
       "workers"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (workers) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.7204,
-      "white_ratio": 0.081,
-      "ink_ratio": 0.066
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 87.0,
+      "stick_head_detected": true,
+      "head_area": 10463,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 98.1
     }
   },
   {
@@ -5652,13 +6366,19 @@
       "guards"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (guards) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.1371,
-      "white_ratio": 0.0073,
-      "ink_ratio": 0.0915
+      "sharpness": 100.0,
+      "center_focus": 85.0,
+      "contrast": 86.0,
+      "entropy": 72.3,
+      "stick_head_detected": true,
+      "head_area": 2728,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 89.3
     }
   },
   {
@@ -5671,13 +6391,19 @@
       "scribe"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (scribe) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.6706,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.2073
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 88.2,
+      "stick_head_detected": true,
+      "head_area": 37681,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 98.2
     }
   },
   {
@@ -5691,13 +6417,19 @@
       "family"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (farmer, family) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.4928,
-      "white_ratio": 0.2353,
-      "ink_ratio": 0.1198
+      "sharpness": 88.3,
+      "center_focus": 92.2,
+      "contrast": 100.0,
+      "entropy": 75.3,
+      "stick_head_detected": true,
+      "head_area": 9118,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 91.4
     }
   },
   {
@@ -5711,13 +6443,19 @@
       "king"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (soldiers, king) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5208,
-      "white_ratio": 0.0085,
-      "ink_ratio": 0.285
+      "sharpness": 97.1,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 83.1,
+      "stick_head_detected": true,
+      "head_area": 15591,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 96.7
     }
   },
   {
@@ -5731,13 +6469,19 @@
       "king"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (farmer, king) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.4228,
-      "white_ratio": 0.2675,
-      "ink_ratio": 0.0775
+      "sharpness": 48.0,
+      "center_focus": 82.2,
+      "contrast": 80.5,
+      "entropy": 64.4,
+      "stick_head_detected": true,
+      "head_area": 10701,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 73.3
     }
   },
   {
@@ -5784,13 +6528,19 @@
       "farmer"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (farmer) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.1986,
-      "white_ratio": 0.6822,
-      "ink_ratio": 0.0781
+      "sharpness": 95.0,
+      "center_focus": 87.8,
+      "contrast": 100.0,
+      "entropy": 76.7,
+      "stick_head_detected": true,
+      "head_area": 5297,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 92.2
     }
   },
   {
@@ -5803,13 +6553,19 @@
       "farmer"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (farmer) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.1868,
-      "white_ratio": 0.0248,
-      "ink_ratio": 0.0551
+      "sharpness": 100.0,
+      "center_focus": 89.2,
+      "contrast": 80.5,
+      "entropy": 59.0,
+      "stick_head_detected": true,
+      "head_area": 4526,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 87.2
     }
   },
   {
@@ -5822,13 +6578,19 @@
       "stick figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2882,
-      "white_ratio": 0.0156,
-      "ink_ratio": 0.4185
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 84.5,
+      "stick_head_detected": true,
+      "head_area": 11992,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 97.7
     }
   },
   {
@@ -5858,13 +6620,19 @@
       "stick figure"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (stick figure) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.0004,
-      "white_ratio": 0.019,
-      "ink_ratio": 0.6919
+      "sharpness": 59.4,
+      "center_focus": 100.0,
+      "contrast": 89.0,
+      "entropy": 87.6,
+      "stick_head_detected": true,
+      "head_area": 29352,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 85.8
     }
   },
   {
@@ -5934,13 +6702,19 @@
       "stick figure"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (stick figure) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2446,
-      "white_ratio": 0.1028,
-      "ink_ratio": 0.1224
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 71.8,
+      "stick_head_detected": true,
+      "head_area": 7706,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 95.8
     }
   },
   {
@@ -5953,13 +6727,19 @@
       "stick figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.7792,
-      "white_ratio": 0.0273,
-      "ink_ratio": 0.0726
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 89.0,
+      "stick_head_detected": true,
+      "head_area": 15249,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 98.3
     }
   },
   {
@@ -5989,13 +6769,19 @@
       "stick figure"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (stick figure) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.2648,
-      "white_ratio": 0.1369,
-      "ink_ratio": 0.1069
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 87.9,
+      "stick_head_detected": true,
+      "head_area": 2601,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 98.2
     }
   },
   {
@@ -6008,13 +6794,19 @@
       "stick figure"
     ],
     "has_stick_kw": true,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Prompt requested stick figure, but image contains realistic human anatomy / flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.7865,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.1063
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 99.6,
+      "stick_head_detected": true,
+      "head_area": 10582,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 99.9
     }
   },
   {
@@ -6046,13 +6838,19 @@
       "stick figure"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (stick figure) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.5995,
-      "white_ratio": 0.0865,
-      "ink_ratio": 0.0893
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 94.4,
+      "stick_head_detected": true,
+      "head_area": 14824,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 99.2
     }
   },
   {
@@ -6101,13 +6899,19 @@
       "stick figure"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (stick figure) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.0659,
-      "white_ratio": 0.0063,
-      "ink_ratio": 0.4458
+      "sharpness": 59.8,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 66.2,
+      "stick_head_detected": true,
+      "head_area": 5658,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 84.9
     }
   },
   {
@@ -6139,13 +6943,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.1844,
-      "white_ratio": 0.0822,
-      "ink_ratio": 0.5192
+      "sharpness": 100.0,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 68.4,
+      "stick_head_detected": true,
+      "head_area": 3562,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 95.3
     }
   },
   {
@@ -6159,13 +6969,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (family, hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.8665,
-      "white_ratio": 0.0,
-      "ink_ratio": 0.0587
+      "sharpness": 45.7,
+      "center_focus": 87.9,
+      "contrast": 86.5,
+      "entropy": 85.2,
+      "stick_head_detected": true,
+      "head_area": 3718,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 78.5
     }
   },
   {
@@ -6179,13 +6995,19 @@
       "hunter"
     ],
     "has_stick_kw": false,
-    "category": "NON_STICK_FIGURE",
-    "reason": "Character scene (family, hunter) lacks explicit stick-figure prompt, resulting in realistic human anatomy/flesh tones.",
-    "regen_needed": true,
+    "category": "VALID_STICK_FIGURE",
+    "reason": "Regenerated and verified as white-filled black-outlined stick figure.",
+    "regen_needed": false,
     "cv_info": {
-      "skin_ratio": 0.4663,
-      "white_ratio": 0.0001,
-      "ink_ratio": 0.0713
+      "sharpness": 80.2,
+      "center_focus": 100.0,
+      "contrast": 100.0,
+      "entropy": 89.5,
+      "stick_head_detected": true,
+      "head_area": 14583,
+      "stick_penalty": 0.0,
+      "border_penalty": 0.0,
+      "total_score": 93.5
     }
   }
 ]

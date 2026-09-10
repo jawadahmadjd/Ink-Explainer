@@ -255,6 +255,7 @@ def main():
     parser.add_argument("--end", type=int, default=334, help="End shot number")
     parser.add_argument("--shots", type=str, default="", help="Comma-separated list of specific shot numbers to regenerate")
     parser.add_argument("--limit", type=int, default=0, help="Max number of shots to regenerate in this execution")
+    parser.add_argument("--model", type=str, default="", help="Specific model to start with (e.g. 'Nano Banana 2', 'Nano Banana Pro')")
     args = parser.parse_args()
 
     # Load audit
@@ -294,7 +295,10 @@ def main():
         return
 
     consecutive_failures = 0
-    model_cascade_idx = 0
+    if args.model and args.model in MODEL_CASCADE:
+        model_cascade_idx = MODEL_CASCADE.index(args.model)
+    else:
+        model_cascade_idx = 0
     current_model = MODEL_CASCADE[model_cascade_idx]
 
     with sync_playwright() as p:
@@ -479,6 +483,11 @@ def main():
             if not render_success or err_msg:
                 consecutive_failures += 1
                 print(f"\n[FAILURE #{consecutive_failures} ON SHOT {shot_idx:03d}] Model: {current_model}. Reason: {err_msg or 'Timeout'}")
+
+                is_limit = bool(err_msg and ("limit" in err_msg.lower() or "usage" in err_msg.lower()))
+                if is_limit:
+                    print(f"-> Usage limit detected for {current_model}! Bypassing cooldown and cascading immediately to next model...")
+                    consecutive_failures = 3
 
                 if consecutive_failures == 1:
                     print("Cooldown 3m (180s)...")

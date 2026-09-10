@@ -3,12 +3,14 @@ import json
 import os
 import shutil
 
-FINAL_DIR = "Final selected images"
-CSV_PATH = os.path.join("3- Finals", "storyboard_master.csv")
-ALL_PROMPTS_TXT = os.path.join("3- Finals", "all_prompts.txt")
+VIDEO_SUBDIR = "1- What Did Ancient Humans Actually Do All Day"
+FINALS_DIR = os.path.join("3- Finals", VIDEO_SUBDIR)
+FINAL_DIR = os.path.join(FINALS_DIR, "Final selected images")
+CSV_PATH = os.path.join(FINALS_DIR, "storyboard_master.csv")
+ALL_PROMPTS_TXT = os.path.join(FINALS_DIR, "all_prompts.txt")
 STATUS_MD = "PROMPT_STATUS.md"
-STATUS_MD_FINALS = os.path.join("3- Finals", "PROMPT_STATUS.md")
-LOG_CSV = os.path.join("3- Finals", "selection_log.csv")
+STATUS_MD_FINALS = os.path.join(FINALS_DIR, "PROMPT_STATUS.md")
+LOG_CSV = os.path.join(FINALS_DIR, "selection_log.csv")
 
 def refresh_trackers():
     os.makedirs(FINAL_DIR, exist_ok=True)

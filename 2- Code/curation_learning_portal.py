@@ -35,13 +35,15 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Paths
-CSV_PATH = os.path.join("3- Finals", "storyboard_master.csv")
-RAW_IMG_DIR = os.path.join("3- Finals", "flow_generated_images")
-FINAL_DIR_ROOT = "Final selected images"
-STATUS_JSON = os.path.join("3- Finals", "production_status.json")
-LOG_CSV = os.path.join("3- Finals", "selection_log.csv")
-LEARNING_JSON = os.path.join("3- Finals", "ai_learning_log.json")
-REGEN_QUEUE_JSON = os.path.join("3- Finals", "regeneration_queue.json")
+VIDEO_SUBDIR = "1- What Did Ancient Humans Actually Do All Day"
+FINALS_DIR = os.path.join("3- Finals", VIDEO_SUBDIR)
+CSV_PATH = os.path.join(FINALS_DIR, "storyboard_master.csv")
+RAW_IMG_DIR = os.path.join(FINALS_DIR, "flow_generated_images")
+FINAL_DIR_ROOT = os.path.join(FINALS_DIR, "Final selected images")
+STATUS_JSON = os.path.join(FINALS_DIR, "production_status.json")
+LOG_CSV = os.path.join(FINALS_DIR, "selection_log.csv")
+LEARNING_JSON = os.path.join(FINALS_DIR, "ai_learning_log.json")
+REGEN_QUEUE_JSON = os.path.join(FINALS_DIR, "regeneration_queue.json")
 
 def load_master_shots():
     if not os.path.exists(CSV_PATH):

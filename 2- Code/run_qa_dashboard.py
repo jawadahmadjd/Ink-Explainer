@@ -14,14 +14,16 @@ PORT = 8507
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(BASE_DIR)
 
-CSV_PATH = os.path.join(PROJECT_ROOT, "3- Finals", "storyboard_master.csv")
-RAW_IMG_DIR = os.path.join(PROJECT_ROOT, "3- Finals", "flow_generated_images")
-FINAL_DIR_ROOT = os.path.join(PROJECT_ROOT, "Final selected images")
+VIDEO_SUBDIR = "1- What Did Ancient Humans Actually Do All Day"
+FINALS_DIR = os.path.join(PROJECT_ROOT, "3- Finals", VIDEO_SUBDIR)
+CSV_PATH = os.path.join(FINALS_DIR, "storyboard_master.csv")
+RAW_IMG_DIR = os.path.join(FINALS_DIR, "flow_generated_images")
+FINAL_DIR_ROOT = os.path.join(FINALS_DIR, "Final selected images")
 HTML_FILE = os.path.join(BASE_DIR, "storyboard_qa_dashboard.html")
 
-LEARNING_JSON = os.path.join(PROJECT_ROOT, "3- Finals", "ai_learning_log.json")
-REGEN_QUEUE_JSON = os.path.join(PROJECT_ROOT, "3- Finals", "regeneration_queue.json")
-SELECTION_LOG = os.path.join(PROJECT_ROOT, "3- Finals", "selection_log.csv")
+LEARNING_JSON = os.path.join(FINALS_DIR, "ai_learning_log.json")
+REGEN_QUEUE_JSON = os.path.join(FINALS_DIR, "regeneration_queue.json")
+SELECTION_LOG = os.path.join(FINALS_DIR, "selection_log.csv")
 
 def analyze_and_score_variation(image_path, is_character_shot=False):
     """Calculates CV score on single image on-demand when selected or reviewed."""

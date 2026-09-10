@@ -14,9 +14,11 @@ import numpy as np
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(BASE_DIR)
 
-CSV_PATH = os.path.join(PROJECT_ROOT, "3- Finals", "storyboard_master.csv")
-IMG_DIR = os.path.join(PROJECT_ROOT, "Final selected images")
-OUTPUT_JSON = os.path.join(PROJECT_ROOT, "3- Finals", "character_audit.json")
+VIDEO_SUBDIR = "1- What Did Ancient Humans Actually Do All Day"
+FINALS_DIR = os.path.join(PROJECT_ROOT, "3- Finals", VIDEO_SUBDIR)
+CSV_PATH = os.path.join(FINALS_DIR, "storyboard_master.csv")
+IMG_DIR = os.path.join(FINALS_DIR, "Final selected images")
+OUTPUT_JSON = os.path.join(FINALS_DIR, "character_audit.json")
 
 char_patterns = [
     r'\bstick[\s\-_]?figure\b', r'\bstick[\s\-_]?figures\b',
@@ -152,3 +154,4 @@ def run_audit():
 
 if __name__ == "__main__":
     run_audit()
+

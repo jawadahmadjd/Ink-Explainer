@@ -108,5 +108,7 @@ For each Shot $N$ from 1 to 334:
 - **Generation Mode**: **ALWAYS COMBINED**. Never generate voiceovers sentence-by-sentence. All script narrations must be passed as unified continuous paragraphs/sections to ensure natural human cadence, seamless emotional inflection, and natural breath pacing.
 - **Active Voice**: `Tyler - Clear US YouTube Creator Voice` (Voice ID: `rPMkKgdwgIwqv4fXgR6N`).
 - **Active Model**: `eleven_multilingual_v2` (SOTA emotional stability and high fidelity).
+- **Silence Normalization Standard**: If an inter-sentence silence pause is greater than 300ms, the excess silence is removed, preserving exactly **150ms tail silence after the current sentence** and **150ms head silence before the next sentence** (total 300ms natural cushion). Timestamps for subsequent sentences and words are sample-accurately adjusted.
+- **NLE XML Sequence Assembly**: An Apple `xmeml` XML sequence (`storyboard_timeline.xml`) places the master normalized audio on Audio Track 1 and maps every storyboard image to Video Track 1 aligned to its exact voiceover sentence timing with zero black gaps.
 - **Target Directory**: `3- Finals/[Video Title]/Voiceovers/`.
 - **Environment Source**: All API credentials, voice IDs, and audio settings are strictly sourced from `.env`.

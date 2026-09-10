@@ -1,9 +1,11 @@
 import csv
 import os
 
-csv_path = os.path.join('3- Finals', 'storyboard_master.csv')
-out_txt = os.path.join('3- Finals', 'all_prompts.txt')
-out_raw = os.path.join('3- Finals', 'all_prompts_raw.txt')
+VIDEO_SUBDIR = "1- What Did Ancient Humans Actually Do All Day"
+FINALS_DIR = os.path.join("3- Finals", VIDEO_SUBDIR)
+csv_path = os.path.join(FINALS_DIR, "storyboard_master.csv")
+out_txt = os.path.join(FINALS_DIR, "all_prompts.txt")
+out_raw = os.path.join(FINALS_DIR, "all_prompts_raw.txt")
 
 with open(csv_path, 'r', encoding='utf-8') as f:
     reader = csv.reader(f)
