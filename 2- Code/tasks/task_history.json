@@ -1,0 +1,172 @@
+[
+  {
+    "task_id": "task_20260911_085520",
+    "task_type": "SCRIPT_AND_STORYBOARD_SYNTHESIS",
+    "project_title": "99- Test Antigravity Architecture",
+    "status": "COMPLETED",
+    "created_at": "2026-09-11T08:55:20.791846",
+    "updated_at": "2026-09-11T08:55:20.872832",
+    "input_payload": {
+      "title": "99- Test Antigravity Architecture",
+      "user_prompt": "Explain why humans dream during REM sleep and what evolutionary purpose it serves.",
+      "matched_blueprint": {},
+      "has_reference_transcript": false,
+      "reference_transcript_preview": ""
+    },
+    "instructions": "ANTIGRAVITY INSTRUCTIONS:\n1. Synthesize a compelling, high-retention 7-act spoken narration script for this title.\n2. Split into fast-paced comic visual beats averaging 16 to 32 characters per shot.\n3. Enforce MinutePhysics stick-figure comic rules: white-filled round heads, bold black outlines, zero realistic anatomy or flesh tones, full bleed 16:9 widescreen environment.\n4. Write output to storyboard_master.csv and complete the task.",
+    "result_summary": "Synthesized 4 shots."
+  },
+  {
+    "task_id": "task_20260911_085520",
+    "task_type": "SCRIPT_AND_STORYBOARD_SYNTHESIS",
+    "project_title": "99- Test Antigravity Architecture",
+    "status": "COMPLETED",
+    "created_at": "2026-09-11T08:55:20.873985",
+    "updated_at": "2026-09-11T08:55:20.880440",
+    "input_payload": {
+      "title": "99- Test Antigravity Architecture",
+      "user_prompt": "",
+      "matched_blueprint": {},
+      "has_reference_transcript": false,
+      "reference_transcript_preview": ""
+    },
+    "instructions": "ANTIGRAVITY INSTRUCTIONS:\n1. Synthesize a compelling, high-retention 7-act spoken narration script for this title.\n2. Split into fast-paced comic visual beats averaging 16 to 32 characters per shot.\n3. Enforce MinutePhysics stick-figure comic rules: white-filled round heads, bold black outlines, zero realistic anatomy or flesh tones, full bleed 16:9 widescreen environment.\n4. Write output to storyboard_master.csv and complete the task.",
+    "result_summary": "Verified by automated test suite"
+  },
+  {
+    "task_id": "task_20260911_085541",
+    "task_type": "SCRIPT_AND_STORYBOARD_SYNTHESIS",
+    "project_title": "99- Test Antigravity Architecture",
+    "status": "COMPLETED",
+    "created_at": "2026-09-11T08:55:41.849058",
+    "updated_at": "2026-09-11T08:55:41.874339",
+    "input_payload": {
+      "title": "99- Test Antigravity Architecture",
+      "user_prompt": "Explain why humans dream during REM sleep and what evolutionary purpose it serves.",
+      "matched_blueprint": {},
+      "has_reference_transcript": false,
+      "reference_transcript_preview": ""
+    },
+    "instructions": "ANTIGRAVITY INSTRUCTIONS:\n1. Synthesize a compelling, high-retention 7-act spoken narration script for this title.\n2. Split into fast-paced comic visual beats averaging 16 to 32 characters per shot.\n3. Enforce MinutePhysics stick-figure comic rules: white-filled round heads, bold black outlines, zero realistic anatomy or flesh tones, full bleed 16:9 widescreen environment.\n4. Write output to storyboard_master.csv and complete the task.",
+    "result_summary": "Synthesized 4 shots."
+  },
+  {
+    "task_id": "task_20260911_085541",
+    "task_type": "SCRIPT_AND_STORYBOARD_SYNTHESIS",
+    "project_title": "99- Test Antigravity Architecture",
+    "status": "COMPLETED",
+    "created_at": "2026-09-11T08:55:41.875362",
+    "updated_at": "2026-09-11T08:55:41.881124",
+    "input_payload": {
+      "title": "99- Test Antigravity Architecture",
+      "user_prompt": "",
+      "matched_blueprint": {},
+      "has_reference_transcript": false,
+      "reference_transcript_preview": ""
+    },
+    "instructions": "ANTIGRAVITY INSTRUCTIONS:\n1. Synthesize a compelling, high-retention 7-act spoken narration script for this title.\n2. Split into fast-paced comic visual beats averaging 16 to 32 characters per shot.\n3. Enforce MinutePhysics stick-figure comic rules: white-filled round heads, bold black outlines, zero realistic anatomy or flesh tones, full bleed 16:9 widescreen environment.\n4. Write output to storyboard_master.csv and complete the task.",
+    "result_summary": "Verified by automated test suite"
+  },
+  {
+    "task_id": "task_20260911_085553",
+    "task_type": "SCRIPT_AND_STORYBOARD_SYNTHESIS",
+    "project_title": "98- Why Do We Forget Dreams",
+    "status": "COMPLETED",
+    "created_at": "2026-09-11T08:55:53.817187",
+    "updated_at": "2026-09-11T08:55:53.830658",
+    "input_payload": {
+      "title": "98- Why Do We Forget Dreams",
+      "user_prompt": "Explain why we immediately forget 90% of our dreams within five minutes of waking up.",
+      "matched_blueprint": {},
+      "has_reference_transcript": false,
+      "reference_transcript_preview": ""
+    },
+    "instructions": "ANTIGRAVITY INSTRUCTIONS:\n1. Synthesize a compelling, high-retention 7-act spoken narration script for this title.\n2. Split into fast-paced comic visual beats averaging 16 to 32 characters per shot.\n3. Enforce MinutePhysics stick-figure comic rules: white-filled round heads, bold black outlines, zero realistic anatomy or flesh tones, full bleed 16:9 widescreen environment.\n4. Write output to storyboard_master.csv and complete the task.",
+    "result_summary": "Synthesized 30 shots."
+  },
+  {
+    "task_id": "task_20260911_092722",
+    "task_type": "SCRIPT_AND_STORYBOARD_SYNTHESIS",
+    "project_title": "98- Why Do We Forget Dreams",
+    "status": "COMPLETED",
+    "created_at": "2026-09-11T09:27:22.994612",
+    "updated_at": "2026-09-11T09:27:23.060095",
+    "input_payload": {
+      "title": "98- Why Do We Forget Dreams",
+      "user_prompt": "Explain why we immediately forget 90% of our dreams within five minutes of waking up.",
+      "matched_blueprint": {},
+      "has_reference_transcript": false,
+      "reference_transcript_preview": ""
+    },
+    "instructions": "ANTIGRAVITY INSTRUCTIONS:\n1. Synthesize a compelling, high-retention 7-act spoken narration script for this title.\n2. Split into fast-paced comic visual beats averaging 16 to 32 characters per shot.\n3. Enforce MinutePhysics stick-figure comic rules: white-filled round heads, bold black outlines, zero realistic anatomy or flesh tones, full bleed 16:9 widescreen environment.\n4. Write output to storyboard_master.csv and complete the task.",
+    "result_summary": "Synthesized 30 shots."
+  },
+  {
+    "task_id": "task_20260911_092731",
+    "task_type": "SCRIPT_AND_STORYBOARD_SYNTHESIS",
+    "project_title": "99- Test Antigravity Architecture",
+    "status": "COMPLETED",
+    "created_at": "2026-09-11T09:27:31.958131",
+    "updated_at": "2026-09-11T09:27:32.034915",
+    "input_payload": {
+      "title": "99- Test Antigravity Architecture",
+      "user_prompt": "Explain why humans dream during REM sleep and what evolutionary purpose it serves.",
+      "matched_blueprint": {},
+      "has_reference_transcript": false,
+      "reference_transcript_preview": ""
+    },
+    "instructions": "ANTIGRAVITY INSTRUCTIONS:\n1. Synthesize a compelling, high-retention 7-act spoken narration script for this title.\n2. Split into fast-paced comic visual beats averaging 16 to 32 characters per shot.\n3. Enforce MinutePhysics stick-figure comic rules: white-filled round heads, bold black outlines, zero realistic anatomy or flesh tones, full bleed 16:9 widescreen environment.\n4. Write output to storyboard_master.csv and complete the task.",
+    "result_summary": "Synthesized 4 shots."
+  },
+  {
+    "task_id": "task_20260911_092732",
+    "task_type": "SCRIPT_AND_STORYBOARD_SYNTHESIS",
+    "project_title": "99- Test Antigravity Architecture",
+    "status": "COMPLETED",
+    "created_at": "2026-09-11T09:27:32.039097",
+    "updated_at": "2026-09-11T09:27:32.059573",
+    "input_payload": {
+      "title": "99- Test Antigravity Architecture",
+      "user_prompt": "",
+      "matched_blueprint": {},
+      "has_reference_transcript": false,
+      "reference_transcript_preview": ""
+    },
+    "instructions": "ANTIGRAVITY INSTRUCTIONS:\n1. Synthesize a compelling, high-retention 7-act spoken narration script for this title.\n2. Split into fast-paced comic visual beats averaging 16 to 32 characters per shot.\n3. Enforce MinutePhysics stick-figure comic rules: white-filled round heads, bold black outlines, zero realistic anatomy or flesh tones, full bleed 16:9 widescreen environment.\n4. Write output to storyboard_master.csv and complete the task.",
+    "result_summary": "Verified by automated test suite"
+  },
+  {
+    "task_id": "task_20260911_094350",
+    "task_type": "SCRIPT_AND_STORYBOARD_SYNTHESIS",
+    "project_title": "99- Test Antigravity Architecture",
+    "status": "COMPLETED",
+    "created_at": "2026-09-11T09:43:50.518712",
+    "updated_at": "2026-09-11T09:43:50.583321",
+    "input_payload": {
+      "title": "99- Test Antigravity Architecture",
+      "user_prompt": "Explain why humans dream during REM sleep and what evolutionary purpose it serves.",
+      "matched_blueprint": {},
+      "has_reference_transcript": false,
+      "reference_transcript_preview": ""
+    },
+    "instructions": "ANTIGRAVITY INSTRUCTIONS:\n1. Synthesize a compelling, high-retention 7-act spoken narration script for this title.\n2. Split into fast-paced comic visual beats averaging 16 to 32 characters per shot.\n3. Enforce MinutePhysics stick-figure comic rules: white-filled round heads, bold black outlines, zero realistic anatomy or flesh tones, full bleed 16:9 widescreen environment.\n4. Write output to storyboard_master.csv and complete the task.",
+    "result_summary": "Synthesized 4 shots."
+  },
+  {
+    "task_id": "task_20260911_094350",
+    "task_type": "SCRIPT_AND_STORYBOARD_SYNTHESIS",
+    "project_title": "99- Test Antigravity Architecture",
+    "status": "COMPLETED",
+    "created_at": "2026-09-11T09:43:50.603950",
+    "updated_at": "2026-09-11T09:43:50.625231",
+    "input_payload": {
+      "title": "99- Test Antigravity Architecture",
+      "user_prompt": "",
+      "matched_blueprint": {},
+      "has_reference_transcript": false,
+      "reference_transcript_preview": ""
+    },
+    "instructions": "ANTIGRAVITY INSTRUCTIONS:\n1. Synthesize a compelling, high-retention 7-act spoken narration script for this title.\n2. Split into fast-paced comic visual beats averaging 16 to 32 characters per shot.\n3. Enforce MinutePhysics stick-figure comic rules: white-filled round heads, bold black outlines, zero realistic anatomy or flesh tones, full bleed 16:9 widescreen environment.\n4. Write output to storyboard_master.csv and complete the task.",
+    "result_summary": "Verified by automated test suite"
+  }
+]

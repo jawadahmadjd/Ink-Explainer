@@ -46,7 +46,7 @@ from learning.learning_engine import (
     split_script_into_fast_paced_shots
 )
 
-def run_stage2_script_prompts(video_title: str, custom_script_path: str = None, user_prompt: str = None) -> dict:
+def run_stage2_script_prompts(video_title: str, custom_script_path: str = None, user_prompt: str = None, force_regenerate: bool = False) -> dict:
     """
     Generate or sync script, master storyboard CSV, all prompts, and character audit.
     Enforces 16-32 character fast pacing with mandatory punctuation dividers.
@@ -66,9 +66,9 @@ def run_stage2_script_prompts(video_title: str, custom_script_path: str = None, 
     audit_json_path = dirs["character_audit"]
     prompt_status_md = dirs["prompt_status_md"]
 
-    # 1. If existing master CSV exists in Finals, preserve and load it
+    # 1. If existing master CSV exists in Finals, preserve and load it unless forced
     existing_rows = []
-    if os.path.exists(master_csv_path):
+    if os.path.exists(master_csv_path) and not force_regenerate:
         print(f"Loading existing storyboard master: {master_csv_path}")
         with open(master_csv_path, "r", encoding="utf-8") as f:
             reader = csv.reader(f)
@@ -83,16 +83,22 @@ def run_stage2_script_prompts(video_title: str, custom_script_path: str = None, 
         # Check if reference video matches
         match = find_matching_reference_video(video_title)
         if match:
-            print(f"🎯 [REFERENCE MATCH FOUND] '{match['title']}' (Score: {match['score']})")
+            print(f"[REFERENCE MATCH FOUND] '{match['title']}' (Score: {match['score']})")
             print(f"   Mirroring reference ideation, hook formula, and 7-act progression...")
 
         rows = []
         if os.path.exists(transcript_path):
             with open(transcript_path, "r", encoding="utf-8") as f:
-                full_text = f.read()
+                raw_text = f.read()
 
-            # Split script into fast-paced shots (16-32 chars + punctuation dividers)
-            shot_texts = split_script_into_fast_paced_shots(full_text, target_min_chars=16, target_max_chars=32)
+            from modules.script_spinner import get_spun_script_for_title
+            # Intelligently spin and rewrite transcript to prevent copy-pasting reference video
+            print("   [SCRIPT SPINNER] Rewriting reference transcript into original narration (0% verbatim)...")
+            spun_script = get_spun_script_for_title(video_title, raw_transcript=raw_text)
+            final_script_text = spun_script if spun_script else raw_text
+
+            # Split spun script into fast-paced shots (16-32 chars + punctuation dividers)
+            shot_texts = split_script_into_fast_paced_shots(final_script_text, target_min_chars=16, target_max_chars=32)
             total_shots_count = len(shot_texts)
 
             # Estimate or align timecodes
@@ -120,27 +126,31 @@ def run_stage2_script_prompts(video_title: str, custom_script_path: str = None, 
                 rows.append([i, tc_str, cut_vo, desc, prompt])
 
         else:
-            # Generate script and shots from user prompt and matched blueprint
-            print(f"Generating custom script & stick-figure storyboard from prompt...")
-            gen_shots = generate_script_and_shots(video_title, user_prompt or "", matched_blueprint=match)
-            total_shots_count = len(gen_shots)
-            shot_dur = 2.0  # nominal ~2s per micro-beat
+            from modules.antigravity_bridge import dispatch_task, wait_for_task_completion
+            print(f"No existing transcript or storyboard found for '{video_title}'.")
+            print(f"Dispatching task to Antigravity AI Engine...")
+            dispatch_task(
+                task_type="SCRIPT_AND_STORYBOARD_SYNTHESIS",
+                project_title=video_title,
+                user_prompt=user_prompt or "",
+                matched_blueprint=match
+            )
+            print(f"Awaiting Antigravity script synthesis and storyboard generation...")
+            completed = wait_for_task_completion(timeout_sec=3600, poll_interval=1.0)
+            if not completed or not os.path.exists(master_csv_path):
+                raise TimeoutError(f"Antigravity task timed out or '{master_csv_path}' was not generated.")
 
-            for s in gen_shots:
-                i = s["shot_num"]
-                s_time = (i - 1) * shot_dur
-                e_time = i * shot_dur
-                s_min, s_sec = int(s_time // 60), s_time % 60
-                e_min, e_sec = int(e_time // 60), e_time % 60
-                tc_str = f"{s_min:02d}:{s_sec:04.1f} - {e_min:02d}:{e_sec:04.1f}"
+            with open(master_csv_path, "r", encoding="utf-8") as f:
+                reader = csv.reader(f)
+                header = next(reader, None)
+                existing_rows = list(reader)
 
-                rows.append([i, tc_str, s["voiceover"], s["description"], s["prompt"]])
-
-        existing_rows = rows
-        with open(master_csv_path, "w", newline="", encoding="utf-8") as f:
-            writer = csv.writer(f)
-            writer.writerow(["Shot", "Timecode", "Voiceover", "Description", "Stick Figure Prompt"])
-            writer.writerows(rows)
+        if force_regenerate or not os.path.exists(master_csv_path):
+            existing_rows = rows
+            with open(master_csv_path, "w", newline="", encoding="utf-8") as f:
+                writer = csv.writer(f)
+                writer.writerow(["Shot #", "Time", "Spoken VO script", "Visual description", "Exact Prompt for google nano banana pro"])
+                writer.writerows(rows)
 
     total_shots = len(existing_rows)
 

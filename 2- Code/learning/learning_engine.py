@@ -54,82 +54,129 @@ def normalize_title(title: str) -> str:
     cleaned = re.sub(r"[^\w\s]", " ", cleaned)
     return " ".join(cleaned.lower().split())
 
-def split_script_into_fast_paced_shots(text: str, target_min_chars: int = 16, target_max_chars: int = 32) -> list:
+DOT_PLACEHOLDER = chr(0xE001)
+COMMA_PLACEHOLDER = chr(0xE002)
+COLON_PLACEHOLDER = chr(0xE003)
+
+def protect_script_tokens(text: str) -> str:
+    """Protect decimals, numbers with commas, times, and abbreviations from being split."""
+    # 1. Protect numbers with decimals (e.g., 99.9%, 3.14, 0.5)
+    text = re.sub(r'(\d+)\.(\d+)', lambda m: m.group(1) + DOT_PLACEHOLDER + m.group(2), text)
+    # 2. Protect numbers with commas (e.g., 300,000, 1,000)
+    text = re.sub(r'(\d+),(\d+)', lambda m: m.group(1) + COMMA_PLACEHOLDER + m.group(2), text)
+    # 3. Protect time notations (e.g., 11:00, 08:30)
+    text = re.sub(r'(\d+):(\d+)', lambda m: m.group(1) + COLON_PLACEHOLDER + m.group(2), text)
+    # 4. Protect abbreviations
+    abbrs = ['e.g.', 'i.e.', 'vs.', 'etc.', 'dr.', 'mr.', 'mrs.', 'ms.', 'prof.', 'al.', 'p.m.', 'a.m.', 'u.s.', 'p.n.a.s.']
+    for abbr in abbrs:
+        pattern = re.compile(r'\b' + re.escape(abbr), re.IGNORECASE)
+        rep = abbr.replace('.', DOT_PLACEHOLDER)
+        text = pattern.sub(rep, text)
+    # 5. Protect ellipsis (...)
+    text = re.sub(r'\.{3,}', DOT_PLACEHOLDER * 3, text)
+    return text
+
+def unprotect_script_tokens(text: str) -> str:
+    """Restore original punctuation for protected script tokens."""
+    return (text.replace(DOT_PLACEHOLDER, '.')
+                .replace(COMMA_PLACEHOLDER, ',')
+                .replace(COLON_PLACEHOLDER, ':'))
+
+def split_clause_at_natural_breaks(clause: str, target_min: int = 16, target_max: int = 34) -> list:
+    """Subdivides a clause at natural syntactic and visual cut boundaries (conjunctions, prepositions)."""
+    words = clause.split()
+    if not words:
+        return []
+    if len(clause) <= target_max:
+        return [clause]
+
+    NATURAL_CUT_WORDS = {
+        'and', 'but', 'so', 'because', 'while', 'when', 'where',
+        'which', 'that', 'who', 'or', 'as', 'if', 'though',
+        'before', 'after', 'until', 'inside', 'outside', 'with',
+        'without', 'during', 'across', 'let', 'compared',
+        'in', 'on', 'at', 'into', 'about'
+    }
+
+    chunks = []
+    curr_words = []
+    curr_len = 0
+
+    for i, w in enumerate(words):
+        w_len = len(w)
+        proj_len = curr_len + 1 + w_len if curr_words else w_len
+        clean_w = re.sub(r'[^a-zA-Z]', '', w).lower()
+        remaining_len = sum(len(x) for x in words[i:]) + (len(words) - 1 - i)
+
+        if curr_words and curr_len >= target_min and clean_w in NATURAL_CUT_WORDS and remaining_len >= target_min:
+            chunks.append(' '.join(curr_words))
+            curr_words = [w]
+            curr_len = w_len
+        elif curr_words and proj_len > target_max:
+            chunks.append(' '.join(curr_words))
+            curr_words = [w]
+            curr_len = w_len
+        else:
+            curr_words.append(w)
+            curr_len = proj_len
+
+    if curr_words:
+        chunks.append(' '.join(curr_words))
+
+    # Merge tiny fragments (< 12 chars) into adjacent chunks if under 42 chars
+    balanced = []
+    for ch in chunks:
+        if not balanced:
+            balanced.append(ch)
+        elif len(ch) < 12 and (len(balanced[-1]) + 1 + len(ch)) <= 42:
+            balanced[-1] = f"{balanced[-1]} {ch}"
+        elif len(balanced[-1]) < 12 and (len(balanced[-1]) + 1 + len(ch)) <= 42:
+            balanced[-1] = f"{balanced[-1]} {ch}"
+        else:
+            balanced.append(ch)
+
+    return balanced
+
+def split_script_into_fast_paced_shots(text: str, target_min_chars: int = 16, target_max_chars: int = 34) -> list:
     """
-    Splits narration script into fast-paced visual beats.
-    Rules:
-    1. Every punctuation divider ([,.;:!?—–\n]) creates a new shot beat immediately,
-       no matter how short that segment is (e.g. 'Why?' is 4 chars, but gets its own shot).
-    2. Any segment between punctuation that exceeds target_max_chars (32 chars) is subdivided
-       at natural word boundaries into balanced chunks of 16-32 characters.
+    Intelligent script splitting for ink explainer video storyboarding:
+    1. Protects decimals (e.g. 99.9%), numbers with commas, abbreviations, and times.
+    2. Respects natural punctuation boundaries and pauses (commas, semicolons, dashes, periods).
+    3. Splits long clauses at natural linguistic transition points (conjunctions, prepositions).
+    4. Balances shots to avoid awkward fragments.
     """
     clean_text = text.replace("\r\n", "\n").strip()
     if not clean_text:
         return []
 
-    # First, split into raw tokens keeping punctuation attached
-    # Regex splits by delimiter while retaining it
-    raw_parts = PUNCT_REGEX.split(clean_text)
-    
-    # Pair clause with its terminating punctuation
+    prot = protect_script_tokens(clean_text)
+
+    # Split on natural pause delimiters: comma, semicolon, question mark, exclamation, dash, newline,
+    # or period followed by whitespace or end of string.
+    raw_clauses = re.split(r'([,;!?—\n]|\.(?:\s+|$)| - )', prot)
+
     clauses = []
     i = 0
-    while i < len(raw_parts):
-        chunk = raw_parts[i].strip()
-        punct = raw_parts[i+1] if i + 1 < len(raw_parts) else ""
-        if chunk or punct:
-            # Combine chunk with punctuation (strip whitespace between them)
-            clause_str = f"{chunk}{punct.strip()}".strip()
-            if clause_str:
-                clauses.append(clause_str)
+    while i < len(raw_clauses):
+        seg = raw_clauses[i].strip()
+        punct = raw_clauses[i+1].strip() if i + 1 < len(raw_clauses) else ''
+        if seg or punct:
+            if punct in [',', ';', '!', '?', '—', '.']:
+                full_seg = f'{seg}{punct}'
+            elif punct:
+                full_seg = f'{seg} {punct}'.strip()
+            else:
+                full_seg = seg
+            if full_seg:
+                clauses.append(full_seg)
         i += 2
 
     final_shots = []
+    for c in clauses:
+        sub = split_clause_at_natural_breaks(c, target_min=target_min_chars, target_max=target_max_chars)
+        final_shots.extend(sub)
 
-    for clause in clauses:
-        # If clause length <= target_max_chars, it qualifies as an independent shot beat
-        if len(clause) <= target_max_chars:
-            final_shots.append(clause)
-        else:
-            # Clause exceeds 32 characters: subdivide at natural word boundaries
-            words = clause.split()
-            if len(words) <= 1:
-                final_shots.append(clause)
-                continue
-
-            sub_chunks = []
-            curr_words = []
-            curr_len = 0
-
-            for w in words:
-                projected_len = len(w) if not curr_words else curr_len + 1 + len(w)
-                if curr_words and projected_len > target_max_chars:
-                    sub_chunks.append(" ".join(curr_words))
-                    curr_words = [w]
-                    curr_len = len(w)
-                else:
-                    curr_words.append(w)
-                    curr_len = projected_len
-
-            if curr_words:
-                # Check if the trailing chunk is too short compared to target_min
-                # and can be balanced with the previous chunk
-                if sub_chunks and curr_len < target_min_chars:
-                    prev_words = sub_chunks[-1].split()
-                    all_words = prev_words + curr_words
-                    # Balanced split
-                    mid = max(1, len(all_words) // 2)
-                    c1 = " ".join(all_words[:mid])
-                    c2 = " ".join(all_words[mid:])
-                    sub_chunks[-1] = c1
-                    sub_chunks.append(c2)
-                else:
-                    sub_chunks.append(" ".join(curr_words))
-
-            final_shots.extend(sub_chunks)
-
-    # Clean and filter out empty shots
-    return [s.strip() for s in final_shots if s.strip()]
+    return [unprotect_script_tokens(s.strip()) for s in final_shots if s.strip()]
 
 def _compute_match_score(user_words: set, norm_user: str, key_words: set, norm_key: str) -> float:
     if not user_words or not key_words:
@@ -355,34 +402,9 @@ def generate_script_and_shots(title: str, user_prompt: str, matched_blueprint: d
     """
     clean_title = re.sub(r"^\d+\s*[-_.]\s*", "", title)
     
-    # 1. Check if Gemini API can synthesize the text dynamically
-    gemini_key = os.getenv("GEMINI_API_KEY", "")
-    full_script = ""
-
-    if gemini_key:
-        try:
-            import google.generativeai as genai
-            genai.configure(api_key=gemini_key)
-            context = get_distilled_prompt_context(matched_blueprint)
-            prompt_payload = f"""{context}
-
-Generate a complete, high-retention narration script for an Ink Explainer video titled: "{clean_title}".
-Creative Direction / Specific Instructions: {user_prompt or 'Follow the standard 7-act retention architecture.'}
-
-Format requirement:
-Write the complete spoken narration script. Use punchy, conversational sentences with clear punctuation (commas, periods, question marks).
-Do NOT include stage directions, bracketed cues, or sound effect notes in the spoken text."""
-
-            model = genai.GenerativeModel("gemini-1.5-flash")
-            response = model.generate_content(prompt_payload)
-            if response and response.text:
-                full_script = response.text.strip()
-        except Exception as e:
-            print(f"[GEMINI SCRIPT SYNTHESIS FALLBACK] {e}")
-
-    # Fallback structured script generation if Gemini not available or failed
-    if not full_script:
-        full_script = _generate_fallback_script(clean_title, user_prompt, matched_blueprint)
+    # 1. Antigravity AI Engine is the primary reasoning brain
+    # (No external LLM API dependency)
+    full_script = _generate_fallback_script(clean_title, user_prompt, matched_blueprint)
 
     # 2. Apply strict 16-32 char + punctuation divider shot splitting
     raw_shot_texts = split_script_into_fast_paced_shots(full_script, target_min_chars=16, target_max_chars=32)

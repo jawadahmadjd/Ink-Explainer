@@ -42,3 +42,8 @@ Thumbs.db
 *.log
 .vscode/
 .idea/
+
+# Local databases and runtime data
+data/
+*.db
+storyboard_timeline.xml

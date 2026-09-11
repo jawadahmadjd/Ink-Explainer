@@ -32,6 +32,13 @@ from learning.learning_engine import (
     find_matching_reference_video,
     ingest_postmortem_to_codex
 )
+from modules.antigravity_bridge import (
+    dispatch_task,
+    get_active_task,
+    complete_task,
+    wait_for_task_completion,
+    synthesize_storyboard_from_script
+)
 
 app = Flask(__name__, template_folder=os.path.join(CODE_DIR, "templates"))
 
@@ -112,10 +119,28 @@ def run_pipeline_worker(url: str, custom_title: str, model: str, pause_mode: boo
             add_log("Mode B: Manual Title & Prompt Mode. Stage 1 Ingestion bypassed.")
 
         # Step 2: Script & Prompts
+        dirs = config.get_project_dirs(project_folder)
+        has_existing_script = os.path.exists(dirs["master_csv"])
+        has_transcript = os.path.exists(os.path.join(dirs["postmortem_dir"], "clean_transcript.txt"))
+
+        if not has_existing_script and not has_transcript:
+            STATE["state"] = "AWAITING_ANTIGRAVITY_SCRIPT"
+            STATE["step2"] = "AWAITING_ANTIGRAVITY"
+            STATE["task_description"] = f"Awaiting Antigravity AI Engine to synthesize script and storyboard for '{project_folder}'..."
+            add_log(f"Stage 2: Dispatched task to Antigravity AI Engine for '{project_folder}'. Waiting for synthesis...")
+            dispatch_task(
+                task_type="SCRIPT_AND_STORYBOARD_SYNTHESIS",
+                project_title=project_folder,
+                user_prompt=prompt
+            )
+            completed = wait_for_task_completion(timeout_sec=3600, poll_interval=1.0)
+            if not completed or not os.path.exists(dirs["master_csv"]):
+                raise RuntimeError("Antigravity task timed out or storyboard CSV was not created.")
+
         STATE["state"] = "RUNNING_SCRIPT"
         STATE["step2"] = "RUNNING"
-        STATE["task_description"] = "Stage 2: Script & Stick-Figure Prompts..."
-        add_log("Generating script and full-bleed stick-figure prompts (16-32 char pacing)...")
+        STATE["task_description"] = "Stage 2: Compiling Script & Stick-Figure Prompts..."
+        add_log("Compiling script and full-bleed stick-figure prompts (16-32 char pacing)...")
         run_stage2_script_prompts(project_folder, user_prompt=prompt)
         STATE["step2"] = "COMPLETED"
         add_log("Stage 2 Script & Storyboard Prompts ready.")
@@ -174,50 +199,84 @@ def run_single_stage_worker(folder_name: str, stage_num: int, url: str, model: s
             if not url:
                 add_log("Error: Stage 1 requires a YouTube URL.")
                 return
-            new_folder = config.get_next_project_folder_name("Ink Explainer Video")
+            raw_title = "Ink Explainer Video"
+            try:
+                meta_res = subprocess.run(["yt-dlp", "--dump-json", "--no-warnings", url], capture_output=True, text=True, check=True)
+                raw_title = json.loads(meta_res.stdout).get("title", "Ink Explainer Video")
+            except Exception:
+                pass
+            new_folder = config.get_next_project_folder_name(raw_title)
             STATE["project_title"] = new_folder
             STATE["state"] = "RUNNING_POSTMORTEM"
             STATE["step1"] = "RUNNING"
+            STATE["task_description"] = f"Ingesting and analyzing '{new_folder}'..."
             add_log(f"Running standalone Stage 1 into '{new_folder}'...")
             run_stage1_postmortem(url, custom_title=new_folder)
             STATE["step1"] = "COMPLETED"
             STATE["state"] = "COMPLETED"
+            STATE["task_description"] = f"Stage 1 Postmortem complete for '{new_folder}'. Ready for Stage 2 (Script & Storyboard)."
             add_log(f"Standalone Stage 1 complete in '{new_folder}'.")
 
         elif stage_num == 2:
+            dirs = config.get_project_dirs(title)
+            has_existing_script = os.path.exists(dirs["master_csv"])
+            has_transcript = os.path.exists(os.path.join(dirs["postmortem_dir"], "clean_transcript.txt"))
+
+            if not has_existing_script and not has_transcript:
+                STATE["state"] = "AWAITING_ANTIGRAVITY_SCRIPT"
+                STATE["step2"] = "AWAITING_ANTIGRAVITY"
+                STATE["task_description"] = f"Awaiting Antigravity AI Engine to synthesize script for '{title}'..."
+                add_log(f"Standalone Stage 2: Dispatched task to Antigravity AI Engine for '{title}'...")
+                dispatch_task(
+                    task_type="SCRIPT_AND_STORYBOARD_SYNTHESIS",
+                    project_title=title,
+                    user_prompt=""
+                )
+                completed = wait_for_task_completion(timeout_sec=3600, poll_interval=1.0)
+                if not completed or not os.path.exists(dirs["master_csv"]):
+                    raise RuntimeError("Antigravity task timed out or storyboard CSV was not created.")
+
             STATE["state"] = "RUNNING_SCRIPT"
             STATE["step2"] = "RUNNING"
+            STATE["task_description"] = f"Compiling spun script and MinutePhysics prompts for '{title}'..."
             add_log(f"Running standalone Stage 2 for '{title}'...")
             run_stage2_script_prompts(title)
             STATE["step2"] = "COMPLETED"
             STATE["state"] = "COMPLETED"
+            STATE["task_description"] = f"Stage 2 Storyboard & Prompts complete for '{title}'. Ready for Stage 3 (Voiceover)."
             add_log(f"Standalone Stage 2 complete for '{title}'.")
 
         elif stage_num == 3:
             STATE["state"] = "RUNNING_VOICEOVER"
             STATE["step3"] = "RUNNING"
+            STATE["task_description"] = f"Generating ElevenLabs Voiceover for '{title}'..."
             add_log(f"Running standalone Stage 3 for '{title}'...")
             run_stage3_voiceover(title, force_regenerate=True)
             STATE["step3"] = "COMPLETED"
             STATE["state"] = "COMPLETED"
+            STATE["task_description"] = f"Stage 3 Voiceover complete for '{title}'. Ready for Stage 4 (Images)."
             add_log(f"Standalone Stage 3 complete for '{title}'.")
 
         elif stage_num == 4:
             STATE["state"] = "RUNNING_IMAGES"
             STATE["step4"] = "RUNNING"
+            STATE["task_description"] = f"Generating stick-figure images via Google Flow CDP for '{title}' on {model}..."
             add_log(f"Running standalone Stage 4 for '{title}' on {model}...")
             run_stage4_image_gen(title, model=model)
             STATE["step4"] = "COMPLETED"
             STATE["state"] = "COMPLETED"
+            STATE["task_description"] = f"Stage 4 Images complete for '{title}'. Ready for Stage 5/6 (Review & XML)."
             add_log(f"Standalone Stage 4 complete for '{title}'.")
 
         elif stage_num == 6:
             STATE["state"] = "ASSEMBLING_XML"
             STATE["step6"] = "RUNNING"
+            STATE["task_description"] = f"Assembling Premiere/FCP Timeline XML for '{title}'..."
             add_log(f"Running standalone Stage 6 for '{title}'...")
             run_stage5_timeline_xml(title)
             STATE["step6"] = "COMPLETED"
             STATE["state"] = "COMPLETED"
+            STATE["task_description"] = f"Stage 6 Timeline XML assembled for '{title}'."
             add_log(f"Standalone Stage 6 Timeline XML assembled for '{title}'.")
 
     except Exception as ex:
@@ -328,7 +387,7 @@ def start_from_prompt():
 def run_stage():
     """Run a specific standalone stage."""
     data = request.json or {}
-    folder_name = data.get("folder_name", "").strip()
+    folder_name = data.get("folder_name", "").strip() or STATE.get("project_title", "").strip()
     stage_num = int(data.get("stage_num", 1))
     url = data.get("url", "").strip()
     model = data.get("model", "Nano Banana Pro")
@@ -351,6 +410,74 @@ def resume_pipeline():
     add_log("Resuming pipeline execution to next stage...")
     PAUSE_EVENT.set()
     return jsonify({"success": True, "message": "Resumed."})
+
+# -----------------------------------------------------------------------------
+# ANTIGRAVITY AI ENGINE BRIDGE ROUTES
+# -----------------------------------------------------------------------------
+@app.route("/api/antigravity/task", methods=["GET"])
+def api_get_antigravity_task():
+    """Return the current active task awaiting Antigravity execution."""
+    task = get_active_task()
+    return jsonify({"active_task": task})
+
+@app.route("/api/antigravity/complete", methods=["POST"])
+def api_complete_antigravity_task():
+    """Mark the active task complete and wake up waiting pipeline worker threads."""
+    data = request.json or {}
+    summary = data.get("summary", "Task marked complete via API")
+    task = get_active_task()
+    if task:
+        complete_task(task.get("task_id"), result_summary=summary)
+        add_log(f"Antigravity AI Engine completed task: {summary}")
+        return jsonify({"success": True, "message": "Task marked complete!"})
+    return jsonify({"success": False, "message": "No active task found."}), 404
+
+@app.route("/api/antigravity/submit-script", methods=["POST"])
+def api_submit_script():
+    """Directly submit synthesized script/shots to build storyboard CSV and complete task."""
+    data = request.json or {}
+    title = data.get("title", STATE["project_title"]).strip()
+    script = data.get("script", "").strip()
+    shots = data.get("shots", [])
+
+    if not title:
+        return jsonify({"success": False, "message": "Project title is required."}), 400
+    if not script and not shots:
+        return jsonify({"success": False, "message": "Script text or shots array is required."}), 400
+
+    add_log(f"Antigravity AI Engine synthesizing storyboard for '{title}'...")
+    res = synthesize_storyboard_from_script(script, title, custom_shots=shots)
+    task = get_active_task()
+    if task and task.get("project_title") == title:
+        complete_task(task.get("task_id"), result_summary=f"Synthesized {res['total_shots']} shots.")
+
+    add_log(f"Antigravity synthesized {res['total_shots']} shots (16-32 char pacing) for '{title}'.")
+    return jsonify({"success": True, "result": res})
+
+@app.route("/api/select-project", methods=["POST"])
+def select_project():
+    """Synchronize user project selection from UI to backend STATE."""
+    data = request.json or {}
+    title = data.get("title", "").strip()
+    STATE["project_title"] = title
+    if STATE["state"] == "ERROR":
+        STATE["state"] = "IDLE"
+        STATE["task_description"] = f"Ready. Selected project '{title}'." if title else "Clean canvas ready."
+    return jsonify({"success": True, "project_title": title, "state": STATE["state"]})
+
+@app.route("/api/reset-state", methods=["POST"])
+def reset_state():
+    """Clear error and reset pipeline state to IDLE."""
+    STATE["state"] = "IDLE"
+    STATE["task_description"] = "Clean canvas ready. Select a project or paste a URL to begin."
+    STATE["step1"] = "WAITING"
+    STATE["step2"] = "WAITING"
+    STATE["step3"] = "WAITING"
+    STATE["step4"] = "WAITING"
+    STATE["step5"] = "WAITING"
+    STATE["step6"] = "WAITING"
+    return jsonify({"success": True})
+
 
 @app.route("/api/shots")
 def get_shots():

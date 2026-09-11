@@ -2,14 +2,17 @@
   "_version": "1.0.0",
   "_description": "Distilled AI Learning Codex. Zero-bloat knowledge repository containing running statistical medians, pacing constraints, 7-act retention formulas, and reference video blueprints.",
   "metadata": {
-    "total_videos_analyzed": 1,
-    "last_updated": "2026-09-10T15:30:00Z"
+    "total_videos_analyzed": 4,
+    "last_updated": "2026-09-11T10:38:48.053231"
   },
   "running_medians": {
     "wpm": 224.6,
     "avg_cut_interval_sec": 2.51,
     "hook_cut_interval_sec": 1.2,
-    "words_per_minute_range": [215.0, 235.0],
+    "words_per_minute_range": [
+      215.0,
+      235.0
+    ],
     "target_chars_per_shot_min": 16,
     "target_chars_per_shot_max": 32,
     "lufs_integrated": -12.28,
@@ -17,8 +20,21 @@
     "max_pause_between_shots_ms": 300
   },
   "pacing_rules": {
-    "target_char_range": [16, 32],
-    "punctuation_dividers": [",", ".", ";", "?", "!", ":", "—", "–", "\n"],
+    "target_char_range": [
+      16,
+      32
+    ],
+    "punctuation_dividers": [
+      ",",
+      ".",
+      ";",
+      "?",
+      "!",
+      ":",
+      "\u2014",
+      "\u2013",
+      "\n"
+    ],
     "divider_rule_description": "Every punctuation mark acts as a mandatory divider to create a new shot regardless of character shortness (e.g. 'Why?' is 4 chars, but gets its own shot). Non-punctuated text longer than 32 chars is subdivided at natural word boundaries targeting 16-32 chars per beat."
   },
   "narrative_framework": {
@@ -86,7 +102,7 @@
       "key_evidence": [
         "Abu Hureyra skeletal biomechanics (hunter decathlete vs farmer spinal wear and tooth rot)",
         "Richard Lee 1963 Kalahari Dobe !Kung stopwatch study (17.1 hrs/week)",
-        "Hadza (15 hrs), Gunwinggu (16 hrs), Aché (19 hrs) comparative verification",
+        "Hadza (15 hrs), Gunwinggu (16 hrs), Ach\u00e9 (19 hrs) comparative verification",
         "Chauvet Cave animation art & Sunghir 10,000 mammoth ivory beads",
         "Polly Wiessner firelight storytelling transcript analysis",
         "Biphasic sleep & prolactin surge during 'The Watch' (1:00 AM)"
@@ -100,6 +116,39 @@
         "Act 6: Biphasic Sleep & Insomnia Truth",
         "Act 7: Wheat Porridge Trap & Modern Retirement Irony"
       ]
+    },
+    "what did ancient humans do at night": {
+      "title": "What Did Ancient Humans Do at Night",
+      "folder_name": "2- What Did Ancient Humans Do at Night",
+      "duration_sec": 0.0,
+      "cuts_count": 0,
+      "word_count": 1602,
+      "hook": "Kind: captions Language: en Tonight, when the sun goes down, you're going to flip a switch.",
+      "core_thesis": "",
+      "key_evidence": [],
+      "story_progression": []
+    },
+    "what did ancient humans do when it rained all week": {
+      "title": "What Did Ancient Humans Do When It Rained All Week",
+      "folder_name": "3- What Did Ancient Humans Do When It Rained All Week",
+      "duration_sec": 0.0,
+      "cuts_count": 0,
+      "word_count": 2417,
+      "hook": "Kind: captions Language: en Imagine you haven't eaten in 2 days.",
+      "core_thesis": "",
+      "key_evidence": [],
+      "story_progression": []
+    },
+    "the entire history of iran in 11 minutes": {
+      "title": "The ENTIRE History of Iran in 11 Minutes",
+      "folder_name": "4- The ENTIRE History of Iran in 11 Minutes",
+      "duration_sec": 0.0,
+      "cuts_count": 0,
+      "word_count": 1902,
+      "hook": "For thousands of years, the world's greatest empires made the exact same fatal mistake.",
+      "core_thesis": "",
+      "key_evidence": [],
+      "story_progression": []
     }
   }
 }

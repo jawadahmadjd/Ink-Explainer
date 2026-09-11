@@ -36,7 +36,7 @@ def clean_vtt_subtitles(vtt_path: str) -> str:
     seen = set()
     for line in lines:
         line = line.strip()
-        if not line or line.startswith("WEBVTT") or "-->" in line or line.isdigit():
+        if not line or line.startswith("WEBVTT") or "-->" in line or line.isdigit() or line.startswith("Kind:") or line.startswith("Language:") or line.startswith("NOTE") or line.startswith("STYLE") or line.startswith("Region:"):
             continue
         # Remove formatting tags like <c>, </c>, <00:00:00.000>
         text = re.sub(r"<[^>]+>", "", line).strip()
@@ -65,8 +65,10 @@ def run_stage1_postmortem(video_url: str, custom_title: str = None) -> dict:
         raise RuntimeError(f"yt-dlp failed to fetch metadata: {res.stderr.strip()}")
 
     info = json.loads(res.stdout)
-    raw_title = custom_title or info.get("title", "Ink Explainer Video")
-    video_title = config.sanitize_title(raw_title)
+    if custom_title:
+        video_title = config.sanitize_title(custom_title)
+    else:
+        video_title = config.get_next_project_folder_name(info.get("title", "Ink Explainer Video"))
     dirs = config.get_project_dirs(video_title)
     pm_dir = dirs["postmortem_dir"]
     os.makedirs(pm_dir, exist_ok=True)
@@ -85,7 +87,8 @@ def run_stage1_postmortem(video_url: str, custom_title: str = None) -> dict:
         print("Downloading reference video (low-res MP4)...")
         dl_cmd = [
             "yt-dlp",
-            "-f", "worst[ext=mp4]/worst",
+            "-f", "worstvideo[ext=mp4]+worstaudio[ext=m4a]/worstvideo+worstaudio/worst[ext=mp4]/worst/best",
+            "--merge-output-format", "mp4",
             "-o", video_low_path,
             video_url
         ]

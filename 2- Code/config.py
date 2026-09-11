@@ -4,9 +4,22 @@ Defines directories, API credentials, silence rules, model cascades, and scoring
 """
 
 import os
+import sys
 import re
 from pathlib import Path
 from dotenv import load_dotenv
+
+# Ensure safe UTF-8 terminal encoding on Windows without charmap crashes
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+if hasattr(sys.stderr, "reconfigure"):
+    try:
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENV_FILE = os.path.join(PROJECT_ROOT, ".env")
@@ -21,7 +34,9 @@ FINALS_ROOT = os.path.join(PROJECT_ROOT, "3- Finals")
 ROOT_CANONICAL_IMAGES_DIR = os.path.join(PROJECT_ROOT, "Final selected images")
 
 def sanitize_title(title: str) -> str:
-    clean = "".join(c for c in title if c.isalnum() or c in (" ", "-", "_", "'", "?", "!", ".", "(", ")")).strip()
+    # Strip illegal Windows path characters (< > : " / \ | ? *)
+    clean = "".join(c for c in title if c.isalnum() or c in (" ", "-", "_", "'", ".", "(", ")")).strip()
+    clean = re.sub(r"\s+", " ", clean)
     return clean
 
 def get_next_project_folder_name(raw_title: str) -> str:
