@@ -3,7 +3,7 @@ Antigravity CLI Utility
 Author: Google DeepMind Antigravity System
 Command-line interface for:
 1. Inspecting pending Antigravity tasks.
-2. Submitting synthesized scripts and decomposing into 16-32 char storyboard beats.
+2. Submitting synthesized scripts and decomposing into 20-50 char storyboard beats.
 3. Marking tasks complete to resume automated pipeline execution.
 """
 
@@ -71,7 +71,7 @@ def main():
 
         print(f"Synthesizing storyboard for '{project}'...")
         res = synthesize_storyboard_from_script(script_content, project)
-        print(f"Success! Generated {res['total_shots']} shots adhering to 16-32 char pacing.")
+        print(f"Success! Generated {res['total_shots']} shots adhering to 20-50 char pacing.")
         print(f"Master CSV: {res['master_csv']}")
 
         # Complete task if active

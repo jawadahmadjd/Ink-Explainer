@@ -1,11 +1,12 @@
 {
-  "_version": "1.0.0",
-  "_description": "Distilled AI Learning Codex. Zero-bloat knowledge repository containing running statistical medians, pacing constraints, 7-act retention formulas, and reference video blueprints.",
+  "_version": "2.0.0",
+  "_description": "Multi-Niche AI Learning Codex with categorized statistical training bases and dynamic niche provisioning.",
   "metadata": {
     "total_videos_analyzed": 4,
-    "last_updated": "2026-09-11T10:38:48.053231"
+    "active_niches_count": 7,
+    "last_updated": "2026-09-22T18:14:31.958289"
   },
-  "running_medians": {
+  "global_fallback_medians": {
     "wpm": 224.6,
     "avg_cut_interval_sec": 2.51,
     "hook_cut_interval_sec": 1.2,
@@ -13,16 +14,16 @@
       215.0,
       235.0
     ],
-    "target_chars_per_shot_min": 16,
-    "target_chars_per_shot_max": 32,
+    "target_chars_per_shot_min": 20,
+    "target_chars_per_shot_max": 50,
     "lufs_integrated": -12.28,
     "loudness_range_lra": 2.5,
     "max_pause_between_shots_ms": 300
   },
   "pacing_rules": {
     "target_char_range": [
-      16,
-      32
+      20,
+      50
     ],
     "punctuation_dividers": [
       ",",
@@ -35,120 +36,764 @@
       "\u2013",
       "\n"
     ],
-    "divider_rule_description": "Every punctuation mark acts as a mandatory divider to create a new shot regardless of character shortness (e.g. 'Why?' is 4 chars, but gets its own shot). Non-punctuated text longer than 32 chars is subdivided at natural word boundaries targeting 16-32 chars per beat."
+    "divider_rule_description": "Every punctuation mark acts as a mandatory divider to create a new shot regardless of character shortness. Non-punctuated text longer than 50 chars is subdivided at natural word boundaries targeting 20-50 chars per beat."
   },
-  "narrative_framework": {
-    "name": "7-Act Retention Architecture",
-    "structure": [
-      {
-        "act": 1,
-        "name": "The Modern Trap (Opening Hook)",
-        "pacing": "Ultra-fast (1.0s - 1.5s per cut)",
-        "formula": "Second-person indictment ('You'), relatable modern friction (phone screens, alarms, desks), followed by a sudden contrast snap into deep time."
-      },
-      {
-        "act": 2,
-        "name": "Dismantling the Myth via Hard Evidence",
-        "pacing": "Moderate (2.0s - 2.5s per cut)",
-        "formula": "Take the standard conventional wisdom ('life was brutish and short') and shatter it using forensic or archaeological physical evidence (e.g. skeletal bioarchaeology, bone density vs. farmer arthritis)."
-      },
-      {
-        "act": 3,
-        "name": "Sensory Day-in-the-Life Immersion",
-        "pacing": "Dynamic (2.2s - 2.8s per cut)",
-        "formula": "Walk through a vivid chronological day. Highlight an evolutionary superpower (e.g. full-body sweating and persistence hunting, sensory acuity)."
-      },
-      {
-        "act": 4,
-        "name": "The Statistical Paradigm Shift",
-        "pacing": "Moderate (2.5s per cut)",
-        "formula": "Cite rigorous empirical studies (stopwatch field research, global comparative data across cultures) that mathematically prove the counter-intuitive truth."
-      },
-      {
-        "act": 5,
-        "name": "The Human Core (Art, Leisure & Storytelling)",
-        "pacing": "Lyrical (2.5s - 3.0s per cut)",
-        "formula": "Explore what humans did with their abundance of free time (cave paintings, intricate crafts, games, firelight storytelling)."
-      },
-      {
-        "act": 6,
-        "name": "The Biological Mismatch",
-        "pacing": "Intimate (2.0s - 2.5s per cut)",
-        "formula": "Connect a modern medical/psychological ailment (insomnia, anxiety, chronic fatigue) to an ancient biological adaptation (e.g. biphasic sleep, the 1 AM Watch)."
-      },
-      {
-        "act": 7,
-        "name": "The Trap Closes & Modern Irony",
-        "pacing": "Punchy (1.5s - 2.2s per cut)",
-        "formula": "Show how progress created unintended entrapment (agriculture, granaries, walls, taxes), ending on a poignant philosophical irony about modern life."
-      }
-    ]
-  },
-  "visual_style": {
-    "art_style": "Minimalist hand-drawn 2D vector line art, bold black ink comic contours, expressive stick-figure characters (MinutePhysics & Casually Explained aesthetic).",
-    "framing": "Full bleed edge-to-edge illustration, grounded environment completely filling 16:9 widescreen frame without white matted borders or floating boxes.",
-    "color_palette": "Flat muted earthy tones (charcoal ink, paper parchment, ochre, terracotta, slate blue)."
-  },
-  "reference_blueprints": {
-    "what did ancient humans actually do all day": {
-      "title": "What Did Ancient Humans Actually Do All Day?",
-      "folder_name": "1- What Did Ancient Humans Actually Do All Day",
-      "duration_sec": 672.08,
-      "word_count": 2516,
-      "cuts_count": 268,
-      "avg_cut_interval": 2.51,
-      "hook": "Second-person indictment waking up to smartphone buzzer, confronting 45-year career grind vs 45,000 years of human baseline.",
-      "core_thesis": "Foragers worked 15-17 hours a week, possessed superior bone health, enjoyed 120 hours of leisure, and practiced biphasic sleep until agriculture trapped civilization.",
-      "key_evidence": [
-        "Abu Hureyra skeletal biomechanics (hunter decathlete vs farmer spinal wear and tooth rot)",
-        "Richard Lee 1963 Kalahari Dobe !Kung stopwatch study (17.1 hrs/week)",
-        "Hadza (15 hrs), Gunwinggu (16 hrs), Ach\u00e9 (19 hrs) comparative verification",
-        "Chauvet Cave animation art & Sunghir 10,000 mammoth ivory beads",
-        "Polly Wiessner firelight storytelling transcript analysis",
-        "Biphasic sleep & prolactin surge during 'The Watch' (1:00 AM)"
+  "niches": {
+    "history": {
+      "display_name": "History & Archaeology",
+      "description": "Deep time, ancient humans, civilizations, empires, and evolutionary anthropology.",
+      "keywords": [
+        "ancient",
+        "human",
+        "history",
+        "empire",
+        "archaeology",
+        "century",
+        "war",
+        "ancestor",
+        "cave",
+        "fossil",
+        "king",
+        "civilization",
+        "stone age",
+        "hunter",
+        "gatherer",
+        "rome",
+        "egypt",
+        "iran",
+        "persia",
+        "medieval",
+        "dynasty",
+        "bc",
+        "ad",
+        "prehistoric"
       ],
-      "story_progression": [
-        "Act 1: The Modern Alarm Clock Trap",
-        "Act 2: Forensic Skeletal Bioarchaeology",
-        "Act 3: The Evolutionary Hunting Superpower (Sweat)",
-        "Act 4: The 15-Hour Work Week Studies",
-        "Act 5: What To Do With 120 Free Hours",
-        "Act 6: Biphasic Sleep & Insomnia Truth",
-        "Act 7: Wheat Porridge Trap & Modern Retirement Irony"
-      ]
+      "videos_analyzed": 4,
+      "running_medians": {
+        "wpm": 224.6,
+        "avg_cut_interval_sec": 2.51,
+        "hook_cut_interval_sec": 1.2,
+        "words_per_minute_range": [
+          215.0,
+          235.0
+        ],
+        "target_chars_per_shot_min": 20,
+        "target_chars_per_shot_max": 50,
+        "lufs_integrated": -12.28,
+        "loudness_range_lra": 2.5,
+        "max_pause_between_shots_ms": 300
+      },
+      "narrative_framework": {
+        "name": "7-Act Anthropological & Deep-Time Retention Arc",
+        "structure": [
+          {
+            "act": 1,
+            "name": "The Modern Trap (Opening Hook)",
+            "pacing": "Ultra-fast (1.0s - 1.5s per cut)",
+            "formula": "Second-person indictment ('You'), relatable modern friction, contrast snap into deep time."
+          },
+          {
+            "act": 2,
+            "name": "Dismantling the Myth via Hard Evidence",
+            "pacing": "Moderate (2.0s - 2.5s per cut)",
+            "formula": "Shatter conventional wisdom using forensic skeletal bioarchaeology or physical artifacts."
+          },
+          {
+            "act": 3,
+            "name": "Sensory Day-in-the-Life Immersion",
+            "pacing": "Dynamic (2.2s - 2.8s per cut)",
+            "formula": "Walk through a vivid chronological day. Highlight an evolutionary superpower (persistence hunting, sweating)."
+          },
+          {
+            "act": 4,
+            "name": "The Empirical Paradigm Shift",
+            "pacing": "Moderate (2.5s per cut)",
+            "formula": "Cite rigorous stopwatch field research or global comparative data proving counter-intuitive truths."
+          },
+          {
+            "act": 5,
+            "name": "The Human Core (Art, Leisure & Storytelling)",
+            "pacing": "Lyrical (2.5s - 3.0s per cut)",
+            "formula": "Explore what humans did with their 120 hours of leisure (cave art, beads, storytelling around fire)."
+          },
+          {
+            "act": 6,
+            "name": "The Biological Mismatch",
+            "pacing": "Intimate (2.0s - 2.5s per cut)",
+            "formula": "Connect modern ailments (insomnia, anxiety) to ancient evolutionary adaptations (biphasic sleep)."
+          },
+          {
+            "act": 7,
+            "name": "The Trap Closes & Modern Irony",
+            "pacing": "Punchy (1.5s - 2.2s per cut)",
+            "formula": "Progress created unintended entrapment (agriculture, granaries, taxes), ending on poignant philosophical irony."
+          }
+        ]
+      },
+      "visual_style": {
+        "art_style": "Minimalist hand-drawn 2D vector line art, bold black ink comic contours, expressive stick-figure characters (MinutePhysics & Casually Explained aesthetic).",
+        "framing": "Full bleed edge-to-edge illustration, grounded environment completely filling 16:9 widescreen frame without borders.",
+        "color_palette": "Flat muted earthy tones (charcoal ink, paper parchment, terracotta, ochre, slate blue)."
+      },
+      "reference_blueprints": {
+        "what did ancient humans actually do all day": {
+          "title": "What Did Ancient Humans Actually Do All Day?",
+          "folder_name": "1- What Did Ancient Humans Actually Do All Day",
+          "duration_sec": 672.08,
+          "word_count": 2516,
+          "cuts_count": 268,
+          "avg_cut_interval": 2.51,
+          "hook": "Second-person indictment waking up to smartphone buzzer, confronting 45-year career grind vs 45,000 years of human baseline.",
+          "core_thesis": "Foragers worked 15-17 hours a week, possessed superior bone health, enjoyed 120 hours of leisure, and practiced biphasic sleep until agriculture trapped civilization.",
+          "key_evidence": [
+            "Abu Hureyra skeletal biomechanics (hunter decathlete vs farmer spinal wear and tooth rot)",
+            "Richard Lee 1963 Kalahari Dobe !Kung stopwatch study (17.1 hrs/week)",
+            "Hadza (15 hrs), Gunwinggu (16 hrs), Ach\u00e9 (19 hrs) comparative verification",
+            "Chauvet Cave animation art & Sunghir 10,000 mammoth ivory beads",
+            "Polly Wiessner firelight storytelling transcript analysis",
+            "Biphasic sleep & prolactin surge during 'The Watch' (1:00 AM)"
+          ],
+          "story_progression": [
+            "Act 1: The Modern Alarm Clock Trap",
+            "Act 2: Forensic Skeletal Bioarchaeology",
+            "Act 3: The Evolutionary Hunting Superpower (Sweat)",
+            "Act 4: The 15-Hour Work Week Studies",
+            "Act 5: What To Do With 120 Free Hours",
+            "Act 6: Biphasic Sleep & Insomnia Truth",
+            "Act 7: Wheat Porridge Trap & Modern Retirement Irony"
+          ]
+        },
+        "what did ancient humans do at night": {
+          "title": "What Did Ancient Humans Do at Night",
+          "folder_name": "2- What Did Ancient Humans Do at Night",
+          "duration_sec": 0.0,
+          "cuts_count": 0,
+          "word_count": 1602,
+          "hook": "Kind: captions Language: en Tonight, when the sun goes down, you're going to flip a switch.",
+          "core_thesis": "",
+          "key_evidence": [],
+          "story_progression": []
+        },
+        "what did ancient humans do when it rained all week": {
+          "title": "What Did Ancient Humans Do When It Rained All Week",
+          "folder_name": "3- What Did Ancient Humans Do When It Rained All Week",
+          "duration_sec": 0.0,
+          "cuts_count": 0,
+          "word_count": 2417,
+          "hook": "Kind: captions Language: en Imagine you haven't eaten in 2 days.",
+          "core_thesis": "",
+          "key_evidence": [],
+          "story_progression": []
+        },
+        "the entire history of iran in 11 minutes": {
+          "title": "The ENTIRE History of Iran in 11 Minutes",
+          "folder_name": "4- The ENTIRE History of Iran in 11 Minutes",
+          "duration_sec": 0.0,
+          "cuts_count": 0,
+          "word_count": 1902,
+          "hook": "For thousands of years, the world's greatest empires made the exact same fatal mistake.",
+          "core_thesis": "",
+          "key_evidence": [],
+          "story_progression": []
+        }
+      }
     },
-    "what did ancient humans do at night": {
-      "title": "What Did Ancient Humans Do at Night",
-      "folder_name": "2- What Did Ancient Humans Do at Night",
-      "duration_sec": 0.0,
-      "cuts_count": 0,
-      "word_count": 1602,
-      "hook": "Kind: captions Language: en Tonight, when the sun goes down, you're going to flip a switch.",
-      "core_thesis": "",
-      "key_evidence": [],
-      "story_progression": []
+    "medical": {
+      "display_name": "Medical & Biology",
+      "description": "Human physiology, clinical mysteries, pathology, neuroscience, cellular biology, and medical breakthroughs.",
+      "keywords": [
+        "doctor",
+        "disease",
+        "virus",
+        "brain",
+        "heart",
+        "surgery",
+        "medicine",
+        "patient",
+        "cell",
+        "syndrome",
+        "hospital",
+        "bacteria",
+        "organ",
+        "dna",
+        "cancer",
+        "immune",
+        "diagnosis",
+        "symptom",
+        "blood",
+        "drug",
+        "infection",
+        "vaccine",
+        "neuron",
+        "biology",
+        "amoeba",
+        "pathology",
+        "clinical",
+        "organism",
+        "cellular",
+        "pathogen"
+      ],
+      "videos_analyzed": 0,
+      "running_medians": {
+        "wpm": 218.0,
+        "avg_cut_interval_sec": 2.4,
+        "hook_cut_interval_sec": 1.2,
+        "words_per_minute_range": [
+          210.0,
+          230.0
+        ],
+        "target_chars_per_shot_min": 20,
+        "target_chars_per_shot_max": 50
+      },
+      "narrative_framework": {
+        "name": "7-Act Clinical Case Study & Cellular Mechanism Arc",
+        "structure": [
+          {
+            "act": 1,
+            "name": "The Subtle Symptom (Opening Hook)",
+            "pacing": "Urgent (1.2s per cut)",
+            "formula": "Seemingly innocuous physical complaint that masks an alarming physiological cascade."
+          },
+          {
+            "act": 2,
+            "name": "Diagnostic Dead-Ends",
+            "pacing": "Deliberate (2.2s per cut)",
+            "formula": "Standard blood panels and scans return normal; clinicians confront an elusive anomaly."
+          },
+          {
+            "act": 3,
+            "name": "Cellular Crime Scene",
+            "pacing": "Dynamic (2.2s - 2.6s per cut)",
+            "formula": "Zoom into microscopic vascular or receptor level revealing molecular saboteurs."
+          },
+          {
+            "act": 4,
+            "name": "The Biological Mechanism Breakthrough",
+            "pacing": "Moderate (2.4s per cut)",
+            "formula": "The exact biochemical pathway discovered under electron microscopy or clinical trial."
+          },
+          {
+            "act": 5,
+            "name": "The Immune Counter-Offensive",
+            "pacing": "Action-oriented (2.0s per cut)",
+            "formula": "How pharmaceutical molecules or bodily antibodies engage the pathology."
+          },
+          {
+            "act": 6,
+            "name": "The Prognosis & Survival Window",
+            "pacing": "High tension (1.8s - 2.2s per cut)",
+            "formula": "The race against organ failure or irreversible tissue decay."
+          },
+          {
+            "act": 7,
+            "name": "The Evolutionary Defense & Modern Lesson",
+            "pacing": "Reflective (2.0s per cut)",
+            "formula": "Why the human body evolved this vulnerability and what it teaches us about survival."
+          }
+        ]
+      },
+      "visual_style": {
+        "art_style": "Minimalist hand-drawn 2D comic art, anatomical line art cross-sections, stick clinicians and patients.",
+        "framing": "Full bleed 16:9 widescreen, clean clinical white backdrops, floating cellular diagrams.",
+        "color_palette": "Charcoal black line art, surgical teal, arterial red, aseptic white, subtle grid paper texture."
+      },
+      "reference_blueprints": {}
     },
-    "what did ancient humans do when it rained all week": {
-      "title": "What Did Ancient Humans Do When It Rained All Week",
-      "folder_name": "3- What Did Ancient Humans Do When It Rained All Week",
-      "duration_sec": 0.0,
-      "cuts_count": 0,
-      "word_count": 2417,
-      "hook": "Kind: captions Language: en Imagine you haven't eaten in 2 days.",
-      "core_thesis": "",
-      "key_evidence": [],
-      "story_progression": []
+    "horror": {
+      "display_name": "Horror & Mystery",
+      "description": "Psychological dread, eerie phenomena, unsolved disappearances, dark lore, and true crime enigmas.",
+      "keywords": [
+        "horror",
+        "creepy",
+        "ghost",
+        "dark",
+        "nightmare",
+        "mystery",
+        "forest",
+        "monster",
+        "cabin",
+        "haunted",
+        "unsolved",
+        "disappeared",
+        "fear",
+        "death",
+        "abandoned",
+        "cursed",
+        "shadow",
+        "woods",
+        "killer",
+        "whisper",
+        "scream",
+        "stalker",
+        "camper",
+        "vanished",
+        "eerie",
+        "night",
+        "woods"
+      ],
+      "videos_analyzed": 0,
+      "running_medians": {
+        "wpm": 198.0,
+        "avg_cut_interval_sec": 3.0,
+        "hook_cut_interval_sec": 1.4,
+        "words_per_minute_range": [
+          190.0,
+          210.0
+        ],
+        "target_chars_per_shot_min": 20,
+        "target_chars_per_shot_max": 50
+      },
+      "narrative_framework": {
+        "name": "7-Act Atmospheric Suspense & Dread Escalation Arc",
+        "structure": [
+          {
+            "act": 1,
+            "name": "The Disturbance (Opening Hook)",
+            "pacing": "Ominous (1.2s - 1.5s per cut)",
+            "formula": "A routine evening or familiar setting fractured by an uncanny, unexplainable detail."
+          },
+          {
+            "act": 2,
+            "name": "Rational Explanations Collapse",
+            "pacing": "Creeping (2.6s per cut)",
+            "formula": "Every logical deduction is forensically ruled out."
+          },
+          {
+            "act": 3,
+            "name": "Isolation & Looming Dread",
+            "pacing": "Claustrophobic (3.0s per cut)",
+            "formula": "Communication lines severed, geographical distance, darkness engulfing the environment."
+          },
+          {
+            "act": 4,
+            "name": "The First Encounter",
+            "pacing": "Shock cut (1.2s bursts)",
+            "formula": "Fleeting glimpse of the unnatural entity in the peripheral line art."
+          },
+          {
+            "act": 5,
+            "name": "The Archive of Prior Victims",
+            "pacing": "Investigative (2.5s per cut)",
+            "formula": "Discovering historical records proving this happened before."
+          },
+          {
+            "act": 6,
+            "name": "The Tipping Point of Survival",
+            "pacing": "Frantic (1.8s - 2.2s per cut)",
+            "formula": "A desperate physical struggle or flight through pitch-black terrain."
+          },
+          {
+            "act": 7,
+            "name": "The Lingering Void",
+            "pacing": "Haunting (2.8s - 3.5s per cut)",
+            "formula": "The mystery remains open, leaving a cold lingering chill."
+          }
+        ]
+      },
+      "visual_style": {
+        "art_style": "High-contrast minimalist 2D line art, heavy black shadows, trembling ink contours, terrified stick figures.",
+        "framing": "Full bleed 16:9 widescreen, pitch black void, flickering flashlight cones, mist and silhouette trees.",
+        "color_palette": "Deep void black, blood crimson accent, ghostly pale yellow, cold moonlight grey."
+      },
+      "reference_blueprints": {}
     },
-    "the entire history of iran in 11 minutes": {
-      "title": "The ENTIRE History of Iran in 11 Minutes",
-      "folder_name": "4- The ENTIRE History of Iran in 11 Minutes",
-      "duration_sec": 0.0,
-      "cuts_count": 0,
-      "word_count": 1902,
-      "hook": "For thousands of years, the world's greatest empires made the exact same fatal mistake.",
-      "core_thesis": "",
-      "key_evidence": [],
-      "story_progression": []
+    "engineering": {
+      "display_name": "Engineering & Technology",
+      "description": "Mega-projects, physics puzzles, industrial disasters, aerospace triumphs, computing, and machines.",
+      "keywords": [
+        "engine",
+        "rocket",
+        "bridge",
+        "machine",
+        "physics",
+        "robot",
+        "concrete",
+        "steel",
+        "turbine",
+        "reactor",
+        "computer",
+        "architecture",
+        "megaproject",
+        "disaster",
+        "tunnel",
+        "space",
+        "pressure",
+        "thrust",
+        "aerodynamics",
+        "failure",
+        "invention",
+        "dam",
+        "hoover dam",
+        "structural",
+        "construction",
+        "mechanics"
+      ],
+      "videos_analyzed": 0,
+      "running_medians": {
+        "wpm": 222.0,
+        "avg_cut_interval_sec": 2.3,
+        "hook_cut_interval_sec": 1.2,
+        "words_per_minute_range": [
+          215.0,
+          235.0
+        ],
+        "target_chars_per_shot_min": 20,
+        "target_chars_per_shot_max": 50
+      },
+      "narrative_framework": {
+        "name": "7-Act Engineering Dilemma & Physics Tipping-Point Arc",
+        "structure": [
+          {
+            "act": 1,
+            "name": "The Impossible Spec (Opening Hook)",
+            "pacing": "Direct (1.2s per cut)",
+            "formula": "Audacious engineering goal confronting an unyielding law of physics or thermodynamics."
+          },
+          {
+            "act": 2,
+            "name": "The Fatal Flaw in Standard Design",
+            "pacing": "Analytical (2.2s per cut)",
+            "formula": "Why conventional materials or geometry collapse under simulated stress."
+          },
+          {
+            "act": 3,
+            "name": "The Radical Prototype",
+            "pacing": "Dynamic (2.2s - 2.5s per cut)",
+            "formula": "Breakdown of the unconventional mechanical innovation that defies intuition."
+          },
+          {
+            "act": 4,
+            "name": "The Stress Test & Trial by Fire",
+            "pacing": "High tension (1.8s - 2.2s per cut)",
+            "formula": "Live telemetry under extreme thermal or pressure limits."
+          },
+          {
+            "act": 5,
+            "name": "The Microscopic Failure Vector",
+            "pacing": "Precision forensic (2.4s per cut)",
+            "formula": "How a single loose rivet or micro-fracture jeopardizes the entire machine."
+          },
+          {
+            "act": 6,
+            "name": "The Redesign Triumph",
+            "pacing": "Fast & rhythmic (2.0s per cut)",
+            "formula": "Clever mechanical elegance solving the dilemma permanently."
+          },
+          {
+            "act": 7,
+            "name": "The New Frontier & Engineering Legacy",
+            "pacing": "Inspiring (2.0s per cut)",
+            "formula": "How this solution unlocked modern skyscrapers, rocketry, or microchips."
+          }
+        ]
+      },
+      "visual_style": {
+        "art_style": "Minimalist isometric line art schematics, technical blueprint cross-sections, stick engineers with hard hats.",
+        "framing": "Full bleed 16:9 widescreen, technical drafting grid backdrop, clean dimension lines.",
+        "color_palette": "Blueprint cyan line art, technical drafting white, hazard safety orange, steel grey."
+      },
+      "reference_blueprints": {}
+    },
+    "finance": {
+      "display_name": "Money Behavior & Personal Wealth",
+      "description": "Money behavior, financial psychology, saving and spending discipline, lifestyle inflation, income growth, compounding surplus, and Islamic interest-free wealth principles.",
+      "keywords": [
+        "finance",
+        "money",
+        "salary",
+        "wealth",
+        "financial",
+        "save",
+        "saving",
+        "broke",
+        "paycheck",
+        "dollar",
+        "dollars",
+        "expense",
+        "budget",
+        "investing",
+        "invest",
+        "debt",
+        "inflation",
+        "cost",
+        "spending",
+        "rich",
+        "poor",
+        "loan",
+        "surplus",
+        "federal reserve",
+        "trillion",
+        "economy",
+        "bank",
+        "cash",
+        "compound",
+        "lifestyle creep",
+        "asset",
+        "millionaire"
+      ],
+      "videos_analyzed": 0,
+      "running_medians": {
+        "wpm": 224.6,
+        "avg_cut_interval_sec": 2.51,
+        "hook_cut_interval_sec": 1.2,
+        "words_per_minute_range": [
+          215.0,
+          235.0
+        ],
+        "target_chars_per_shot_min": 20,
+        "target_chars_per_shot_max": 50,
+        "lufs_integrated": -12.28,
+        "loudness_range_lra": 2.5,
+        "max_pause_between_shots_ms": 300
+      },
+      "topic_editorial_patterns": {
+        "good_patterns": [
+          "Authoritative Declarations Over Timid Inquiries",
+          "Constructive Hope & Creation Over Cynical Pain",
+          "The 'What Actually Happens...' Scientific Simulation",
+          "Concrete, Tactile Numbers (Zero Abstraction: $0, $5, $100, 3 years, 20 years)",
+          "100% Universal Accessibility (Zero Prerequisites, for Ordinary People)"
+        ],
+        "bad_patterns": [
+          "Academic / Coursework Clutter (colons, stage roadmaps, formal syllabus titles)",
+          "Preachy / Nagging Commands (scolding, parental lectures)",
+          "Extreme Sacrifices / Austerity Diet Traps (50% income cuts)",
+          "Oversaturated Gossip Tropes (celebrity/billionaire gossip lacking personal utility)",
+          "Low-Stakes Micro-Habits (trivial $2 lattes that lack life-altering macro weight)"
+        ]
+      },
+      "narrative_framework": {
+        "name": "8-Engine Behavioral Finance & Compounding Arc",
+        "structure": [
+          {
+            "act": 1,
+            "name": "The Immediate High-Stakes Crisis / Dilemma (Opening Hook)",
+            "pacing": "Ultra-fast (1.0s - 1.5s per cut, 600-700 chars)",
+            "formula": "Step-by-step camera velocity inside the story, physical sensory props (envelope, paper check, silent steering wheel), immediate high-stakes deadline (rent due in 4 days), ending on a frozen physical pivot (the car ignition moment)."
+          },
+          {
+            "act": 2,
+            "name": "The Fatal Conventional Default",
+            "pacing": "Analytical (2.0s - 2.5s per cut)",
+            "formula": "Show why driving home and paying bills like normal guarantees financial ruin or eternal treadmill entrapment."
+          },
+          {
+            "act": 3,
+            "name": "The Counter-Intuitive Rule / The Smart Pivot",
+            "pacing": "Dynamic (2.2s - 2.8s per cut)",
+            "formula": "The character executes an accessible, unconventional, low-ego decision that defies standard spending habits."
+          },
+          {
+            "act": 4,
+            "name": "The Ticking Clock & Survival Reality",
+            "pacing": "High tension (1.8s - 2.2s per cut)",
+            "formula": "Navigating Day 1, Day 15, Day 30 milestones with zero debt, strict budgeting, and active income hustle."
+          },
+          {
+            "act": 5,
+            "name": "The First Seed of Surplus (Compounding Takes Root)",
+            "pacing": "Moderate (2.4s - 2.8s per cut)",
+            "formula": "Transforming the first saved $100 or $500 into a protected cushion, escaping pure survival mode into stability."
+          },
+          {
+            "act": 6,
+            "name": "The Contrast Gap Divergence",
+            "pacing": "Rhythmic (2.0s - 2.5s per cut)",
+            "formula": "Contrasting the sovereign trajectory against the standard consumer treadmill over 180 days, 1 year, or 10 years."
+          },
+          {
+            "act": 7,
+            "name": "The Sovereign Reality & Mental Model Payoff",
+            "pacing": "Poignant & inspiring (1.8s - 2.2s per cut)",
+            "formula": "Permanent financial dignity achieved through discipline, ownership of productive assets, and zero debt."
+          }
+        ]
+      },
+      "visual_style": {
+        "art_style": "Minimalist hand-drawn 2D vector line art, bold black ink comic contours, expressive stick figures (MinutePhysics & Casually Explained aesthetic).",
+        "framing": "Full bleed edge-to-edge illustration, grounded environment completely filling 16:9 widescreen frame without borders.",
+        "color_palette": "Clean black ink lines, white paper backdrop, emerald green money accents ($), rich leather brown, warning amber."
+      },
+      "reference_blueprints": {
+        "two people earn the same salary one becomes wealthy": {
+          "title": "Two People Earn the Same Salary. One Becomes Wealthy.",
+          "engine": "Engine A: The Two-Person Experiment",
+          "hook": "At twenty-five, Ahmed and Daniel earned the exact same twenty-five hundred dollar monthly paycheck. Twenty years later, one had total financial freedom. The other was still waiting for his next direct deposit. So what happened?",
+          "core_thesis": "Identical income produces radically divergent freedom over 20 years based on whether the monthly surplus is spent on status consumption or preserved for productive asset ownership.",
+          "key_evidence": [
+            "Ahmed saves $450/month (18%) vs Daniel saves $50/month (2%)",
+            "At Year 1, divergence is invisible ($5,400 vs $600)",
+            "At Year 10, Ahmed has $80,000+ cushion while Daniel panics over a blown car radiator",
+            "At Year 20, Ahmed owns income-producing assets generating his baseline living expenses"
+          ]
+        },
+        "0 to financial stability": {
+          "title": "$0 to Financial Stability",
+          "engine": "Engine F: The Roadmap & The Tactical Pivot",
+          "hook_char_count": 609,
+          "hook": "At 9:00 AM on a Tuesday, Adam clocked into work.\nAt 9:15 AM, his manager slid a white envelope across the table: \"Today is your last day.\"\n\nBy 9:25 AM, Adam was sitting in his car with the door slammed shut, gripping the steering wheel in dead silence.\nHe opened the envelope. Inside was a paper check for two thousand dollars.\nHis final paycheck.\n\nHis bank balance was at zero. Rent was due in four days.\nAnd for the first time in his life, there was no next paycheck coming.\n\nBefore he even turned the key in the ignition, he realized: if he drove home and paid his bills like normal, he was completely ruined.",
+          "golden_rules_applied": [
+            "Unbroken narrative camera velocity (9:00 AM -> 9:15 AM -> 9:25 AM door slam)",
+            "Physical sensory realism over metaphors (white envelope, paper check, steering wheel, dead silence)",
+            "Immediate high-stakes deadline (rent due in four days with $0 in bank)",
+            "600-700 character sweet spot (exactly 609 chars, ~25s voiceover)",
+            "Frozen physical pivot (the car ignition moment before turning the key)"
+          ],
+          "core_thesis": "Escaping $0 without debt or speculation requires an immediate tactical pause, triaging cash survival before obligations, and building a 3-stage buffer (Survival Buffer -> 30-Day Airbag -> 3-Month Sovereign Shield)."
+        }
+      }
+    },
+    "forget_dreams": {
+      "display_name": "Forget & Dreams",
+      "description": "Specialized knowledge and narrative base for Forget & Dreams.",
+      "keywords": [
+        "forget",
+        "dreams"
+      ],
+      "videos_analyzed": 0,
+      "running_medians": {
+        "wpm": 224.6,
+        "avg_cut_interval_sec": 2.51,
+        "hook_cut_interval_sec": 1.2,
+        "words_per_minute_range": [
+          215.0,
+          235.0
+        ],
+        "target_chars_per_shot_min": 20,
+        "target_chars_per_shot_max": 50,
+        "lufs_integrated": -12.28,
+        "loudness_range_lra": 2.5,
+        "max_pause_between_shots_ms": 300
+      },
+      "narrative_framework": {
+        "name": "7-Act Forget & Dreams Retention Arc",
+        "structure": [
+          {
+            "act": 1,
+            "name": "The Everyday Friction (Opening Hook)",
+            "pacing": "Rapid (1.2s per cut)",
+            "formula": "Second-person challenge confronting standard assumptions in Forget & Dreams."
+          },
+          {
+            "act": 2,
+            "name": "Dismantling the Common Myth",
+            "pacing": "Deliberate (2.2s per cut)",
+            "formula": "Hard empirical proof disproving standard conventional wisdom."
+          },
+          {
+            "act": 3,
+            "name": "Mechanisms & First Principles",
+            "pacing": "Dynamic (2.2s - 2.5s per cut)",
+            "formula": "Deep dive into the underlying operational mechanism."
+          },
+          {
+            "act": 4,
+            "name": "The Tipping Point Revelation",
+            "pacing": "Moderate (2.4s per cut)",
+            "formula": "Statistical or chronological turning point."
+          },
+          {
+            "act": 5,
+            "name": "The Human Impact & Tradeoffs",
+            "pacing": "Reflective (2.5s per cut)",
+            "formula": "Real-world friction, consequences, and tradeoffs."
+          },
+          {
+            "act": 6,
+            "name": "The Systemic Mismatch",
+            "pacing": "Intimate (2.0s - 2.4s per cut)",
+            "formula": "Why current systems or habits fail to account for this."
+          },
+          {
+            "act": 7,
+            "name": "The Strategic Resolution",
+            "pacing": "Punchy (1.8s - 2.2s per cut)",
+            "formula": "Memorable final takeaway and poignant perspective."
+          }
+        ]
+      },
+      "visual_style": {
+        "art_style": "Minimalist hand-drawn 2D vector line art, bold black ink comic contours, expressive stick figures (MinutePhysics style).",
+        "framing": "Full bleed edge-to-edge illustration, grounded environment completely filling 16:9 widescreen frame without borders.",
+        "color_palette": "Clean black ink, white backdrop, distinct topic accent color, subtle paper texture."
+      },
+      "reference_blueprints": {}
+    },
+    "test_antigravity": {
+      "display_name": "Test & Antigravity",
+      "description": "Specialized knowledge and narrative base for Test & Antigravity.",
+      "keywords": [
+        "test",
+        "antigravity"
+      ],
+      "videos_analyzed": 0,
+      "running_medians": {
+        "wpm": 224.6,
+        "avg_cut_interval_sec": 2.51,
+        "hook_cut_interval_sec": 1.2,
+        "words_per_minute_range": [
+          215.0,
+          235.0
+        ],
+        "target_chars_per_shot_min": 20,
+        "target_chars_per_shot_max": 50,
+        "lufs_integrated": -12.28,
+        "loudness_range_lra": 2.5,
+        "max_pause_between_shots_ms": 300
+      },
+      "narrative_framework": {
+        "name": "7-Act Test & Antigravity Retention Arc",
+        "structure": [
+          {
+            "act": 1,
+            "name": "The Everyday Friction (Opening Hook)",
+            "pacing": "Rapid (1.2s per cut)",
+            "formula": "Second-person challenge confronting standard assumptions in Test & Antigravity."
+          },
+          {
+            "act": 2,
+            "name": "Dismantling the Common Myth",
+            "pacing": "Deliberate (2.2s per cut)",
+            "formula": "Hard empirical proof disproving standard conventional wisdom."
+          },
+          {
+            "act": 3,
+            "name": "Mechanisms & First Principles",
+            "pacing": "Dynamic (2.2s - 2.5s per cut)",
+            "formula": "Deep dive into the underlying operational mechanism."
+          },
+          {
+            "act": 4,
+            "name": "The Tipping Point Revelation",
+            "pacing": "Moderate (2.4s per cut)",
+            "formula": "Statistical or chronological turning point."
+          },
+          {
+            "act": 5,
+            "name": "The Human Impact & Tradeoffs",
+            "pacing": "Reflective (2.5s per cut)",
+            "formula": "Real-world friction, consequences, and tradeoffs."
+          },
+          {
+            "act": 6,
+            "name": "The Systemic Mismatch",
+            "pacing": "Intimate (2.0s - 2.4s per cut)",
+            "formula": "Why current systems or habits fail to account for this."
+          },
+          {
+            "act": 7,
+            "name": "The Strategic Resolution",
+            "pacing": "Punchy (1.8s - 2.2s per cut)",
+            "formula": "Memorable final takeaway and poignant perspective."
+          }
+        ]
+      },
+      "visual_style": {
+        "art_style": "Minimalist hand-drawn 2D vector line art, bold black ink comic contours, expressive stick figures (MinutePhysics style).",
+        "framing": "Full bleed edge-to-edge illustration, grounded environment completely filling 16:9 widescreen frame without borders.",
+        "color_palette": "Clean black ink, white backdrop, distinct topic accent color, subtle paper texture."
+      },
+      "reference_blueprints": {}
     }
   }
 }

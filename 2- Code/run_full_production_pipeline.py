@@ -168,8 +168,8 @@ def switch_flow_model(page, target_model_name):
     """
     print(f"[MODEL SWITCH] Switching Google Flow model to: {target_model_name}...")
     try:
-        page.mouse.click(100, 100)
-        time.sleep(0.5)
+        page.keyboard.press("Escape")
+        time.sleep(0.3)
 
         settings_btn = page.locator("button.settings-trigger-button").first
         settings_btn.click(timeout=5000)
@@ -189,13 +189,16 @@ def switch_flow_model(page, target_model_name):
             x2_btn.click(timeout=3000)
             time.sleep(0.3)
 
-        page.mouse.click(100, 100)
-        time.sleep(0.8)
+        page.keyboard.press("Escape")
+        time.sleep(0.5)
         print(f"[MODEL SWITCH] Successfully switched to {target_model_name} (x{TARGET_VARIATIONS})")
         return True
     except Exception as e:
         print(f"[MODEL SWITCH ERROR] Failed to switch model: {e}")
-        page.mouse.click(100, 100)
+        try:
+            page.keyboard.press("Escape")
+        except Exception:
+            pass
         return False
 
 def update_status(shot_num, total_shots, status, note="", active_model="Nano Banana 2"):

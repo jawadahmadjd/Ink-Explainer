@@ -1,0 +1,2026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The $5 Daily Habit - Full 5-Scene Infographics Explainer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Poppins:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background-color: #070a12;
+      color: #f8fafc;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow-x: hidden;
+    }
+
+    header {
+      width: 100%;
+      max-width: 1240px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .badge-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pill-tag {
+      background: linear-gradient(135deg, #10b981, #047857);
+      color: #ffffff;
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .pill-scene {
+      background: #1e293b;
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: 19px;
+      font-weight: 800;
+      color: #f1f5f9;
+      letter-spacing: -0.3px;
+    }
+
+    .status-text {
+      font-size: 13px;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* 16:9 Cinema Viewport */
+    #viewport-container {
+      position: relative;
+      width: 100%;
+      max-width: 1240px;
+      aspect-ratio: 16 / 9;
+      background: #020617;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    #stage {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Controls Bar */
+    #controls-container {
+      width: 100%;
+      max-width: 1240px;
+      margin-top: 12px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn:hover {
+      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    /* Timeline Slider */
+    #timeline-slider {
+      flex: 1;
+      accent-color: #10b981;
+      height: 6px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .time-indicator {
+      font-family: monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: #38bdf8;
+      min-width: 130px;
+      text-align: right;
+    }
+
+    .scene-badge {
+      background: rgba(16, 185, 129, 0.12);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-family: monospace;
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge-title">
+      <span class="pill-tag">Infographics Master</span>
+      <h1>The $5 Daily Habit (Director & Orchestrator Master Pipeline)</h1>
+      <span id="active-scene-pill" class="pill-scene">Scene 1: The Hook</span>
+    </div>
+    <div class="status-text">
+      Director Arc • Orchestrator Zones • 60fps Tangent Rocket
+    </div>
+  </header>
+
+  <!-- Cinema Viewport -->
+  <div id="viewport-container">
+    <div id="stage"></div>
+  </div>
+
+  <!-- Audio Element -->
+  <audio id="voiceover-audio" src="what-happens-if-you-take-five-.wav" preload="auto"></audio>
+
+  <!-- Controls Bar -->
+  <div id="controls-container">
+    <button id="play-btn" class="btn">▶ Play</button>
+    <button id="restart-btn" class="btn btn-secondary">↺ Restart</button>
+    
+    <input type="range" id="timeline-slider" min="0" max="26.85" step="0.01" value="0">
+    
+    <div class="time-indicator">
+      <span id="current-time">0.00s</span> / <span>26.85s</span>
+    </div>
+
+    <div id="scene-indicator" class="scene-badge">
+      SCENE 1 / 5
+    </div>
+  </div>
+
+  <!-- MASTER SCRIPT BUNDLE (Zero-CORS standalone) -->
+  <script>
+    // --- 1. AGENT 1: CHARACTER POSE RIG ---
+    // --- MASTER CHARACTER SKELETAL RIG & FORWARD KINEMATICS ---
+/**
+ * MASTER CHARACTER LIBRARY: THE INFOGRAPHICS SKELETAL RIG (REVISION 3 - TRUE HUMAN MOVEMENT)
+ * 
+ * 1. 2D Forward Kinematics (FK) Joint Hierarchy:
+ *    - Neck: Base (0, 20) -> Head pivot (0, 10), tilt [-18 deg, +18 deg]
+ *    - Left Arm:  Shoulder (-52, 36) -> Elbow (L1=65) -> Wrist (L2=55) -> Hand
+ *    - Right Arm: Shoulder (+52, 36) -> Elbow (L1=65) -> Wrist (L2=55) -> Hand
+ *    - Left Leg:  Hip (-22, 155) -> Knee (L1=60) -> Ankle (L2=55) -> Shoe
+ *    - Right Leg: Hip (+22, 155) -> Knee (L1=60) -> Ankle (L2=55) -> Shoe
+ * 
+ * 2. True Human Biomechanical Laws:
+ *    - Upper arm swings outward/upward:
+ *      * Left:  alpha_s = 90 deg + theta_s
+ *      * Right: alpha_s = 90 deg - theta_s
+ *    - Elbow flexes UPWARD and TOWARD BODY (flexion):
+ *      * Left:  alpha_f = alpha_s + theta_e  (Forearm bends UP-IN toward head/chest)
+ *      * Right: alpha_f = alpha_s - theta_e  (Forearm bends UP-IN toward head/chest)
+ *    - Elbow Flexion Range: theta_e in [0 deg, 140 deg] (Zero backward bending)
+ *    - Shoulder Range: theta_s in [-20 deg, 155 deg] (Zero 360-degree spin)
+ * 
+ * 3. Airtight Prop Attachment:
+ *    - Banknote is clamped directly inside the hand's fingers at (Wx, Wy)
+ *    - Hand palm behind bill -> Bill -> Thumb & curled fingers in front of bill (Zero mid-air floating)
+ */
+
+const MASTER_CHARACTER_SPEC = {
+  version: "3.0.0-human-kinematics",
+  name: "Infographics Host (The $5 Investor)",
+  proportions: {
+    height: 380,
+    headWidth: 120,
+    headHeight: 140,
+    torsoWidth: 116,
+    torsoHeight: 135,
+    armUpperLength: 65,
+    armForeLength: 55,
+    legThighLength: 60,
+    legShinLength: 55
+  },
+  palette: {
+    skin: "#fcd5b4",
+    skinShadow: "#f0b992",
+    blush: "#fb7185",
+    hoodieMain: "#2563eb",
+    hoodieShadow: "#1d4ed8",
+    hoodieDrawstring: "#f8fafc",
+    hair: "#1e1e1e",
+    mouthDark: "#881337",
+    pants: "#1e293b",
+    pantsOutline: "#0f172a",
+    shoes: "#f8fafc",
+    shoesStripe: "#ef4444",
+    billMain: "#10b981",
+    billLight: "#ecfdf5",
+    billDark: "#065f46"
+  },
+  jointPivots: {
+    neck: { x: 0, y: 10 },
+    leftShoulder: { x: -52, y: 36 },
+    rightShoulder: { x: 52, y: 36 },
+    leftHip: { x: -22, y: 155 },
+    rightHip: { x: 22, y: 155 }
+  }
+};
+
+function clampBiometrics(val, min, max) {
+  return Math.min(Math.max(val, min), max);
+}
+
+/**
+ * Forward Kinematics Arm Solver (True Human Biomechanics)
+ * @param {'left' | 'right'} side
+ * @param {number} shoulderAngle - degrees from resting down [0 = straight down, 30 = down-out, 90 = horizontal, 140 = high up]
+ * @param {number} elbowFlexion  - degrees of inward bend [0 = straight, 90 = right-angle bend UPWARD, 130 = hand near chest/face]
+ */
+function solveArmKinematics(side, shoulderAngle, elbowFlexion) {
+  const S = (side === 'left') 
+    ? { x: MASTER_CHARACTER_SPEC.jointPivots.leftShoulder.x, y: MASTER_CHARACTER_SPEC.jointPivots.leftShoulder.y }
+    : { x: MASTER_CHARACTER_SPEC.jointPivots.rightShoulder.x, y: MASTER_CHARACTER_SPEC.jointPivots.rightShoulder.y };
+
+  // Biomechanical safety constraints
+  const sClamped = clampBiometrics(shoulderAngle, -20, 155);
+  const eClamped = clampBiometrics(elbowFlexion, 0, 140); // Elbow cannot bend backward!
+
+  const L1 = MASTER_CHARACTER_SPEC.proportions.armUpperLength;
+  const L2 = MASTER_CHARACTER_SPEC.proportions.armForeLength;
+
+  let alphaS, alphaF;
+  if (side === 'left') {
+    // Upper arm swings outward to the left (90 deg is straight down, 90 + s swings to left and up)
+    alphaS = (90 + sClamped) * (Math.PI / 180);
+    // Flexion bends UPWARD and TOWARDS the head/chest (increasing angle toward -Y)
+    alphaF = (90 + sClamped + eClamped) * (Math.PI / 180);
+  } else {
+    // Upper arm swings outward to the right (90 deg is straight down, 90 - s swings to right and up)
+    alphaS = (90 - sClamped) * (Math.PI / 180);
+    // Flexion bends UPWARD and TOWARDS the head/chest (decreasing angle toward -Y)
+    alphaF = (90 - sClamped - eClamped) * (Math.PI / 180);
+  }
+
+  const Ex = S.x + L1 * Math.cos(alphaS);
+  const Ey = S.y + L1 * Math.sin(alphaS);
+
+  const Wx = Ex + L2 * Math.cos(alphaF);
+  const Wy = Ey + L2 * Math.sin(alphaF);
+
+  // Angle of the forearm in degrees
+  const forearmDeg = alphaF * (180 / Math.PI);
+
+  return {
+    shoulder: S,
+    elbow: { x: Ex, y: Ey },
+    wrist: { x: Wx, y: Wy },
+    forearmAngle: forearmDeg,
+    shoulderAngleClamped: sClamped,
+    elbowFlexionClamped: eClamped
+  };
+}
+
+/**
+ * Forward Kinematics Leg Solver
+ */
+function solveLegKinematics(side, hipAngle = 0, kneeFlexion = 0) {
+  const H = (side === 'left')
+    ? { x: MASTER_CHARACTER_SPEC.jointPivots.leftHip.x, y: MASTER_CHARACTER_SPEC.jointPivots.leftHip.y }
+    : { x: MASTER_CHARACTER_SPEC.jointPivots.rightHip.x, y: MASTER_CHARACTER_SPEC.jointPivots.rightHip.y };
+
+  const hClamped = clampBiometrics(hipAngle, -25, 35);
+  const kClamped = clampBiometrics(kneeFlexion, 0, 110);
+
+  const Lthigh = MASTER_CHARACTER_SPEC.proportions.legThighLength;
+  const Lshin = MASTER_CHARACTER_SPEC.proportions.legShinLength;
+
+  const alphaH = (90 + hClamped) * (Math.PI / 180);
+  const Kx = H.x + Lthigh * Math.cos(alphaH);
+  const Ky = H.y + Lthigh * Math.sin(alphaH);
+
+  // Knee backward flexion
+  const alphaK = (90 + hClamped - kClamped) * (Math.PI / 180);
+  const Ax = Kx + Lshin * Math.cos(alphaK);
+  const Ay = Ky + Lshin * Math.sin(alphaK);
+
+  return {
+    hip: H,
+    knee: { x: Kx, y: Ky },
+    ankle: { x: Ax, y: Ay }
+  };
+}
+
+/**
+ * 5 Canonical Verified Human Poses (Natural Biomechanical Movements)
+ */
+const CANONICAL_POSES = {
+  POSE_IDLE: {
+    name: "Idle Rest",
+    description: "Relaxed standing pose with arms hanging comfortably beside torso",
+    leftArm: { shoulderAngle: 12, elbowFlexion: 12 },
+    rightArm: { shoulderAngle: 12, elbowFlexion: 12 },
+    headTilt: 0,
+    mouth: "smile",
+    billScale: 0
+  },
+  POSE_PRESENT_BILL: {
+    name: "Present $5 Bill",
+    description: "Elbow bent naturally; forearm raised UPWARD holding $5 banknote at chest level",
+    leftArm: { shoulderAngle: 28, elbowFlexion: 92 },
+    rightArm: { shoulderAngle: 15, elbowFlexion: 20 },
+    headTilt: 4,
+    mouth: "inquisitive",
+    billScale: 1.0
+  },
+  POSE_STASHING: {
+    name: "Stashing Under Mattress",
+    description: "Both arms angled forward-down into mattress stash; focused downward gaze",
+    leftArm: { shoulderAngle: 40, elbowFlexion: 35 },
+    rightArm: { shoulderAngle: 12, elbowFlexion: 15 },
+    headTilt: 6,
+    mouth: "smile",
+    billScale: 0.85
+  },
+  POSE_PANIC_SHOCK: {
+    name: "Inflation Panic & Shock",
+    description: "Both hands raised UP beside cheeks/ears in alarm; wide terrified eyes & agape mouth",
+    leftArm: { shoulderAngle: 70, elbowFlexion: 80 },
+    rightArm: { shoulderAngle: 70, elbowFlexion: 80 },
+    headTilt: -8,
+    mouth: "open_gasp",
+    billScale: 0
+  },
+  POSE_VICTORY: {
+    name: "S&P 500 Victory Celebration",
+    description: "Both arms raised high in triumphant V-shape celebration into the sky",
+    leftArm: { shoulderAngle: 140, elbowFlexion: 15 },
+    rightArm: { shoulderAngle: 140, elbowFlexion: 15 },
+    headTilt: -4,
+    mouth: "victory_grin",
+    billScale: 0
+  }
+};
+
+function verifyPoseBiometrics(poseParams) {
+  const diagnostics = [];
+  let isValid = true;
+
+  if (poseParams.leftArm.elbowFlexion < 0) {
+    isValid = false;
+    diagnostics.push(`Left elbow hyperextended backwards (${poseParams.leftArm.elbowFlexion} deg). Must be >= 0 deg.`);
+  }
+  if (poseParams.rightArm.elbowFlexion < 0) {
+    isValid = false;
+    diagnostics.push(`Right elbow hyperextended backwards (${poseParams.rightArm.elbowFlexion} deg). Must be >= 0 deg.`);
+  }
+  if (poseParams.leftArm.shoulderAngle > 165 || poseParams.leftArm.shoulderAngle < -30) {
+    isValid = false;
+    diagnostics.push(`Left shoulder out of human range (${poseParams.leftArm.shoulderAngle} deg).`);
+  }
+  if (poseParams.rightArm.shoulderAngle > 165 || poseParams.rightArm.shoulderAngle < -30) {
+    isValid = false;
+    diagnostics.push(`Right shoulder out of human range (${poseParams.rightArm.shoulderAngle} deg).`);
+  }
+
+  return {
+    valid: isValid,
+    score: isValid ? 100 : 0,
+    diagnostics: diagnostics.length ? diagnostics : ["All joints within strict anatomical bounds (Zero backward bends, zero 360-degree spins)."]
+  };
+}
+
+/**
+ * Render FK Limb with sleeve, cuff, and tight prop grip
+ */
+function renderRiggedArm(side, kinematics, opts = {}) {
+  const { shoulder, elbow, wrist, forearmAngle } = kinematics;
+  const { showBill = false, billScale = 1.0, isSkeleton = false } = opts;
+  const p = MASTER_CHARACTER_SPEC.palette;
+
+  const sx = shoulder.x, sy = shoulder.y;
+  const ex = elbow.x, ey = elbow.y;
+  const wx = wrist.x, wy = wrist.y;
+
+  // Sleeve cuff perpendicular to forearm
+  const cuffRot = forearmAngle + 90;
+
+  return `
+    <g id="${side}_arm_rig">
+      <!-- Outer Dark Stroke Limb Underlayer -->
+      <path d="M ${sx} ${sy} L ${ex} ${ey} L ${wx} ${wy}" 
+            fill="none" stroke="#0f172a" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+      
+      <!-- Blue Hoodie Sleeve Fill Layer -->
+      <path d="M ${sx} ${sy} L ${ex} ${ey} L ${wx} ${wy}" 
+            fill="none" stroke="${p.hoodieMain}" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+      
+      <!-- Elbow Joint Crease Accent -->
+      <circle cx="${ex}" cy="${ey}" r="5" fill="${p.hoodieShadow}" opacity="0.6"/>
+
+      <!-- Sleeve Cuff at Wrist -->
+      <ellipse cx="${wx}" cy="${wy}" rx="9" ry="14" fill="${p.hoodieShadow}" stroke="#0f172a" stroke-width="3.5" 
+               transform="rotate(${cuffRot} ${wx} ${wy})"/>
+
+      <!-- Hand Palm (behind bill) -->
+      <g transform="translate(${wx}, ${wy})">
+        <circle cx="0" cy="0" r="14" fill="${p.skin}" stroke="#0f172a" stroke-width="3.5"/>
+      </g>
+
+      <!-- $5 Banknote (Physically held in hand grip) -->
+      ${showBill ? `
+        <g id="five_dollar_bill" transform="translate(${wx - 10}, ${wy - 26}) rotate(-10) scale(${billScale})">
+          <rect x="-70" y="-40" width="140" height="80" rx="8" fill="#000000" opacity="0.4" transform="translate(5, 6)"/>
+          <rect x="-70" y="-40" width="140" height="80" rx="8" fill="${p.billMain}" stroke="#064e3b" stroke-width="3.5"/>
+          <rect x="-64" y="-34" width="128" height="68" rx="6" fill="${p.billLight}" stroke="#059669" stroke-width="2"/>
+          
+          <!-- Corner 5s -->
+          <rect x="-60" y="-30" width="15" height="15" rx="2" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+          <text x="-52" y="-19" font-family="'Impact', 'Arial Black', sans-serif" font-size="12" font-weight="900" fill="#065f46" text-anchor="middle">5</text>
+          <rect x="45" y="-30" width="15" height="15" rx="2" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+          <text x="53" y="-19" font-family="'Impact', 'Arial Black', sans-serif" font-size="12" font-weight="900" fill="#065f46" text-anchor="middle">5</text>
+          <rect x="-60" y="15" width="15" height="15" rx="2" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+          <text x="-52" y="26" font-family="'Impact', 'Arial Black', sans-serif" font-size="12" font-weight="900" fill="#065f46" text-anchor="middle">5</text>
+          <rect x="45" y="15" width="15" height="15" rx="2" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+          <text x="53" y="26" font-family="'Impact', 'Arial Black', sans-serif" font-size="12" font-weight="900" fill="#065f46" text-anchor="middle">5</text>
+
+          <!-- Lincoln Oval -->
+          <ellipse cx="0" cy="0" rx="22" ry="27" fill="#d1fae5" stroke="#047857" stroke-width="2"/>
+          <path d="M -9 16 C -9 5 -5 -2 0 -3 C 5 -2 9 5 9 16 Z" fill="#065f46"/>
+          <circle cx="0" cy="-7" r="8" fill="#065f46"/>
+
+          <rect x="-38" y="-29" width="76" height="8" rx="2" fill="#047857"/>
+          <text x="0" y="-23" font-family="'Arial Black', sans-serif" font-size="5.5" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1">UNITED STATES OF AMERICA</text>
+          <rect x="-30" y="21" width="60" height="7" rx="2" fill="#047857"/>
+          <text x="0" y="26" font-family="'Impact', 'Arial Black', sans-serif" font-size="6.5" font-weight="bold" fill="#ffffff" text-anchor="middle" letter-spacing="1">FIVE DOLLARS</text>
+        </g>
+      ` : ''}
+
+      <!-- Front Hand Grip: Thumb and Curled Fingers clamping onto the bill -->
+      <g transform="translate(${wx}, ${wy})">
+        <!-- Thumb clamping front -->
+        <path d="M 6 -8 C 12 -4 8 8 2 6" fill="${p.skin}" stroke="#0f172a" stroke-width="3.5"/>
+        <!-- Curled front fingers -->
+        <path d="M -8 4 C -12 12 -4 18 2 12" fill="${p.skin}" stroke="#0f172a" stroke-width="3"/>
+        <path d="M -6 -2 C -12 6 -4 14 4 8" fill="${p.skin}" stroke="#0f172a" stroke-width="3"/>
+      </g>
+
+      <!-- Optional Skeleton Diagnostic Overlay -->
+      ${isSkeleton ? `
+        <g id="${side}_arm_bones" stroke="#10b981" stroke-width="3" stroke-dasharray="4 2">
+          <line x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}"/>
+          <line x1="${ex}" y1="${ey}" x2="${wx}" y2="${wy}"/>
+          <circle cx="${sx}" cy="${sy}" r="7" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+          <circle cx="${ex}" cy="${ey}" r="7" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+          <circle cx="${wx}" cy="${wy}" r="7" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+        </g>
+      ` : ''}
+    </g>
+  `;
+}
+
+/**
+ * Render Legs
+ */
+function renderRiggedLegs(leftLeg, rightLeg, isSkeleton = false) {
+  const p = MASTER_CHARACTER_SPEC.palette;
+  const lk = leftLeg.knee, la = leftLeg.ankle, lh = leftLeg.hip;
+  const rk = rightLeg.knee, ra = rightLeg.ankle, rh = rightLeg.hip;
+
+  return `
+    <g id="legs_rig">
+      <!-- Left Leg (Pants) -->
+      <path d="M ${lh.x} ${lh.y} L ${lk.x} ${lk.y} L ${la.x} ${la.y}" 
+            fill="none" stroke="#0f172a" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M ${lh.x} ${lh.y} L ${lk.x} ${lk.y} L ${la.x} ${la.y}" 
+            fill="none" stroke="${p.pants}" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+      
+      <!-- Left Shoe -->
+      <g transform="translate(${la.x}, ${la.y})">
+        <path d="M -20 -10 L 16 -10 C 28 -10 28 10 16 10 L -24 10 C -32 10 -32 -10 -20 -10 Z" 
+              fill="${p.shoes}" stroke="#0f172a" stroke-width="4" stroke-linejoin="round"/>
+        <line x1="-26" y1="3" x2="22" y2="3" stroke="${p.shoesStripe}" stroke-width="3" stroke-linecap="round"/>
+      </g>
+
+      <!-- Right Leg (Pants) -->
+      <path d="M ${rh.x} ${rh.y} L ${rk.x} ${rk.y} L ${ra.x} ${ra.y}" 
+            fill="none" stroke="#0f172a" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M ${rh.x} ${rh.y} L ${rk.x} ${rk.y} L ${ra.x} ${ra.y}" 
+            fill="none" stroke="${p.pants}" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <!-- Right Shoe -->
+      <g transform="translate(${ra.x}, ${ra.y})">
+        <path d="M -16 -10 L 20 -10 C 32 -10 32 10 20 10 L -20 10 C -28 10 -28 -10 -16 -10 Z" 
+              fill="${p.shoes}" stroke="#0f172a" stroke-width="4" stroke-linejoin="round"/>
+        <line x1="-22" y1="3" x2="26" y2="3" stroke="${p.shoesStripe}" stroke-width="3" stroke-linecap="round"/>
+      </g>
+
+      <!-- Optional Skeleton Diagnostic Overlay -->
+      ${isSkeleton ? `
+        <g id="leg_bones" stroke="#10b981" stroke-width="3" stroke-dasharray="4 2">
+          <line x1="${lh.x}" y1="${lh.y}" x2="${lk.x}" y2="${lk.y}"/>
+          <line x1="${lk.x}" y1="${lk.y}" x2="${la.x}" y2="${la.y}"/>
+          <line x1="${rh.x}" y1="${rh.y}" x2="${rk.x}" y2="${rk.y}"/>
+          <line x1="${rk.x}" y1="${rk.y}" x2="${ra.x}" y2="${ra.y}"/>
+          <circle cx="${lh.x}" cy="${lh.y}" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+          <circle cx="${lk.x}" cy="${lk.y}" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+          <circle cx="${la.x}" cy="${la.y}" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+          <circle cx="${rh.x}" cy="${rh.y}" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+          <circle cx="${rk.x}" cy="${rk.y}" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+          <circle cx="${ra.x}" cy="${ra.y}" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+        </g>
+      ` : ''}
+    </g>
+  `;
+}
+
+/**
+ * MASTER CHARACTER RENDERER
+ */
+function renderMasterCharacter(options = {}) {
+  const {
+    pose = "POSE_IDLE",
+    headTilt = null,
+    blink = 0,
+    breathScale = 1.0,
+    browPosition = 0,
+    eyeLookX = 0,
+    eyeLookY = 0,
+    billScale = null,
+    showSkeleton = false,
+    customJoints = null
+  } = options;
+
+  let preset = CANONICAL_POSES[pose] || CANONICAL_POSES.POSE_IDLE;
+  if (pose === "IDLE") preset = CANONICAL_POSES.POSE_IDLE;
+  if (pose === "PRESENT_BILL") preset = CANONICAL_POSES.POSE_PRESENT_BILL;
+  if (pose === "STASHING") preset = CANONICAL_POSES.POSE_STASHING;
+  if (pose === "PANIC_SHOCK") preset = CANONICAL_POSES.POSE_PANIC_SHOCK;
+  if (pose === "VICTORY" || pose === "VICTORY_CELEBRATE") preset = CANONICAL_POSES.POSE_VICTORY;
+
+  const leftShoulderAngle = (customJoints?.leftArm?.shoulderAngle !== undefined) ? customJoints.leftArm.shoulderAngle : preset.leftArm.shoulderAngle;
+  const leftElbowFlexion = (customJoints?.leftArm?.elbowFlexion !== undefined) ? customJoints.leftArm.elbowFlexion : preset.leftArm.elbowFlexion;
+
+  const rightShoulderAngle = (customJoints?.rightArm?.shoulderAngle !== undefined) ? customJoints.rightArm.shoulderAngle : preset.rightArm.shoulderAngle;
+  const rightElbowFlexion = (customJoints?.rightArm?.elbowFlexion !== undefined) ? customJoints.rightArm.elbowFlexion : preset.rightArm.elbowFlexion;
+
+  const actualHeadTilt = (headTilt !== null) ? headTilt : preset.headTilt;
+  const actualBillScale = (billScale !== null) ? billScale : preset.billScale;
+
+  const leftArmKine = solveArmKinematics('left', leftShoulderAngle, leftElbowFlexion);
+  const rightArmKine = solveArmKinematics('right', rightShoulderAngle, rightElbowFlexion);
+
+  const leftLegKine = solveLegKinematics('left', 0, 0);
+  const rightLegKine = solveLegKinematics('right', 0, 0);
+
+  const p = MASTER_CHARACTER_SPEC.palette;
+
+  let mouthSvg = `
+    <path d="M -12 -4 C -8 8 8 8 12 -4 C 6 4 -6 4 -12 -4 Z" 
+          fill="${p.mouthDark}" stroke="#0f172a" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M -7 -2 C -3 2 3 2 7 -2" fill="#ffffff" stroke="none"/>
+  `;
+
+  if (preset.mouth === "open_gasp" || pose === "PANIC_SHOCK") {
+    mouthSvg = `
+      <ellipse cx="0" cy="-2" rx="14" ry="18" fill="${p.mouthDark}" stroke="#0f172a" stroke-width="3.5"/>
+      <ellipse cx="0" cy="8" rx="8" ry="4" fill="${p.blush}"/>
+    `;
+  } else if (preset.mouth === "victory_grin" || pose === "VICTORY" || pose === "VICTORY_CELEBRATE") {
+    mouthSvg = `
+      <path d="M -16 -6 C -12 12 12 12 16 -6 Z" fill="${p.mouthDark}" stroke="#0f172a" stroke-width="3.5"/>
+      <path d="M -12 -5 C -6 0 6 0 12 -5 Z" fill="#ffffff"/>
+    `;
+  }
+
+  return `
+    <g id="master_character_root" transform="scale(${breathScale * 1.35})">
+      <!-- 1. LEGS -->
+      ${renderRiggedLegs(leftLegKine, rightLegKine, showSkeleton)}
+
+      <!-- 2. TORSO / HOODIE -->
+      <g id="torso">
+        <path d="M -58 25 C -60 25 -66 105 -50 160 L 50 160 C 66 105 60 25 58 25 C 38 16 -38 16 -58 25 Z" 
+              fill="${p.hoodieMain}" stroke="#0f172a" stroke-width="4.5" stroke-linejoin="round"/>
+        <path d="M 18 22 C 38 55 46 120 50 160 L 22 160 C 18 115 12 65 -6 22 Z" fill="${p.hoodieShadow}" opacity="0.45"/>
+        <path d="M -34 98 L 34 98 L 42 146 L -42 146 Z" fill="${p.hoodieShadow}" stroke="#0f172a" stroke-width="3.5" stroke-linejoin="round"/>
+        <path d="M -22 20 C -12 40 12 40 22 20" fill="none" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+        <line x1="-10" y1="30" x2="-10" y2="64" stroke="${p.hoodieDrawstring}" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="-10" cy="67" r="3" fill="${p.hoodieDrawstring}"/>
+        <line x1="10" y1="30" x2="10" y2="68" stroke="${p.hoodieDrawstring}" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="10" cy="71" r="3" fill="${p.hoodieDrawstring}"/>
+      </g>
+
+      <!-- 3. RIGHT ARM -->
+      ${renderRiggedArm('right', rightArmKine, { showBill: false, isSkeleton: showSkeleton })}
+
+      <!-- 4. HEAD & FACE -->
+      <g id="head_group" transform="translate(0, 8) rotate(${actualHeadTilt})">
+        <rect x="-18" y="-20" width="36" height="38" fill="${p.skinShadow}" stroke="#0f172a" stroke-width="4" rx="4"/>
+        <path d="M -60 -75 C -60 -155 60 -155 60 -75 C 60 -5 44 20 0 24 C -44 20 -60 -5 -60 -75 Z" 
+              fill="${p.skin}" stroke="#0f172a" stroke-width="4.5" stroke-linejoin="round"/>
+        
+        <ellipse cx="-42" cy="-45" rx="10" ry="6" fill="${p.blush}" opacity="0.4"/>
+        <ellipse cx="42" cy="-45" rx="10" ry="6" fill="${p.blush}" opacity="0.4"/>
+        <path d="M -60 -70 C -70 -70 -70 -48 -58 -46" fill="${p.skin}" stroke="#0f172a" stroke-width="4"/>
+        <path d="M 60 -70 C 70 -70 70 -48 58 -46" fill="${p.skin}" stroke="#0f172a" stroke-width="4"/>
+
+        <!-- Hair -->
+        <path d="M -62 -85 C -66 -148 -14 -175 25 -170 C 58 -165 72 -135 66 -95 C 60 -86 52 -100 36 -104 C 20 -108 10 -98 -8 -102 C -28 -106 -45 -82 -62 -85 Z" 
+              fill="${p.hair}" stroke="#0f172a" stroke-width="4.5" stroke-linejoin="round"/>
+        <path d="M -60 -88 L -58 -62 L -50 -68 Z" fill="${p.hair}"/>
+        <path d="M 60 -88 L 58 -62 L 50 -68 Z" fill="${p.hair}"/>
+
+        <!-- Eyebrows -->
+        <g id="eyebrows" transform="translate(0, ${-browPosition * 8})">
+          <path d="M -42 -94 C -32 -108 -18 -104 -10 -96" fill="none" stroke="${p.hair}" stroke-width="5.5" stroke-linecap="round"/>
+          <path d="M 10 -98 C 22 -112 38 -108 44 -94" fill="none" stroke="${p.hair}" stroke-width="5.5" stroke-linecap="round"/>
+        </g>
+
+        <!-- Eyes -->
+        <g id="eyes">
+          ${blink === 1 ? `
+            <path d="M -40 -68 C -32 -58 -20 -58 -12 -68" fill="none" stroke="#0f172a" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M 12 -68 C 20 -58 32 -58 40 -68" fill="none" stroke="#0f172a" stroke-width="4.5" stroke-linecap="round"/>
+          ` : `
+            <g transform="translate(-26, -72)">
+              <ellipse cx="0" cy="0" rx="14" ry="17" fill="#ffffff" stroke="#0f172a" stroke-width="3.5"/>
+              <circle cx="${eyeLookX}" cy="${eyeLookY}" r="7.5" fill="#0f172a"/>
+              <circle cx="${eyeLookX + 3}" cy="${eyeLookY - 3}" r="3" fill="#ffffff"/>
+              <circle cx="${eyeLookX - 2.5}" cy="${eyeLookY + 2.5}" r="1.5" fill="#ffffff"/>
+            </g>
+            <g transform="translate(26, -72)">
+              <ellipse cx="0" cy="0" rx="14" ry="17" fill="#ffffff" stroke="#0f172a" stroke-width="3.5"/>
+              <circle cx="${eyeLookX}" cy="${eyeLookY}" r="7.5" fill="#0f172a"/>
+              <circle cx="${eyeLookX + 3}" cy="${eyeLookY - 3}" r="3" fill="#ffffff"/>
+              <circle cx="${eyeLookX - 2.5}" cy="${eyeLookY + 2.5}" r="1.5" fill="#ffffff"/>
+            </g>
+          `}
+        </g>
+
+        <!-- Nose -->
+        <path d="M -2 -58 C 4 -56 5 -48 -2 -44" fill="none" stroke="${p.skinShadow}" stroke-width="4.5" stroke-linecap="round"/>
+
+        <!-- Mouth -->
+        <g id="mouth" transform="translate(0, -28)">
+          ${mouthSvg}
+        </g>
+      </g>
+
+      <!-- 5. LEFT ARM (Holds $5 Banknote firmly) -->
+      ${renderRiggedArm('left', leftArmKine, { 
+        showBill: actualBillScale > 0, 
+        billScale: actualBillScale, 
+        isSkeleton: showSkeleton 
+      })}
+
+      <!-- 6. NECK SKELETON PIVOT -->
+      ${showSkeleton ? `
+        <circle cx="0" cy="10" r="8" fill="#10b981" stroke="#ffffff" stroke-width="2.5"/>
+        <text x="0" y="-12" font-family="'Inter', sans-serif" font-size="11" font-weight="900" fill="#10b981" text-anchor="middle">NECK PIVOT</text>
+      ` : ''}
+    </g>
+  `;
+}
+
+function renderCharacter(options = {}) {
+  return renderMasterCharacter(options);
+}
+
+
+    // --- 2. AGENT 2: SCENE 1 ENVIRONMENT ---
+    /**
+ * AGENT 2: SCENE ENVIRONMENT DESIGNER (REVISION 2 - POLISHED COMPOSITION)
+ * 
+ * Refinements:
+ * - Repositioned popping question marks to lateral diagonals (framing character without badge collision)
+ * - Enhanced calendar page drop shadows, rich paper curl, and staggered framing
+ * - Elevated hero badge with sparkling golden coins and luminous emerald halo
+ */
+
+function renderSceneEnvironment(options = {}) {
+  const {
+    calendarOffset = 0,     // drift progress (0 to 1)
+    badgeScale = 1,          // pop-in scale
+    badgeOpacity = 1,        // fade in
+    questionScale = 1,       // question mark burst scale
+    questionOpacity = 1,     // question mark opacity
+    gridPulse = 1            // ambient grid pulse
+  } = options;
+
+  // 5 floating calendar pages with smooth staggered drift
+  const calendarSheets = [
+    { day: "MON", date: "01", baseX: 240, baseY: 340, rot: -14, driftX: calendarOffset * 60, driftY: -calendarOffset * 25 },
+    { day: "TUE", date: "02", baseX: 360, baseY: 180, rot: 12, driftX: calendarOffset * 85, driftY: -calendarOffset * 40 },
+    { day: "WED", date: "03", baseX: 1540, baseY: 200, rot: -18, driftX: -calendarOffset * 70, driftY: -calendarOffset * 30 },
+    { day: "THU", date: "04", baseX: 1680, baseY: 390, rot: 15, driftX: -calendarOffset * 50, driftY: -calendarOffset * 20 },
+    { day: "FRI", date: "05", baseX: 1500, baseY: 600, rot: -8, driftX: -calendarOffset * 90, driftY: -calendarOffset * 35 }
+  ];
+
+  return `
+    <defs>
+      <!-- Background Radial Studio Glow -->
+      <radialGradient id="bgStudioGlow" cx="50%" cy="45%" r="65%">
+        <stop offset="0%" stop-color="#1e293b"/>
+        <stop offset="60%" stop-color="#0f172a"/>
+        <stop offset="100%" stop-color="#020617"/>
+      </radialGradient>
+
+      <!-- Badge Glow & Gradient -->
+      <linearGradient id="badgeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#065f46"/>
+        <stop offset="100%" stop-color="#047857"/>
+      </linearGradient>
+
+      <linearGradient id="coinGold" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#fef08a"/>
+        <stop offset="50%" stop-color="#f59e0b"/>
+        <stop offset="100%" stop-color="#b45309"/>
+      </linearGradient>
+
+      <!-- Eye Clip Paths -->
+      <clipPath id="leftEyeClip">
+        <ellipse cx="0" cy="0" rx="14" ry="17"/>
+      </clipPath>
+      <clipPath id="rightEyeClip">
+        <ellipse cx="0" cy="0" rx="14" ry="17"/>
+      </clipPath>
+
+      <!-- Drop Shadows -->
+      <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#000000" flood-opacity="0.55"/>
+      </filter>
+      <filter id="badgeGlow" x="-30%" y="-30%" width="160%" height="160%">
+        <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#10b981" flood-opacity="0.5"/>
+      </filter>
+    </defs>
+
+    <!-- 1. STUDIO BACKGROUND -->
+    <rect width="1920" height="1080" fill="url(#bgStudioGlow)"/>
+
+    <!-- Subtle Motion Grid -->
+    <g id="ambient_grid" opacity="${0.12 * gridPulse}">
+      <path d="M 0 180 L 1920 180 M 0 360 L 1920 360 M 0 540 L 1920 540 M 0 720 L 1920 720 M 0 900 L 1920 900" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="8 12"/>
+      <path d="M 320 0 L 320 1080 M 640 0 L 640 1080 M 960 0 L 960 1080 M 1280 0 L 1280 1080 M 1600 0 L 1600 1080" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="8 12"/>
+      <circle cx="960" cy="500" r="680" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="16 24" opacity="0.3"/>
+    </g>
+
+    <!-- 2. AMBIENT FLOATING GOLD COINS -->
+    <g id="ambient_coins" opacity="0.8">
+      <!-- Coin 1 -->
+      <g transform="translate(${380 - calendarOffset * 30}, ${640 - calendarOffset * 40}) rotate(${calendarOffset * 45})">
+        <ellipse cx="0" cy="0" rx="26" ry="26" fill="url(#coinGold)" stroke="#78350f" stroke-width="3.5" filter="url(#softShadow)"/>
+        <ellipse cx="0" cy="0" rx="19" ry="19" fill="none" stroke="#fef08a" stroke-width="2"/>
+        <text x="0" y="9" font-family="'Impact', 'Arial Black', sans-serif" font-size="22" font-weight="bold" fill="#78350f" text-anchor="middle">$</text>
+      </g>
+      <!-- Coin 2 -->
+      <g transform="translate(${1620 + calendarOffset * 40}, ${700 - calendarOffset * 30}) rotate(${-calendarOffset * 60})">
+        <ellipse cx="0" cy="0" rx="20" ry="20" fill="url(#coinGold)" stroke="#78350f" stroke-width="3" filter="url(#softShadow)"/>
+        <ellipse cx="0" cy="0" rx="14" ry="14" fill="none" stroke="#fef08a" stroke-width="1.5"/>
+        <text x="0" y="7" font-family="'Impact', 'Arial Black', sans-serif" font-size="16" font-weight="bold" fill="#78350f" text-anchor="middle">$</text>
+      </g>
+    </g>
+
+    <!-- 3. FLYING CALENDAR PAGES ("every single day") -->
+    <g id="calendar_pages">
+      ${calendarSheets.map(sheet => `
+        <g transform="translate(${sheet.baseX + sheet.driftX}, ${sheet.baseY + sheet.driftY}) rotate(${sheet.rot})" filter="url(#softShadow)">
+          <!-- Page Body -->
+          <rect x="-46" y="-56" width="92" height="112" rx="8" fill="#ffffff" stroke="#0f172a" stroke-width="4"/>
+          <!-- Red Header Bar -->
+          <path d="M -46 -48 C -46 -53 -41 -56 -36 -56 L 36 -56 C 41 -56 46 -43 46 -48 L 46 -24 L -46 -24 Z" fill="#ef4444" stroke="#0f172a" stroke-width="3"/>
+          <!-- Perforated Holes -->
+          <circle cx="-22" cy="-40" r="3.5" fill="#ffffff" stroke="#991b1b" stroke-width="1.5"/>
+          <circle cx="22" cy="-40" r="3.5" fill="#ffffff" stroke="#991b1b" stroke-width="1.5"/>
+          <!-- Day Name -->
+          <text x="0" y="-30" font-family="'Impact', 'Arial Black', sans-serif" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle" letter-spacing="1">${sheet.day}</text>
+          <!-- Big Date Number -->
+          <text x="0" y="26" font-family="'Arial Black', 'Impact', sans-serif" font-size="38" font-weight="900" fill="#0f172a" text-anchor="middle">${sheet.date}</text>
+          <!-- Page Corner Fold -->
+          <polygon points="30,56 46,40 46,56" fill="#cbd5e1" stroke="#94a3b8" stroke-width="1.5"/>
+        </g>
+      `).join('')}
+    </g>
+
+    <!-- 4. POPPING QUESTION MARKS (Positioned to Lateral Flanks) -->
+    <g id="question_marks" transform="translate(960, 480) scale(${questionScale})" opacity="${questionOpacity}">
+      <!-- Left Electric Yellow Question Mark -->
+      <g transform="translate(-290, -110) rotate(-16)">
+        <ellipse cx="0" cy="0" rx="38" ry="38" fill="#facc15" stroke="#0f172a" stroke-width="4.5" filter="url(#softShadow)"/>
+        <text x="0" y="15" font-family="'Impact', 'Arial Black', sans-serif" font-size="48" font-weight="900" fill="#0f172a" text-anchor="middle">?</text>
+        <!-- Burst Sparks -->
+        <line x1="-32" y1="-32" x2="-48" y2="-48" stroke="#facc15" stroke-width="4.5" stroke-linecap="round"/>
+        <line x1="0" y1="-44" x2="0" y2="-64" stroke="#facc15" stroke-width="4.5" stroke-linecap="round"/>
+        <line x1="-44" y1="0" x2="-64" y2="0" stroke="#facc15" stroke-width="4.5" stroke-linecap="round"/>
+      </g>
+
+      <!-- Right Vibrant Cyan Question Mark -->
+      <g transform="translate(290, -120) rotate(18)">
+        <ellipse cx="0" cy="0" rx="34" ry="34" fill="#38bdf8" stroke="#0f172a" stroke-width="4.5" filter="url(#softShadow)"/>
+        <text x="0" y="13" font-family="'Impact', 'Arial Black', sans-serif" font-size="42" font-weight="900" fill="#0f172a" text-anchor="middle">?</text>
+        <!-- Burst Sparks -->
+        <line x1="28" y1="-28" x2="44" y2="-44" stroke="#38bdf8" stroke-width="4.5" stroke-linecap="round"/>
+        <line x1="42" y1="0" x2="58" y2="0" stroke="#38bdf8" stroke-width="4.5" stroke-linecap="round"/>
+      </g>
+    </g>
+
+    <!-- 5. HERO INFOGRAPHIC PILL BADGE: "$5.00 / DAY" -->
+    <g id="hero_badge" transform="translate(960, 160) scale(${badgeScale})" opacity="${badgeOpacity}" filter="url(#badgeGlow)">
+      <!-- Outer Border Shell -->
+      <rect x="-250" y="-56" width="500" height="112" rx="56" fill="#047857" stroke="#10b981" stroke-width="6"/>
+      <!-- Inner High-Contrast Fill -->
+      <rect x="-244" y="-50" width="488" height="100" rx="50" fill="url(#badgeGradient)" stroke="#34d399" stroke-width="2.5"/>
+      
+      <!-- Gold Coin Icon -->
+      <g transform="translate(-170, 0)">
+        <ellipse cx="0" cy="0" rx="38" ry="38" fill="url(#coinGold)" stroke="#78350f" stroke-width="4.5"/>
+        <ellipse cx="0" cy="0" rx="30" ry="30" fill="none" stroke="#fef08a" stroke-width="2.5"/>
+        <text x="0" y="13" font-family="'Impact', 'Arial Black', sans-serif" font-size="36" font-weight="bold" fill="#78350f" text-anchor="middle">$</text>
+      </g>
+
+      <!-- Text: "$5.00 / DAY" -->
+      <text x="45" y="15" font-family="'Arial Black', 'Impact', sans-serif" font-size="54" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="2">
+        $5.00 <tspan fill="#6ee7b7" font-size="38" font-weight="800">/ DAY</tspan>
+      </text>
+
+      <!-- Sparkle Star -->
+      <g transform="translate(205, -28)">
+        <polygon points="0,-16 5,-5 16,0 5,5 0,16 -5,5 -16,0 -5,-5" fill="#fef08a"/>
+      </g>
+    </g>
+  `;
+}
+
+
+    // --- 3. ORCHESTRATOR ENGINE (Zoning, Bezier Tangent, Chunked Captions) ---
+    /**
+ * ORCHESTRATOR AGENT: TECHNICAL CONTRACTS, SPATIAL ZONES & DATA BUS
+ * 
+ * Enforces:
+ * 1. Screen Real Estate Zoning (Header 0-240, Action 240-850, Caption 860-1080)
+ * 2. Calculus Tangent Engine for curve-following motion (Rocket along S&P 500 curve)
+ * 3. 18 Non-overlapping Chunked Subtitles (zero double-rendering, zero bounds overflow)
+ * 4. 50% Midpoint Scene Switching Protocol for seamless transitions
+ */
+
+// 1. SPATIAL ZONING CONTRACTS
+const SPATIAL_ZONES = {
+  HEADER:  { yMin: 0,   yMax: 240, label: "Hero Badges & Counters" },
+  ACTION:  { yMin: 240, yMax: 850, label: "Character & Kinetic Props" },
+  CAPTION: { yMin: 860, yMax: 1080, label: "Chunked Subtitles" }
+};
+
+// 2. CALCULUS TANGENT ENGINE FOR BEZIER CURVES
+// Quadratic Bezier: B(p) = (1-p)^2 * P0 + 2(1-p)p * P1 + p^2 * P2
+function getQuadraticBezierPointAndTangent(p0, p1, p2, p) {
+  const t = Math.min(Math.max(p, 0), 1);
+  
+  // Position B(t)
+  const x = Math.pow(1 - t, 2) * p0.x + 2 * (1 - t) * t * p1.x + Math.pow(t, 2) * p2.x;
+  const y = Math.pow(1 - t, 2) * p0.y + 2 * (1 - t) * t * p1.y + Math.pow(t, 2) * p2.y;
+
+  // First Derivative B'(t) = 2(1-t)(P1 - P0) + 2t(P2 - P1)
+  const dx = 2 * (1 - t) * (p1.x - p0.x) + 2 * t * (p2.x - p1.x);
+  const dy = 2 * (1 - t) * (p1.y - p0.y) + 2 * t * (p2.y - p1.y);
+
+  // Tangent angle in degrees. Adding 90 deg because default rocket points UP (negative Y)
+  const angleDeg = (Math.atan2(dy, dx) * 180 / Math.PI) + 90;
+
+  return { x, y, dx, dy, angleDeg };
+}
+
+// 3. 18 RHYTHMIC CHUNKED SUBTITLES (3 to 5 words each - ZERO OVERFLOW)
+const CHUNKED_SUBTITLES = [
+  // Scene 1: The Hook (0.00s - 4.75s)
+  {
+    chunkId: 1, start: 0.00, end: 1.05,
+    words: [
+      { word: "What", start: 0.00, end: 0.25 },
+      { word: "happens", start: 0.25, end: 0.65 },
+      { word: "if", start: 0.65, end: 0.85 },
+      { word: "you", start: 0.85, end: 1.05 }
+    ]
+  },
+  {
+    chunkId: 2, start: 1.05, end: 2.15,
+    words: [
+      { word: "take", start: 1.05, end: 1.35 },
+      { word: "five", start: 1.35, end: 1.70 },
+      { word: "dollars", start: 1.70, end: 2.15 }
+    ]
+  },
+  {
+    chunkId: 3, start: 2.15, end: 3.45,
+    words: [
+      { word: "every", start: 2.15, end: 2.55 },
+      { word: "single", start: 2.55, end: 2.95 },
+      { word: "day", start: 2.95, end: 3.45 }
+    ]
+  },
+  {
+    chunkId: 4, start: 3.45, end: 4.75,
+    words: [
+      { word: "and", start: 3.45, end: 3.70 },
+      { word: "simply", start: 3.70, end: 4.05 },
+      { word: "never", start: 4.05, end: 4.35 },
+      { word: "spend", start: 4.35, end: 4.60 },
+      { word: "it?", start: 4.60, end: 4.75 }
+    ]
+  },
+
+  // Scene 2: The Mattress Stash (4.75s - 9.70s)
+  {
+    chunkId: 5, start: 5.30, end: 6.95,
+    words: [
+      { word: "Tuck", start: 5.30, end: 5.60 },
+      { word: "it", start: 5.60, end: 5.80 },
+      { word: "under", start: 5.80, end: 6.10 },
+      { word: "your", start: 6.10, end: 6.35 },
+      { word: "mattress,", start: 6.35, end: 6.95 }
+    ]
+  },
+  {
+    chunkId: 6, start: 6.95, end: 8.35,
+    words: [
+      { word: "and", start: 6.95, end: 7.20 },
+      { word: "in", start: 7.20, end: 7.45 },
+      { word: "thirty", start: 7.45, end: 7.85 },
+      { word: "years,", start: 7.85, end: 8.35 }
+    ]
+  },
+  {
+    chunkId: 7, start: 8.35, end: 9.70,
+    words: [
+      { word: "you'll", start: 8.35, end: 8.65 },
+      { word: "have", start: 8.65, end: 8.90 },
+      { word: "fifty-four", start: 8.90, end: 9.35 },
+      { word: "thousand", start: 9.35, end: 9.70 }
+    ]
+  },
+
+  // Scene 3: The Inflation Threat (9.70s - 16.10s)
+  {
+    chunkId: 8, start: 9.70, end: 11.45,
+    words: [
+      { word: "dollars.", start: 9.70, end: 10.05 },
+      { word: "Sounds", start: 10.05, end: 10.45 },
+      { word: "decent,", start: 10.45, end: 11.00 },
+      { word: "right?", start: 11.00, end: 11.45 }
+    ]
+  },
+  {
+    chunkId: 9, start: 12.04, end: 13.00,
+    words: [
+      { word: "Wrong.", start: 12.04, end: 13.00 }
+    ]
+  },
+  {
+    chunkId: 10, start: 13.10, end: 14.45,
+    words: [
+      { word: "Inflation", start: 13.10, end: 13.65 },
+      { word: "quietly", start: 13.65, end: 14.10 },
+      { word: "eats", start: 14.10, end: 14.45 }
+    ]
+  },
+  {
+    chunkId: 11, start: 14.45, end: 16.10,
+    words: [
+      { word: "half", start: 14.45, end: 14.75 },
+      { word: "of", start: 14.75, end: 14.95 },
+      { word: "that", start: 14.95, end: 15.20 },
+      { word: "buying", start: 15.20, end: 15.65 },
+      { word: "power.", start: 15.65, end: 16.10 }
+    ]
+  },
+
+  // Scene 4: S&P 500 Rocket Engine (16.10s - 25.07s)
+  {
+    chunkId: 12, start: 16.50, end: 18.05,
+    words: [
+      { word: "But", start: 16.50, end: 16.75 },
+      { word: "put", start: 16.75, end: 17.00 },
+      { word: "that", start: 17.00, end: 17.25 },
+      { word: "exact", start: 17.25, end: 17.65 },
+      { word: "same", start: 17.65, end: 18.05 }
+    ]
+  },
+  {
+    chunkId: 13, start: 18.05, end: 19.30,
+    words: [
+      { word: "five", start: 18.05, end: 18.40 },
+      { word: "dollars", start: 18.40, end: 18.80 },
+      { word: "a", start: 18.80, end: 18.95 },
+      { word: "day", start: 18.95, end: 19.30 }
+    ]
+  },
+  {
+    chunkId: 14, start: 19.30, end: 20.65,
+    words: [
+      { word: "into", start: 19.30, end: 19.60 },
+      { word: "the", start: 19.60, end: 19.80 },
+      { word: "S&P", start: 19.80, end: 20.15 },
+      { word: "500,", start: 20.15, end: 20.65 }
+    ]
+  },
+  {
+    chunkId: 15, start: 20.95, end: 22.65,
+    words: [
+      { word: "and", start: 20.95, end: 21.20 },
+      { word: "compound", start: 21.20, end: 21.75 },
+      { word: "interest", start: 21.75, end: 22.25 },
+      { word: "turns", start: 22.25, end: 22.65 }
+    ]
+  },
+  {
+    chunkId: 16, start: 22.65, end: 23.75,
+    words: [
+      { word: "it", start: 22.65, end: 22.85 },
+      { word: "into", start: 22.85, end: 23.15 },
+      { word: "over", start: 23.15, end: 23.45 },
+      { word: "three", start: 23.45, end: 23.75 }
+    ]
+  },
+  {
+    chunkId: 17, start: 23.75, end: 25.07,
+    words: [
+      { word: "hundred", start: 23.75, end: 24.15 },
+      { word: "thirty", start: 24.15, end: 24.65 },
+      { word: "thousand", start: 24.65, end: 24.85 },
+      { word: "dollars.", start: 24.85, end: 25.07 }
+    ]
+  },
+
+  // Scene 5: Climax CTA (25.07s - 26.85s)
+  {
+    chunkId: 18, start: 25.40, end: 26.85,
+    words: [
+      { word: "Start", start: 25.65, end: 26.15 },
+      { word: "today.", start: 26.15, end: 26.85 }
+    ]
+  }
+];
+
+function renderChunkedCaptions(currentTime) {
+  const t = currentTime;
+  const currentChunk = CHUNKED_SUBTITLES.find(c => t >= c.start && t <= c.end);
+  if (!currentChunk) return '';
+
+  const words = currentChunk.words;
+  const activeWordIdx = words.findIndex(w => t >= w.start && t <= w.end);
+
+  return `
+    <g id="master_chunked_captions" transform="translate(960, 960)">
+      <!-- Auto-fitting pill (Max width 820px, fits comfortably in 1920x1080) -->
+      <rect x="-410" y="-45" width="820" height="90" rx="45" fill="#020617" opacity="0.88" stroke="#1e293b" stroke-width="2.5"/>
+      <text x="0" y="14" font-family="'Montserrat', 'Arial Black', sans-serif" font-size="34" font-weight="900" text-anchor="middle" letter-spacing="1">
+        ${words.map((w, idx) => {
+          const isCurrent = idx === activeWordIdx;
+          const isPassed = t > w.end;
+          const fill = isCurrent ? "#facc15" : (isPassed ? "#ffffff" : "#64748b");
+          const size = isCurrent ? "40" : "34";
+          return `<tspan fill="${fill}" font-size="${size}" ${isCurrent ? 'font-weight="900"' : ''}>${w.word} </tspan>`;
+        }).join('')}
+      </text>
+    </g>
+  `;
+}
+
+
+    // --- 4. AGENT 5: CONTINUITY & 50% MIDPOINT TRANSITIONS ---
+    /**
+ * AGENT 5: CONTINUITY & TRANSITION DIRECTOR (REVISION 3 - 50% MIDPOINT SWITCHING)
+ * 
+ * Enforces the Golden Motion Graphics Rule:
+ * Base scene N switches to scene N+1 at the EXACT MIDPOINT of the transition overlay
+ * when the screen is fully masked or covered, ensuring zero visual pops or abrupt cuts.
+ */
+
+function easeInOutCubic(x) {
+  return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+}
+
+function easeOutBack(x) {
+  const c1 = 1.70158;
+  const c3 = c1 + 1;
+  return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
+}
+
+function clamp(val, min, max) {
+  return Math.min(Math.max(val, min), max);
+}
+
+function lerp(a, b, t) {
+  return a + (b - a) * t;
+}
+
+function getContinuityState(currentTime) {
+  const t = clamp(currentTime, 0, 26.85);
+
+  let activeBaseScene = 1;
+  let cameraX = 0;
+  let cameraY = 0;
+  let cameraScale = 1.0;
+  let screenShakeX = 0;
+  let screenShakeY = 0;
+  let transitionOverlaySvg = '';
+
+  // 1. SCENE 1 (0.00s - 4.40s)
+  if (t < 4.40) {
+    activeBaseScene = 1;
+    cameraScale = lerp(1.0, 1.04, t / 4.40);
+  }
+  // TRANSITION 1 -> 2 (4.40s - 5.10s, Midpoint: 4.75s)
+  else if (t >= 4.40 && t < 5.10) {
+    const p = (t - 4.40) / 0.70;
+    const eased = easeInOutCubic(p);
+    
+    // 50% MIDPOINT RULE: Switch base scene at 4.75s (p = 0.5)
+    activeBaseScene = (p < 0.5) ? 1 : 2;
+    
+    // Camera whip pan
+    cameraX = lerp(0, -1920, eased);
+    if (activeBaseScene === 2) {
+      cameraX += 1920; // Re-anchor camera to Scene 2 origin
+    }
+
+    const whipOpacity = Math.sin(p * Math.PI) * 0.7;
+    transitionOverlaySvg = `
+      <g id="whip_speed_lines" opacity="${whipOpacity}">
+        <rect x="0" y="0" width="1920" height="1080" fill="#020617" opacity="${whipOpacity * 0.6}"/>
+        <line x1="100" y1="220" x2="1820" y2="220" stroke="#38bdf8" stroke-width="6" stroke-dasharray="160 80"/>
+        <line x1="200" y1="540" x2="1720" y2="540" stroke="#ffffff" stroke-width="8" stroke-dasharray="240 100"/>
+        <line x1="80" y1="820" x2="1840" y2="820" stroke="#38bdf8" stroke-width="6" stroke-dasharray="180 90"/>
+      </g>
+    `;
+  }
+  // 2. SCENE 2 (5.10s - 9.30s)
+  else if (t >= 5.10 && t < 9.30) {
+    activeBaseScene = 2;
+    cameraScale = lerp(1.0, 1.05, (t - 5.10) / 4.20);
+  }
+  // TRANSITION 2 -> 3 (9.30s - 10.10s, Midpoint: 9.70s)
+  else if (t >= 9.30 && t < 10.10) {
+    const p = (t - 9.30) / 0.80;
+    const eased = easeInOutCubic(p);
+    
+    // 50% MIDPOINT RULE: Switch base scene at 9.70s
+    activeBaseScene = (p < 0.5) ? 2 : 3;
+
+    cameraScale = lerp(1.05, 1.35, eased);
+    cameraY = lerp(0, 60, eased);
+    if (activeBaseScene === 3) {
+      cameraScale = lerp(1.35, 1.0, (p - 0.5) * 2);
+      cameraY = lerp(60, 0, (p - 0.5) * 2);
+    }
+  }
+  // 3. SCENE 3 (10.10s - 15.70s)
+  else if (t >= 10.10 && t < 15.70) {
+    activeBaseScene = 3;
+    // WRONG! Stamp screen shake at 12.04s - 12.50s
+    if (t >= 12.04 && t < 12.50) {
+      const shakeProgress = (t - 12.04) / 0.46;
+      const decay = 1 - shakeProgress;
+      screenShakeX = Math.sin(t * 70) * 20 * decay;
+      screenShakeY = Math.cos(t * 80) * 16 * decay;
+    }
+    cameraScale = 1.0;
+  }
+  // TRANSITION 3 -> 4 (15.70s - 16.50s, Midpoint: 16.10s)
+  else if (t >= 15.70 && t < 16.50) {
+    const p = (t - 15.70) / 0.80;
+    const eased = easeInOutCubic(p);
+
+    // 50% MIDPOINT RULE: Switch from Scene 3 to Scene 4 at 16.10s (p = 0.5)
+    activeBaseScene = (p < 0.5) ? 3 : 4;
+
+    const wipeX = lerp(-800, 2800, eased);
+    transitionOverlaySvg = `
+      <g id="diagonal_wipe">
+        <!-- Giant Solid Emerald Energy Shield -->
+        <polygon points="${wipeX - 600},-120 ${wipeX + 600},-120 ${wipeX + 200},1200 ${wipeX - 1000},1200" 
+                 fill="#10b981"/>
+        <line x1="${wipeX + 600}" y1="-120" x2="${wipeX + 200}" y2="1200" 
+              stroke="#34d399" stroke-width="24"/>
+        <line x1="${wipeX + 620}" y1="-120" x2="${wipeX + 220}" y2="1200" 
+              stroke="#ffffff" stroke-width="8"/>
+      </g>
+    `;
+  }
+  // 4. SCENE 4 (16.50s - 24.80s)
+  else if (t >= 16.50 && t < 24.80) {
+    activeBaseScene = 4;
+    cameraScale = lerp(1.0, 1.06, (t - 16.50) / 8.30);
+  }
+  // TRANSITION 4 -> 5 (24.80s - 25.35s, Midpoint: 25.07s)
+  else if (t >= 24.80 && t < 25.35) {
+    const p = (t - 24.80) / 0.55;
+
+    // 50% MIDPOINT RULE: Switch from Scene 4 to Scene 5 at 25.07s (p = 0.5)
+    activeBaseScene = (p < 0.5) ? 4 : 5;
+
+    const burstScale = lerp(0.1, 4.5, easeOutBack(p));
+    const burstOpacity = clamp(Math.sin(p * Math.PI) * 1.4, 0, 1);
+    transitionOverlaySvg = `
+      <g id="climax_burst" transform="translate(960, 540) scale(${burstScale})" opacity="${burstOpacity}">
+        <circle cx="0" cy="0" r="450" fill="#facc15" opacity="0.9"/>
+        <circle cx="0" cy="0" r="320" fill="#ffffff"/>
+        <polygon points="0,-500 45,-90 500,0 90,45 0,500 -45,90 -500,0 -90,-45" fill="#f59e0b"/>
+      </g>
+    `;
+  }
+  // 5. SCENE 5 (25.35s - 26.85s)
+  else {
+    activeBaseScene = 5;
+    cameraScale = lerp(1.0, 1.04, (t - 25.35) / 1.50);
+  }
+
+  return {
+    t,
+    activeBaseScene,
+    cameraX,
+    cameraY,
+    cameraScale,
+    screenShakeX,
+    screenShakeY,
+    transitionOverlaySvg
+  };
+}
+
+
+    // --- 5. SCENES 2 THROUGH 5 ASSETS (Monster, Badge, Tangent Rocket) ---
+    /**
+ * SCENE ASSETS ENGINE: SCENES 2 THROUGH 5 (REVISION 3 - POLISHED ASSETS & TANGENT ROCKET)
+ * 
+ * Features:
+ * - Iconic Menacing Inflation Monster (Pac-Man style with sharp white teeth & dollar crumbs)
+ * - Zero-Overflow Vector Purchasing Power Badge
+ * - Rocket Tangent Tracking using Orchestrator Bezier Calculus
+ * - Deconflicted Scene 4 Layout with Victory Pose Character
+ */
+
+
+function formatCurrency(num) {
+  return '$' + Math.round(num).toLocaleString('en-US');
+}
+
+/**
+ * SCENE 2: The Mattress Stash (4.75s - 9.70s)
+ */
+function renderScene2(t) {
+  const p = clamp((t - 4.75) / 4.55, 0, 1);
+  const counterVal = formatCurrency(lerp(0, 54000, Math.min(p * 1.3, 1)));
+  const yearVal = Math.min(30, Math.max(1, Math.round(lerp(1, 30, p))));
+  const mattressLift = lerp(0, -18, Math.sin(p * Math.PI) * 0.9);
+
+  return `
+    <rect width="1920" height="1080" fill="#0f172a"/>
+    <g opacity="0.06">
+      ${Array.from({ length: 20 }).map((_, i) => `<rect x="${i * 100}" y="0" width="50" height="1080" fill="#ffffff"/>`).join('')}
+    </g>
+
+    <!-- 30-Year Wall Clock -->
+    <g transform="translate(1540, 240)">
+      <circle cx="0" cy="0" r="75" fill="#1e293b" stroke="#38bdf8" stroke-width="5"/>
+      <circle cx="0" cy="0" r="62" fill="#ffffff"/>
+      <line x1="0" y1="0" x2="0" y2="-45" stroke="#0f172a" stroke-width="5" stroke-linecap="round" transform="rotate(${p * 2160})"/>
+      <line x1="0" y1="0" x2="0" y2="-32" stroke="#ef4444" stroke-width="4" stroke-linecap="round" transform="rotate(${p * 180})"/>
+      <circle cx="0" cy="0" r="6" fill="#0f172a"/>
+      <rect x="-80" y="90" width="160" height="42" rx="21" fill="#1e293b" stroke="#38bdf8" stroke-width="3"/>
+      <text x="0" y="117" font-family="'Impact', 'Arial Black', sans-serif" font-size="20" font-weight="900" fill="#38bdf8" text-anchor="middle">YEAR ${yearVal} / 30</text>
+    </g>
+
+    <!-- Bed & Mattress Rig -->
+    <g id="bed_rig" transform="translate(480, 560)">
+      <rect x="-320" y="-120" width="640" height="240" rx="14" fill="#78350f" stroke="#451a03" stroke-width="6"/>
+      <rect x="-300" y="-100" width="600" height="200" rx="10" fill="#92400e" stroke="#451a03" stroke-width="4"/>
+      <rect x="-340" y="100" width="680" height="120" rx="8" fill="#451a03"/>
+      <rect x="-330" y="210" width="40" height="120" fill="#291102" rx="4"/>
+      <rect x="290" y="210" width="40" height="120" fill="#291102" rx="4"/>
+
+      <!-- Cash Stash -->
+      <g transform="translate(0, 80)">
+        <rect x="-140" y="-40" width="280" height="60" rx="6" fill="#065f46" stroke="#047857" stroke-width="3"/>
+        <rect x="-135" y="-35" width="270" height="50" rx="4" fill="#10b981"/>
+        <text x="0" y="-2" font-family="'Impact', 'Arial Black', sans-serif" font-size="22" font-weight="bold" fill="#064e3b" text-anchor="middle">$$$ CASH STASH $$$</text>
+      </g>
+
+      <!-- Mattress -->
+      <g transform="translate(-310, 80) rotate(${mattressLift}) translate(310, -80)">
+        <rect x="-315" y="-30" width="630" height="85" rx="14" fill="#000000" opacity="0.35" transform="translate(4, 8)"/>
+        <rect x="-315" y="-30" width="630" height="85" rx="14" fill="#f8fafc" stroke="#0f172a" stroke-width="5"/>
+        <line x1="-315" y1="12" x2="315" y2="12" stroke="#cbd5e1" stroke-width="3" stroke-dasharray="16 16"/>
+        <path d="M -315 10 L -315 55 L 120 55 L 120 10 Z" fill="#3b82f6" opacity="0.85"/>
+      </g>
+    </g>
+
+    <!-- Character in Stashing Pose -->
+    <g transform="translate(980, 480)">
+      ${renderCharacter({
+        pose: "STASHING",
+        headTilt: 4,
+        blink: 0,
+        breathScale: 1.0 + Math.sin(t * 4) * 0.015,
+        browPosition: 0.6,
+        eyeLookX: 2,
+        eyeLookY: 1
+      })}
+    </g>
+
+    <!-- Hero Rolling Odometer Badge -->
+    <g transform="translate(960, 160)" filter="url(#badgeGlow)">
+      <rect x="-290" y="-55" width="580" height="110" rx="55" fill="#047857" stroke="#10b981" stroke-width="6"/>
+      <rect x="-284" y="-49" width="568" height="98" rx="49" fill="url(#badgeGradient)" stroke="#34d399" stroke-width="2.5"/>
+      <text x="0" y="-18" font-family="'Inter', sans-serif" font-size="16" font-weight="800" fill="#a7f3d0" text-anchor="middle" letter-spacing="2">MATTRESS SAVINGS (30 YEARS)</text>
+      <text x="0" y="32" font-family="'Arial Black', 'Impact', sans-serif" font-size="52" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="2">
+        ${counterVal}
+      </text>
+    </g>
+  `;
+}
+
+/**
+ * Renders the iconic Pac-Man Inflation Monster:
+ * A clean red circle with a real moving mouth wedge, sharp interlocking teeth,
+ * an angry brow & eye, and "INFLATION" written boldly across its body.
+ */
+function renderPacmanMonster(mouthAngleDeg) {
+  const R = 150;
+  const rad = (mouthAngleDeg * Math.PI) / 180;
+  const ux = -R * Math.cos(rad);
+  const uy = -R * Math.sin(rad);
+  const lx = -R * Math.cos(rad);
+  const ly = R * Math.sin(rad);
+
+  const bodyPath = `M 0 0 L ${ux.toFixed(1)} ${uy.toFixed(1)} A ${R} ${R} 0 1 1 ${lx.toFixed(1)} ${ly.toFixed(1)} Z`;
+
+  // Interlocking sharp triangular teeth
+  const upperTeeth = [0.24, 0.50, 0.76].map(t => {
+    const bx0 = ux * (t - 0.08);
+    const by0 = uy * (t - 0.08);
+    const bx1 = ux * (t + 0.08);
+    const by1 = uy * (t + 0.08);
+    const tipX = ux * t - Math.sin(rad) * 24;
+    const tipY = uy * t + Math.cos(rad) * 24;
+    return `<polygon points="${bx0.toFixed(1)},${by0.toFixed(1)} ${tipX.toFixed(1)},${tipY.toFixed(1)} ${bx1.toFixed(1)},${by1.toFixed(1)}" fill="#ffffff" stroke="#3b0707" stroke-width="3"/>`;
+  }).join('');
+
+  const lowerTeeth = [0.37, 0.63, 0.89].map(t => {
+    const bx0 = lx * (t - 0.08);
+    const by0 = ly * (t - 0.08);
+    const bx1 = lx * (t + 0.08);
+    const by1 = ly * (t + 0.08);
+    const tipX = lx * t - Math.sin(rad) * 24;
+    const tipY = ly * t - Math.cos(rad) * 24;
+    return `<polygon points="${bx0.toFixed(1)},${by0.toFixed(1)} ${tipX.toFixed(1)},${tipY.toFixed(1)} ${bx1.toFixed(1)},${by1.toFixed(1)}" fill="#ffffff" stroke="#3b0707" stroke-width="3"/>`;
+  }).join('');
+
+  return `
+    <g id="pacman_inflation_monster">
+      <!-- Dark Inside Mouth Throat Wedge -->
+      <path d="M 0 0 L ${ux.toFixed(1)} ${uy.toFixed(1)} L ${lx.toFixed(1)} ${ly.toFixed(1)} Z" fill="#180c10"/>
+
+      <!-- Main Vibrant Red Circular Body with Moving Mouth Cutout -->
+      <path d="${bodyPath}" fill="#ef4444" stroke="#450a0a" stroke-width="7" stroke-linejoin="round" filter="url(#softShadow)"/>
+
+      <!-- Sharp Interlocking Teeth -->
+      <g id="teeth">
+        ${upperTeeth}
+        ${lowerTeeth}
+      </g>
+
+      <!-- Angry Characterful Eye -->
+      <g id="angry_eye" transform="translate(15, -75)">
+        <circle cx="0" cy="0" r="26" fill="#fef08a" stroke="#450a0a" stroke-width="4"/>
+        <circle cx="-10" cy="3" r="12" fill="#0f172a"/>
+        <circle cx="-6" cy="-1" r="4" fill="#ffffff"/>
+        <!-- Slanted Angry Eyebrow -->
+        <polygon points="-36,-12 24,-32 28,-22 -32,-2" fill="#450a0a"/>
+      </g>
+
+      <!-- Bold "INFLATION" Typography Centered on the Body -->
+      <g transform="translate(50, 8)">
+        <rect x="-75" y="-22" width="150" height="44" rx="12" fill="#450a0a" stroke="#ffffff" stroke-width="2"/>
+        <text x="0" y="9" font-family="'Impact', 'Arial Black', sans-serif" font-size="28" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="2">
+          INFLATION
+        </text>
+      </g>
+    </g>
+  `;
+}
+
+/**
+ * SCENE 3: The Inflation Threat & Wrong! Stamp (9.70s - 16.10s)
+ */
+function renderScene3(t) {
+  const isPostStamp = t >= 12.04;
+  const stampProgress = clamp((t - 12.04) / 0.22, 0, 1);
+  const stampScale = lerp(3.5, 1.0, easeOutBack(stampProgress));
+
+  // Monster Timeline: enters at 12.80s, strikes and chomps cash at 13.70s
+  const isMonsterActive = t >= 12.80;
+  const isBitten = t >= 13.70;
+
+  // Lunge position: accelerates in from offscreen right (2100) to cash stack (1070)
+  const lungeProgress = clamp((t - 12.80) / 0.90, 0, 1);
+  const easedLunge = 1 - Math.pow(1 - lungeProgress, 3);
+  const monsterX = lerp(2100, 1070, easedLunge);
+
+  // Authentic Pac-Man Mouth Chomping Motion
+  let mouthAngle = 6;
+  if (t < 13.70) {
+    // Dynamic chomping mouth as it rushes in
+    mouthAngle = 22 + 16 * Math.sin((t - 12.80) * 16);
+  } else {
+    // Steady chewing on the bitten money
+    mouthAngle = 8 + 6 * Math.sin((t - 13.70) * 10);
+  }
+
+  return `
+    <rect width="1920" height="1080" fill="#180c10"/>
+    <circle cx="960" cy="540" r="800" fill="#450a0a" opacity="${isPostStamp ? '0.8' : '0.2'}"/>
+
+    <!-- CHARACTER: Uses Rigged PANIC_SHOCK pose with zero arm tangling -->
+    <g transform="translate(440, 480)">
+      ${renderCharacter({
+        pose: isPostStamp ? "PANIC_SHOCK" : "IDLE",
+        headTilt: isPostStamp ? -8 : 3,
+        blink: 0,
+        breathScale: 1.0 + Math.sin(t * 8) * 0.02,
+        browPosition: isPostStamp ? -1.0 : 0.4,
+        eyeLookX: isPostStamp ? 3 : 0,
+        eyeLookY: isPostStamp ? -1 : 0
+      })}
+    </g>
+
+    <!-- CASH STACK (Full Intact vs Bitten Severed) -->
+    <g transform="translate(920, 520)">
+      ${!isBitten ? `
+        <rect x="-130" y="-75" width="260" height="150" rx="14" fill="#047857" stroke="#064e3b" stroke-width="4" transform="translate(6, 10)"/>
+        <rect x="-130" y="-75" width="260" height="150" rx="14" fill="#10b981" stroke="#047857" stroke-width="5"/>
+        <rect x="-115" y="-60" width="230" height="120" rx="10" fill="#ecfdf5" stroke="#059669" stroke-width="3"/>
+        <circle cx="0" cy="0" r="36" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+        <text x="0" y="12" font-family="'Impact', 'Arial Black', sans-serif" font-size="44" font-weight="900" fill="#065f46" text-anchor="middle">$54,000</text>
+      ` : `
+        <!-- Severed Left Half with Clean Jagged Bite Mark -->
+        <path d="M -130 -75 L 0 -75 C -15 -45 -35 -15 0 0 C -25 25 -10 50 10 75 L -130 75 Z" fill="#10b981" stroke="#047857" stroke-width="5"/>
+        <path d="M -115 -60 L -10 -60 C -25 -35 -40 -10 -10 0 C -30 20 -15 40 0 60 L -115 60 Z" fill="#ecfdf5"/>
+        <text x="-68" y="6" font-family="'Impact', 'Arial Black', sans-serif" font-size="34" font-weight="900" fill="#065f46" text-anchor="middle">$27K</text>
+        <text x="-68" y="28" font-family="'Inter', sans-serif" font-size="16" font-weight="900" fill="#047857" text-anchor="middle">(-50%)</text>
+        
+        <!-- Flying Dollar Scraps -->
+        <g transform="translate(45, -50) rotate(25)"><rect x="-16" y="-10" width="32" height="20" rx="3" fill="#10b981" stroke="#047857" stroke-width="2"/><text x="0" y="4" font-size="10" font-weight="900" fill="#ffffff" text-anchor="middle">$</text></g>
+        <g transform="translate(65, 40) rotate(-30)"><rect x="-14" y="-9" width="28" height="18" rx="3" fill="#34d399" stroke="#047857" stroke-width="2"/><text x="0" y="4" font-size="10" font-weight="900" fill="#ffffff" text-anchor="middle">$</text></g>
+        <circle cx="30" cy="-60" r="6" fill="#34d399"/>
+        <circle cx="55" cy="70" r="5" fill="#10b981"/>
+      `}
+    </g>
+
+    <!-- AUTHENTIC PAC-MAN INFLATION MONSTER (Moving Mouth Wedge + Teeth + INFLATION) -->
+    ${isMonsterActive ? `
+      <g transform="translate(${monsterX}, 520)">
+        ${renderPacmanMonster(mouthAngle)}
+      </g>
+    ` : ''}
+
+    <!-- COMIC IMPACT CHOMP! BURST ON BITE -->
+    ${(t >= 13.70 && t < 14.20) ? `
+      <g transform="translate(970, 520) scale(${lerp(1.15, 0.5, clamp((t - 13.70) / 0.50, 0, 1))})" opacity="${clamp((14.20 - t) / 0.20, 0, 1)}">
+        <polygon points="0,-60 18,-18 60,-32 28,0 65,28 20,18 25,60 -8,25 -45,55 -22,12 -60,-8 -16,-16" 
+                 fill="#fbbf24" stroke="#dc2626" stroke-width="5"/>
+        <polygon points="0,-44 14,-14 44,-24 22,0 48,20 15,14 18,44 -6,18 -34,40 -16,8 -44,-6 -12,-12" 
+                 fill="#ffffff" stroke="#f59e0b" stroke-width="2.5"/>
+        <text x="0" y="9" font-family="'Impact', 'Arial Black', sans-serif" font-size="26" font-weight="900" fill="#dc2626" text-anchor="middle" letter-spacing="2">CHOMP!</text>
+      </g>
+    ` : ''}
+
+    <!-- "WRONG!" GIANT RUBBER STAMP -->
+    ${isPostStamp ? `
+      <g transform="translate(960, 220) rotate(-14) scale(${stampScale})" filter="url(#softShadow)">
+        <rect x="-240" y="-60" width="480" height="120" rx="16" fill="#dc2626" stroke="#ffffff" stroke-width="8"/>
+        <rect x="-225" y="-45" width="450" height="90" rx="10" fill="none" stroke="#ffffff" stroke-width="4" stroke-dasharray="14 10"/>
+        <text x="0" y="24" font-family="'Impact', 'Arial Black', sans-serif" font-size="82" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="6">WRONG!</text>
+      </g>
+    ` : ''}
+
+    <!-- ZERO-OVERFLOW PURCHASING POWER BADGE (Vector Chevron + Auto-Fitting Bounds) -->
+    ${isBitten ? `
+      <g id="purchasing_power_badge" transform="translate(960, 830)" filter="url(#softShadow)">
+        <!-- Expanded 640px Pill (Zero Overflow) -->
+        <rect x="-320" y="-46" width="640" height="92" rx="46" fill="#450a0a" stroke="#dc2626" stroke-width="5"/>
+        <!-- Clean SVG Vector Downward Chevron -->
+        <g transform="translate(-245, 0)">
+          <polygon points="0,14 -14,-8 14,-8" fill="#ef4444" stroke="#ffffff" stroke-width="2"/>
+        </g>
+        <text x="25" y="10" font-family="'Montserrat', 'Arial Black', sans-serif" font-size="28" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1">
+          PURCHASING POWER: <tspan fill="#fca5a5" font-weight="900">-50%</tspan>
+        </text>
+      </g>
+    ` : ''}
+  `;
+}
+
+/**
+ * SCENE 4: S&P 500 Rocket Engine & $330,000+ Vault (16.10s - 25.07s)
+ */
+function renderScene4(t) {
+  const p = clamp((t - 16.10) / 8.0, 0, 1);
+  const rocketProgress = clamp((t - 16.50) / 7.0, 0, 1);
+  const counterVal = formatCurrency(lerp(54000, 330450, Math.pow(p, 1.8)));
+
+  // S&P 500 Quadratic Curve Control Points
+  const p0 = { x: 380, y: 800 };
+  const p1 = { x: 860, y: 720 };
+  const p2 = { x: 1420, y: 220 };
+
+  // Calculate exact position AND mathematical tangent orientation
+  const { x: rocketX, y: rocketY, angleDeg: rocketAngle } = getQuadraticBezierPointAndTangent(p0, p1, p2, rocketProgress);
+
+  return `
+    <rect width="1920" height="1080" fill="#022c22"/>
+    <circle cx="960" cy="540" r="750" fill="#064e3b" opacity="0.4"/>
+    
+    <g opacity="0.15">
+      <path d="M 0 200 L 1920 200 M 0 400 L 1920 400 M 0 600 L 1920 600 M 0 800 L 1920 800" stroke="#34d399" stroke-width="2"/>
+      <path d="M 300 0 L 300 1080 M 600 0 L 600 1080 M 900 0 L 900 1080 M 1200 0 L 1200 1080 M 1500 0 L 1500 1080" stroke="#34d399" stroke-width="2"/>
+    </g>
+
+    <!-- S&P 500 EXPONENTIAL CURVE -->
+    <g id="sp500_curve">
+      <path d="M ${p0.x} ${p0.y} Q ${p1.x} ${p1.y} ${p2.x} ${p2.y}" fill="none" stroke="#10b981" stroke-width="12" stroke-linecap="round"/>
+      <path d="M ${p0.x} ${p0.y} Q ${p1.x} ${p1.y} ${p2.x} ${p2.y}" fill="none" stroke="#a7f3d0" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="${p0.x}" cy="${p0.y}" r="10" fill="#ffffff" stroke="#10b981" stroke-width="4"/>
+      <circle cx="860" cy="680" r="10" fill="#ffffff" stroke="#10b981" stroke-width="4"/>
+      <circle cx="1180" cy="460" r="12" fill="#facc15" stroke="#10b981" stroke-width="4"/>
+      <circle cx="${p2.x}" cy="${p2.y}" r="16" fill="#facc15" stroke="#ffffff" stroke-width="5"/>
+    </g>
+
+    <!-- TANGENT-ALIGNED STOCK ROCKET (Precisely follows mathematical curve direction) -->
+    <g transform="translate(${rocketX}, ${rocketY}) rotate(${rocketAngle})" filter="url(#badgeGlow)">
+      <!-- Flame Thruster -->
+      <polygon points="-14,48 0,95 14,48" fill="#f59e0b"/>
+      <polygon points="-7,48 0,78 7,48" fill="#fef08a"/>
+      <!-- Rocket Hull -->
+      <path d="M -24 48 L -24 -20 C -24 -58 0 -85 0 -85 C 0 -85 24 -58 24 -20 L 24 48 Z" fill="#ffffff" stroke="#0f172a" stroke-width="4"/>
+      <polygon points="-24,18 -48,52 -24,42" fill="#ef4444" stroke="#0f172a" stroke-width="3"/>
+      <polygon points="24,18 48,52 24,42" fill="#ef4444" stroke="#0f172a" stroke-width="3"/>
+      <circle cx="0" cy="-14" r="11" fill="#38bdf8" stroke="#0f172a" stroke-width="3"/>
+      <text x="0" y="28" font-family="'Impact', sans-serif" font-size="12" font-weight="900" fill="#10b981" text-anchor="middle">S&P</text>
+    </g>
+
+    <!-- CHARACTER: Relocated to Left Quadrant in VICTORY_CELEBRATE Pose (Clear Runway) -->
+    <g transform="translate(420, 520)">
+      ${renderCharacter({
+        pose: "VICTORY_CELEBRATE",
+        headTilt: -4,
+        blink: 0,
+        breathScale: 1.0 + Math.sin(t * 6) * 0.02,
+        browPosition: 1.0,
+        eyeLookX: 2,
+        eyeLookY: -2
+      })}
+    </g>
+
+    <!-- COMPARISON BOXES -->
+    <!-- Left: $54K Mattress Box -->
+    <g transform="translate(240, 260)">
+      <rect x="-110" y="-60" width="220" height="120" rx="12" fill="#1e293b" stroke="#64748b" stroke-width="4"/>
+      <text x="0" y="-25" font-family="'Inter', sans-serif" font-size="14" font-weight="700" fill="#94a3b8" text-anchor="middle">MATTRESS (0%)</text>
+      <text x="0" y="15" font-family="'Impact', 'Arial Black', sans-serif" font-size="32" font-weight="900" fill="#cbd5e1" text-anchor="middle">$54,000</text>
+      <text x="0" y="42" font-family="'Inter', sans-serif" font-size="12" font-weight="bold" fill="#ef4444" text-anchor="middle">Lost to Inflation</text>
+    </g>
+
+    <!-- Right: $330,000+ S&P 500 GOLD VAULT -->
+    <g transform="translate(1540, 580)" filter="url(#badgeGlow)">
+      <rect x="-190" y="-120" width="380" height="240" rx="20" fill="#065f46" stroke="#34d399" stroke-width="6"/>
+      <rect x="-175" y="-105" width="350" height="210" rx="14" fill="url(#badgeGradient)"/>
+      <text x="0" y="-60" font-family="'Inter', sans-serif" font-size="18" font-weight="900" fill="#a7f3d0" text-anchor="middle" letter-spacing="1">S&P 500 COMPOUND ENGINE</text>
+      <text x="0" y="15" font-family="'Arial Black', 'Impact', sans-serif" font-size="52" font-weight="900" fill="#facc15" text-anchor="middle">
+        ${counterVal}
+      </text>
+      <text x="0" y="65" font-family="'Impact', sans-serif" font-size="24" font-weight="bold" fill="#ffffff" text-anchor="middle">
+        🚀 +600% PROFIT
+      </text>
+    </g>
+  `;
+}
+
+/**
+ * SCENE 5: The Climax Call to Action (25.07s - 26.85s)
+ */
+function renderScene5(t) {
+  const p = clamp((t - 25.07) / 1.5, 0, 1);
+  const ctaScale = lerp(0.8, 1.0, easeOutBack(p));
+  const pulse = 1.0 + Math.sin(t * 8) * 0.03;
+
+  return `
+    <rect width="1920" height="1080" fill="#020617"/>
+    <circle cx="960" cy="540" r="850" fill="#0f172a"/>
+    <circle cx="960" cy="540" r="500" fill="#1e293b" opacity="0.6"/>
+
+    <g transform="translate(960, 540) rotate(${t * 30})" opacity="0.25">
+      ${Array.from({ length: 12 }).map((_, i) => `
+        <line x1="0" y1="0" x2="0" y2="600" stroke="#facc15" stroke-width="4" stroke-dasharray="40 60" transform="rotate(${i * 30})"/>
+      `).join('')}
+    </g>
+
+    <g transform="translate(960, 480) scale(${ctaScale * pulse})" filter="url(#badgeGlow)">
+      <g transform="translate(0, -180)">
+        <polygon points="0,-60 18,-18 60,0 18,18 0,60 -18,18 -60,0 -18,-18" fill="#facc15" stroke="#78350f" stroke-width="4"/>
+      </g>
+      <text x="0" y="0" font-family="'Impact', 'Arial Black', sans-serif" font-size="120" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="4">
+        START TODAY.
+      </text>
+      <rect x="-340" y="50" width="680" height="80" rx="40" fill="#10b981" stroke="#34d399" stroke-width="4"/>
+      <text x="0" y="105" font-family="'Arial Black', 'Impact', sans-serif" font-size="38" font-weight="900" fill="#022c22" text-anchor="middle" letter-spacing="2">
+        $5 A DAY = $330,000+
+      </text>
+    </g>
+  `;
+}
+
+
+    // --- 6. SCENE 1 ANIMATOR ---
+    /**
+ * AGENT 3: KINETIC ANIMATOR (SCENE 1 ENGINE)
+ * Drives Scene 1 visuals and character presentation
+ */
+
+
+function easeOutBack(x) {
+  const c1 = 1.70158;
+  const c3 = c1 + 1;
+  return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
+}
+
+function clamp(val, min, max) {
+  return Math.min(Math.max(val, min), max);
+}
+
+function lerp(a, b, t) {
+  return a + (b - a) * t;
+}
+
+function computeScene1Frame(currentTime, includeCaptions = false) {
+  const t = clamp(currentTime, 0, 4.85);
+
+  // Character Entrance Bounce (0.0s to 0.75s)
+  let charY = 0;
+  let charScale = 1;
+  if (t < 0.75) {
+    const p = t / 0.75;
+    const eased = easeOutBack(p);
+    charY = lerp(160, 0, eased);
+    charScale = lerp(0.85, 1, eased);
+  }
+
+  // Head Tilt & Wonder
+  let headTilt = 0;
+  if (t < 1.2) {
+    headTilt = lerp(0, -5, t / 1.2);
+  } else if (t < 2.8) {
+    const p = (t - 1.2) / 1.6;
+    headTilt = lerp(-5, 6, p);
+  } else {
+    const p = (t - 2.8) / 2.05;
+    headTilt = lerp(6, -2, p);
+  }
+
+  // Eye Blink Cycle (2.30s and 4.05s)
+  let blink = 0;
+  if ((t >= 2.30 && t <= 2.45) || (t >= 4.05 && t <= 4.20)) {
+    blink = 1;
+  }
+
+  // Eye Gaze
+  let eyeLookX = (t > 1.2 && t < 2.5) ? -2.5 : Math.sin(t * 1.5) * 1.2;
+  let eyeLookY = (t > 1.2 && t < 2.5) ? -1 : 0;
+
+  // Hero Badge Pop-in
+  let badgeScale = 0;
+  let badgeOpacity = 0;
+  if (t >= 1.30) {
+    const p = clamp((t - 1.30) / 0.45, 0, 1);
+    badgeScale = easeOutBack(p);
+    badgeOpacity = clamp(p * 2, 0, 1);
+  }
+
+  // Question Marks Pop
+  let questionScale = 0;
+  let questionOpacity = 0;
+  if (t >= 0.35 && t < 2.9) {
+    const p = clamp((t - 0.35) / 0.4, 0, 1);
+    questionScale = easeOutBack(p);
+    questionOpacity = (t > 2.4) ? clamp(1 - (t - 2.4) / 0.5, 0, 1) : 1;
+  }
+
+  // Calendar Sheets Drift
+  let calendarOffset = (t >= 1.8) ? (t - 1.8) / 3.05 : 0;
+
+  // Subtle Idle Breathing
+  const breathScale = 1.0 + Math.sin(t * 4.5) * 0.015;
+
+  const sceneEnvironmentSvg = renderSceneEnvironment({
+    calendarOffset,
+    badgeScale,
+    badgeOpacity,
+    questionScale,
+    questionOpacity,
+    gridPulse: 1 + Math.sin(t * 2) * 0.2
+  });
+
+  const characterSvg = renderCharacter({
+    pose: (t >= 1.05) ? "PRESENT_BILL" : "IDLE",
+    headTilt,
+    blink,
+    breathScale,
+    browPosition: clamp(t / 2.0, 0, 1),
+    eyeLookX,
+    eyeLookY,
+    billScale: clamp((t - 1.05) / 0.4, 0, 1)
+  });
+
+  return `
+    <g id="scene1_container">
+      ${sceneEnvironmentSvg}
+      <g id="character_wrapper" transform="translate(960, ${465 + charY}) scale(${charScale})">
+        ${characterSvg}
+      </g>
+    </g>
+  `;
+}
+
+
+    // --- 7. MASTER TIMELINE ENGINE ---
+    /**
+ * MASTER TIMELINE ENGINE (REVISION 3 - ORCHESTRATOR COMPLIANT)
+ * 
+ * Features:
+ * - Integrates all 5 scenes under the Orchestrator's spatial zoning protocol
+ * - Renders single-layer 18 chunked non-overlapping subtitles (ZERO DUPLICATION)
+ * - Applies Agent 5's 50% Midpoint Scene Switching
+ */
+
+
+function computeMasterFrame(currentTime) {
+  const t = Math.min(Math.max(currentTime, 0), 26.85);
+  const continuity = getContinuityState(t);
+
+  let sceneContent = '';
+
+  // 50% Midpoint Scene Selection
+  if (continuity.activeBaseScene === 1) {
+    sceneContent = computeScene1Frame(t);
+  } else if (continuity.activeBaseScene === 2) {
+    sceneContent = renderScene2(t);
+  } else if (continuity.activeBaseScene === 3) {
+    sceneContent = renderScene3(t);
+  } else if (continuity.activeBaseScene === 4) {
+    sceneContent = renderScene4(t);
+  } else {
+    sceneContent = renderScene5(t);
+  }
+
+  // Single-Source-of-Truth Chunked Captions (from Orchestrator)
+  const captionSvg = renderChunkedCaptions(t);
+
+  return `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%" style="display:block; overflow:hidden;">
+      <defs>
+        <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#000000" flood-opacity="0.55"/>
+        </filter>
+        <filter id="badgeGlow" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#10b981" flood-opacity="0.5"/>
+        </filter>
+        <linearGradient id="badgeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#065f46"/>
+          <stop offset="100%" stop-color="#047857"/>
+        </linearGradient>
+        <linearGradient id="beastSkin" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ef4444"/>
+          <stop offset="40%" stop-color="#dc2626"/>
+          <stop offset="80%" stop-color="#991b1b"/>
+          <stop offset="100%" stop-color="#450a0a"/>
+        </linearGradient>
+        <linearGradient id="beastBelly" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#f87171"/>
+          <stop offset="100%" stop-color="#b91c1c"/>
+        </linearGradient>
+        <linearGradient id="eyeGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#fef08a"/>
+          <stop offset="60%" stop-color="#f59e0b"/>
+          <stop offset="100%" stop-color="#d97706"/>
+        </linearGradient>
+        <filter id="monsterGlow" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#dc2626" flood-opacity="0.6"/>
+        </filter>
+      </defs>
+
+      <!-- AGENT 5 CAMERA & CONTINUITY RIG -->
+      <g transform="translate(${960 + continuity.screenShakeX}, ${540 + continuity.screenShakeY}) scale(${continuity.cameraScale}) translate(${-960 + continuity.cameraX}, ${-540 + continuity.cameraY})">
+        <!-- Scene Base Layer -->
+        ${sceneContent}
+        <!-- Continuity Transition Overlay (whip lines, diagonal wipe, climax burst) -->
+        ${continuity.transitionOverlaySvg}
+      </g>
+
+      <!-- FIXED CAPTIONS LAYER (Zone: y = 860 to 1080) -->
+      ${captionSvg}
+    </svg>
+  `;
+}
+
+
+    // --- 8. MASTER UI CONTROLLER ---
+    document.addEventListener('DOMContentLoaded', () => {
+      const stage = document.getElementById('stage');
+      const audio = document.getElementById('voiceover-audio');
+      const playBtn = document.getElementById('play-btn');
+      const restartBtn = document.getElementById('restart-btn');
+      const timelineSlider = document.getElementById('timeline-slider');
+      const currentTimeDisplay = document.getElementById('current-time');
+      const activeScenePill = document.getElementById('active-scene-pill');
+      const sceneIndicator = document.getElementById('scene-indicator');
+
+      const TOTAL_DURATION = 26.85;
+      let isPlaying = false;
+      let animFrameId = null;
+      let fallbackTime = 0.0;
+      let lastTimestamp = 0;
+
+      function getSceneTitle(t) {
+        if (t < 4.40) return { name: 'Scene 1: The Hook', num: '1 / 5' };
+        if (t < 5.10) return { name: 'Transition: Studio ➔ Bedroom (50% Midpoint)', num: 'T 1➔2' };
+        if (t < 9.30) return { name: 'Scene 2: The Mattress Stash', num: '2 / 5' };
+        if (t < 10.10) return { name: 'Transition: Punch-in Freeze', num: 'T 2➔3' };
+        if (t < 15.70) return { name: 'Scene 3: The Inflation Threat', num: '3 / 5' };
+        if (t < 16.50) return { name: 'Transition: Emerald Wipe (50% Midpoint)', num: 'T 3➔4' };
+        if (t < 24.80) return { name: 'Scene 4: S&P 500 Rocket Engine', num: '4 / 5' };
+        if (t < 25.35) return { name: 'Transition: Climax Starburst', num: 'T 4➔5' };
+        return { name: 'Scene 5: START TODAY', num: '5 / 5' };
+      }
+
+      // Global hook for Diagnostic Auditor
+      window.seekTo = function(seconds) {
+        const t = Math.min(Math.max(seconds, 0), TOTAL_DURATION);
+        timelineSlider.value = t;
+        currentTimeDisplay.textContent = t.toFixed(2) + 's';
+        const sc = getSceneTitle(t);
+        activeScenePill.textContent = sc.name;
+        sceneIndicator.textContent = 'SCENE ' + sc.num;
+        stage.innerHTML = computeMasterFrame(t);
+        fallbackTime = t;
+      };
+
+      function update(now) {
+        if (isPlaying) {
+          let t = 0;
+          if (!audio.paused && !isNaN(audio.currentTime) && audio.currentTime > 0) {
+            t = audio.currentTime;
+          } else {
+            if (!lastTimestamp) lastTimestamp = now;
+            const dt = (now - lastTimestamp) / 1000;
+            fallbackTime += dt;
+            lastTimestamp = now;
+            t = fallbackTime;
+          }
+
+          if (t >= TOTAL_DURATION) {
+            try { audio.pause(); } catch(e) {}
+            audio.currentTime = 0;
+            fallbackTime = 0;
+            isPlaying = false;
+            playBtn.innerHTML = '▶ Play';
+            window.seekTo(0);
+            return;
+          }
+
+          timelineSlider.value = t;
+          currentTimeDisplay.textContent = t.toFixed(2) + 's';
+          const sc = getSceneTitle(t);
+          activeScenePill.textContent = sc.name;
+          sceneIndicator.textContent = 'SCENE ' + sc.num;
+          stage.innerHTML = computeMasterFrame(t);
+
+          animFrameId = requestAnimationFrame(update);
+        }
+      }
+
+      function togglePlay() {
+        if (isPlaying) {
+          try { audio.pause(); } catch(e) {}
+          isPlaying = false;
+          playBtn.innerHTML = '▶ Play';
+          cancelAnimationFrame(animFrameId);
+        } else {
+          if (timelineSlider.value >= TOTAL_DURATION) {
+            window.seekTo(0);
+          }
+          fallbackTime = parseFloat(timelineSlider.value) || 0;
+          lastTimestamp = performance.now();
+          audio.currentTime = fallbackTime;
+
+          const playPromise = audio.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              isPlaying = true;
+              playBtn.innerHTML = '❚❚ Pause';
+              animFrameId = requestAnimationFrame(update);
+            }).catch(err => {
+              isPlaying = true;
+              playBtn.innerHTML = '❚❚ Pause';
+              animFrameId = requestAnimationFrame(update);
+            });
+          } else {
+            isPlaying = true;
+            playBtn.innerHTML = '❚❚ Pause';
+            animFrameId = requestAnimationFrame(update);
+          }
+        }
+      }
+
+      playBtn.addEventListener('click', togglePlay);
+
+      restartBtn.addEventListener('click', () => {
+        try { audio.pause(); } catch(e) {}
+        audio.currentTime = 0;
+        fallbackTime = 0;
+        window.seekTo(0);
+        if (isPlaying) {
+          lastTimestamp = performance.now();
+          audio.play().catch(() => {});
+        }
+      });
+
+      timelineSlider.addEventListener('input', (e) => {
+        const val = parseFloat(e.target.value);
+        audio.currentTime = val;
+        fallbackTime = val;
+        window.seekTo(val);
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.code === 'Space') {
+          e.preventDefault();
+          togglePlay();
+        }
+      });
+
+      window.seekTo(0);
+    });
+  </script>
+</body>
+</html>

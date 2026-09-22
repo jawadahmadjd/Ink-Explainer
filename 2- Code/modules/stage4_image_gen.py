@@ -12,12 +12,47 @@ import csv
 import random
 import shutil
 from datetime import datetime
+import threading
 from PIL import Image
 import numpy as np
 from playwright.sync_api import sync_playwright
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import config
+
+STAGE4_PAUSE_EVENT = threading.Event()
+STAGE4_PAUSE_EVENT.set()
+STAGE4_CANCEL_FLAG = False
+STAGE4_RUNNING_FLAG = False
+
+class _Stage4RunningTracker:
+    def __enter__(self):
+        global STAGE4_RUNNING_FLAG
+        STAGE4_RUNNING_FLAG = True
+        return self
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        global STAGE4_RUNNING_FLAG
+        STAGE4_RUNNING_FLAG = False
+
+def pause_stage4():
+    STAGE4_PAUSE_EVENT.clear()
+
+def resume_stage4():
+    STAGE4_PAUSE_EVENT.set()
+
+def cancel_stage4():
+    global STAGE4_CANCEL_FLAG, STAGE4_RUNNING_FLAG
+    STAGE4_CANCEL_FLAG = True
+    STAGE4_RUNNING_FLAG = False
+    STAGE4_PAUSE_EVENT.set()
+
+def is_stage4_paused() -> bool:
+    """Return True if Stage 4 image generation is actively paused."""
+    return not STAGE4_PAUSE_EVENT.is_set()
+
+def is_stage4_running() -> bool:
+    """Return True if Stage 4 image generation worker loop is actively executing."""
+    return bool(STAGE4_RUNNING_FLAG)
 
 def safe_copy_file(src: str, dst: str, max_retries: int = 5, retry_delay: float = 1.0):
     """Safely copy a file handling Windows file-lock contention."""
@@ -65,8 +100,8 @@ def switch_flow_model(page, target_model_name):
     """Switch model family in Google Flow settings dropdown."""
     print(f"[MODEL SWITCH] Switching Google Flow model to: {target_model_name}...")
     try:
-        page.mouse.click(100, 100)
-        time.sleep(0.5)
+        page.keyboard.press("Escape")
+        time.sleep(0.3)
 
         settings_btn = page.locator("button.settings-trigger-button").first
         settings_btn.click(timeout=5000)
@@ -85,16 +120,103 @@ def switch_flow_model(page, target_model_name):
             print(f"[MODEL SWITCH] Could not find menu item '{target_model_name}', pressing Escape")
             page.keyboard.press("Escape")
 
-        # Close settings panel
+        # Close settings panel cleanly via keyboard Escape (never click arbitrary sidebar coordinates)
         page.keyboard.press("Escape")
-        time.sleep(0.5)
-        page.mouse.click(200, 200)
+        time.sleep(0.3)
+        page.keyboard.press("Escape")
+        time.sleep(0.3)
     except Exception as e:
         print(f"[MODEL SWITCH] Note during switch: {e}")
         try:
             page.keyboard.press("Escape")
         except Exception:
             pass
+
+def download_flow_image_2k(flow_page, target_src: str = None, dest_path: str = None, timeout: int = 30000) -> bool:
+    """
+    Downloads native 2K (Upscaled) image from Google Flow via Playwright CDP.
+    Finds the image by src or clicks the latest rendered image, opens detail view,
+    clicks 'Download media' -> '2K (Upscaled)', saves to dest_path, and returns to canvas.
+    """
+    try:
+        flow_page.keyboard.press("Escape")
+        time.sleep(0.3)
+
+        # Locate image element
+        target_locator = None
+        if target_src:
+            loc = flow_page.locator(f'img[src="{target_src}"]')
+            if loc.count() > 0:
+                target_locator = loc.first
+
+        if not target_locator:
+            # Fallback to large image on canvas
+            imgs = flow_page.locator("img")
+            for i in range(imgs.count()):
+                box = imgs.nth(i).bounding_box()
+                if box and box['width'] > 200:
+                    target_locator = imgs.nth(i)
+                    break
+
+        if not target_locator:
+            print("  [2K DOWNLOAD] Could not locate target image on canvas.")
+            return False
+
+        target_locator.click(force=True)
+        time.sleep(1.0)
+
+        # Find download media button
+        dl_btn = flow_page.locator('button[aria-label="Download media"], button[aria-label="Download"]').first
+        if not dl_btn.is_visible():
+            dl_btn = flow_page.locator('button:has-text("download")').first
+
+        if not dl_btn.is_visible():
+            print("  [2K DOWNLOAD] Download button not visible in detail view.")
+            flow_page.keyboard.press("Escape")
+            return False
+
+        dl_btn.click(force=True)
+        time.sleep(0.5)
+
+        # Find 2K option
+        menu_2k = flow_page.locator('button[role="menuitem"]:has-text("2K")').first
+        if not menu_2k.is_visible():
+            menu_2k = flow_page.locator('button:has-text("2K\\nUpscaled"), button:has-text("2K")').first
+
+        if not menu_2k.is_visible():
+            print("  [2K DOWNLOAD] 2K Upscaled option not found in menu.")
+            flow_page.keyboard.press("Escape")
+            return False
+
+        with flow_page.expect_download(timeout=timeout) as dl_info:
+            menu_2k.click(force=True)
+
+        download = dl_info.value
+        os.makedirs(os.path.dirname(dest_path), exist_ok=True)
+        download.save_as(dest_path)
+
+        # Return to canvas
+        done_btn = flow_page.locator('button:has-text("Done")').first
+        if done_btn.is_visible():
+            done_btn.click(force=True)
+            time.sleep(0.5)
+        else:
+            flow_page.keyboard.press("Escape")
+            time.sleep(0.5)
+
+        print(f"  -> [2K SUCCESS] Downloaded native 2K image ({os.path.getsize(dest_path)} bytes) to {os.path.basename(dest_path)}")
+        return True
+    except Exception as ex:
+        print(f"  [2K DOWNLOAD WARNING] Flow 2K download exception: {ex}")
+        try:
+            done_btn = flow_page.locator('button:has-text("Done")').first
+            if done_btn.is_visible():
+                done_btn.click(force=True)
+            else:
+                flow_page.keyboard.press("Escape")
+        except Exception:
+            pass
+        return False
 
 def analyze_and_score_variation(image_path: str, is_character_shot: bool = True):
     """Evaluate image quality, stick-figure compliance, and border absence."""
@@ -155,17 +277,155 @@ def analyze_and_score_variation(image_path: str, is_character_shot: bool = True)
     except Exception as e:
         return 50.0, {"error": str(e)}
 
+def has_valid_final_image(final_img_dir: str, shot_num: int) -> bool:
+    """Checks if a valid, non-zero-byte final image exists for the given shot number."""
+    for ext in (".jpg", ".png", ".jpeg"):
+        p = os.path.join(final_img_dir, f"shot_{shot_num:03d}{ext}")
+        if os.path.exists(p) and os.path.getsize(p) > 0:
+            return True
+    return False
+
+def get_missing_shots(video_title: str, start_shot: int = 1, end_shot: int = None) -> list:
+    """
+    Returns a sorted list of shot numbers from master CSV that do not currently have
+    a valid image file in final_images_dir.
+    """
+    dirs = config.get_project_dirs(video_title)
+    final_img_dir = dirs["final_images_dir"]
+    master_csv = dirs["master_csv"]
+    if not os.path.exists(master_csv):
+        return []
+
+    with open(master_csv, "r", encoding="utf-8") as f:
+        rows = list(csv.reader(f))[1:]
+
+    max_end = end_shot or len(rows)
+    missing = []
+    for r in rows:
+        try:
+            shot_num = int(r[0])
+        except (ValueError, IndexError):
+            continue
+        if start_shot <= shot_num <= max_end:
+            if not has_valid_final_image(final_img_dir, shot_num):
+                missing.append(shot_num)
+    return sorted(missing)
+
+def update_production_status(
+    finals_dir: str,
+    shot_num: int,
+    total_shots: int,
+    completed_count: int,
+    status: str,
+    note: str = "",
+    active_model: str = "Nano Banana Pro",
+    last_image_info: dict = None
+):
+    """Writes Arslan's production_status.json in the project finals directory."""
+    try:
+        os.makedirs(finals_dir, exist_ok=True)
+        status_file = os.path.join(finals_dir, "production_status.json")
+        data = {
+            "current_shot": shot_num,
+            "total_shots": total_shots,
+            "completed_count": completed_count,
+            "status": status,
+            "active_model": active_model,
+            "last_updated": datetime.now().isoformat(),
+            "note": note,
+            "last_image": last_image_info
+        }
+        with open(status_file, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2)
+    except Exception as ex:
+        print(f"  [TRACKER WARNING] Could not write production_status.json: {ex}")
+
+def update_prompt_status_md(
+    video_title: str,
+    finals_dir: str,
+    total_shots: int,
+    completed_count: int,
+    rows: list,
+    selection_log_path: str = None
+):
+    """Writes Arslan's PROMPT_STATUS.md with visual progress bar and shot status table."""
+    try:
+        os.makedirs(finals_dir, exist_ok=True)
+        status_md = os.path.join(finals_dir, "PROMPT_STATUS.md")
+        pct = (completed_count / total_shots * 100.0) if total_shots > 0 else 0.0
+        remaining = max(0, total_shots - completed_count)
+        filled_blocks = int(pct // 5)
+        empty_blocks = max(0, 20 - filled_blocks)
+        progress_bar = "█" * filled_blocks + "░" * empty_blocks
+
+        scores_by_shot = {}
+        if selection_log_path and os.path.exists(selection_log_path):
+            try:
+                with open(selection_log_path, "r", encoding="utf-8") as f:
+                    reader = csv.reader(f)
+                    for r in reader:
+                        if r and len(r) >= 4:
+                            try:
+                                scores_by_shot[int(r[0])] = (r[2], r[3])
+                            except Exception:
+                                pass
+            except Exception:
+                pass
+
+        lines = [
+            f"# Storyboard Generation Live Status Tracker: {video_title}",
+            "",
+            f"**Overall Progress**: `{progress_bar}` **{pct:.1f}%** ({completed_count} / {total_shots} Shots Completed | {remaining} Remaining)",
+            "",
+            f"- **Storage Location**: `Final selected images/`",
+            f"- **Status File**: `production_status.json`",
+            f"- **Last Updated**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+            "",
+            "---",
+            "",
+            "## Shots Overview",
+            "",
+            "| Shot # | Timecode | Status | Score | VO Script |",
+            "| :--- | :--- | :--- | :--- | :--- |"
+        ]
+
+        final_img_dir = os.path.join(finals_dir, "Final selected images")
+        for r in rows:
+            try:
+                s_num = int(r[0])
+            except Exception:
+                continue
+            tc = r[1] if len(r) > 1 else ""
+            vo = (r[2][:50] + "...") if len(r) > 2 and len(r[2]) > 50 else (r[2] if len(r) > 2 else "")
+            done = has_valid_final_image(final_img_dir, s_num)
+            st_text = "✓ COMPLETED" if done else "⏳ PENDING"
+            score_str = scores_by_shot.get(s_num, ("", "--"))[1] if done else "--"
+            lines.append(f"| #{s_num:03d} | {tc} | {st_text} | {score_str} | {vo} |")
+
+        with open(status_md, "w", encoding="utf-8") as f:
+            f.write("\n".join(lines) + "\n")
+    except Exception as ex:
+        print(f"  [TRACKER WARNING] Could not write PROMPT_STATUS.md: {ex}")
+
 def run_stage4_image_gen(
     video_title: str,
     target_shots: list = None,
     start_shot: int = 1,
     end_shot: int = None,
     model: str = None,
-    limit: int = 0
+    limit: int = 0,
+    force_all: bool = False,
+    resolution: str = None,
+    only_missing: bool = False,
+    status_callback: callable = None
 ) -> dict:
     """
     Run autonomous stick-figure image generation and curation on Google Flow.
     """
+    global STAGE4_CANCEL_FLAG, STAGE4_RUNNING_FLAG
+    STAGE4_CANCEL_FLAG = False
+    STAGE4_RUNNING_FLAG = True
+
     dirs = config.get_project_dirs(video_title)
     final_img_dir = dirs["final_images_dir"]
     raw_img_dir = dirs["raw_images_dir"]
@@ -185,31 +445,78 @@ def run_stage4_image_gen(
         audit_records = json.load(f)
     audit_map = {d["shot_num"]: d for d in audit_records}
 
-    # Determine shots to process
     if target_shots:
         shots_to_run = [int(s) for s in target_shots if int(s) in csv_map]
+    elif only_missing:
+        shots_to_run = get_missing_shots(video_title, start_shot=start_shot, end_shot=end_shot)
     else:
         max_end = end_shot or len(rows)
         shots_to_run = [
-            d["shot_num"] for d in audit_records
-            if d.get("regen_needed", False) and (start_shot <= d["shot_num"] <= max_end)
+            int(r[0]) for r in rows
+            if (force_all or not has_valid_final_image(final_img_dir, int(r[0])))
+            and (start_shot <= int(r[0]) <= max_end)
         ]
 
     if limit > 0:
         shots_to_run = shots_to_run[:limit]
 
     print(f"\n[STAGE 4] Google Flow Autonomous Image Generation for '{video_title}'")
-    print(f"Target Shots: {len(shots_to_run)} shots")
+    print(f"Target Shots: {len(shots_to_run)} shots (Only Missing Mode: {only_missing})")
+
+    completed_on_disk = len([r for r in rows if has_valid_final_image(final_img_dir, int(r[0]))])
+    res_setting = (resolution or getattr(config, "FLOW_IMAGE_RESOLUTION", "2k") or "2k").lower().strip()
+    current_model = model or config.MODEL_CASCADE[0]
+    completed_in_run = 0
+
+    def emit_progress(phase: str, phase_text: str, shot_idx: int = None, score: float = None, last_image: dict = None, pacing_sec: float = 0.0):
+        update_production_status(
+            finals_dir=dirs["finals_dir"],
+            shot_num=shot_idx or 0,
+            total_shots=len(rows),
+            completed_count=completed_on_disk,
+            status=phase,
+            note=phase_text,
+            active_model=current_model,
+            last_image_info=last_image
+        )
+        if status_callback:
+            try:
+                run_target_count = len(shots_to_run)
+                run_pct = round((completed_in_run / run_target_count * 100.0), 1) if run_target_count > 0 else 100.0
+                payload = {
+                    "is_active": phase not in ("COMPLETE", "HALTED", "CANCELLED"),
+                    "shot_num": shot_idx,
+                    "index_in_run": min(run_target_count, completed_in_run + (1 if phase not in ("APPROVED", "PACING", "COMPLETE") else 0)),
+                    "total_in_run": run_target_count,
+                    "completed_in_run": completed_in_run,
+                    "total_project_shots": len(rows),
+                    "completed_project_shots": completed_on_disk,
+                    "run_percent": run_pct,
+                    "phase": phase,
+                    "phase_text": phase_text,
+                    "model": current_model,
+                    "resolution": res_setting.upper(),
+                    "best_score": score,
+                    "last_approved_shot": last_image,
+                    "pacing_sec": pacing_sec
+                }
+                status_callback(payload)
+            except Exception as cb_err:
+                print(f"  [STATUS CALLBACK WARNING] {cb_err}")
 
     if not shots_to_run:
+        STAGE4_RUNNING_FLAG = False
         print("All target shots already generated and verified! Zero remaining.")
-        return {"completed": len(rows), "pending": 0}
+        emit_progress("COMPLETE", f"All {len(rows)} shots already generated and verified! Zero remaining.")
+        update_prompt_status_md(video_title, dirs["finals_dir"], len(rows), completed_on_disk, rows, selection_log)
+        return {"completed": len(rows), "pending": 0, "total_missing": 0, "completed_in_run": 0}
+
+    emit_progress("START", f"Initialized generation for {len(shots_to_run)} shots...")
 
     # Connect to Chrome DevTools CDP
-    current_model = model or config.MODEL_CASCADE[0]
     model_cascade_idx = config.MODEL_CASCADE.index(current_model) if current_model in config.MODEL_CASCADE else 0
 
-    with sync_playwright() as p:
+    with _Stage4RunningTracker(), sync_playwright() as p:
         browser = None
         ctx = None
         for cdp in config.CDP_ENDPOINTS:
@@ -226,6 +533,7 @@ def run_stage4_image_gen(
                 continue
 
         if not browser:
+            emit_progress("HALTED", "Could not connect to Chrome on port 9222.")
             raise ConnectionError("Could not connect to Chrome on port 9222. Please start Chrome with --remote-debugging-port=9222.")
 
         # Find Flow tab
@@ -244,9 +552,13 @@ def run_stage4_image_gen(
         switch_flow_model(flow_page, current_model)
 
         consecutive_failures = 0
-        completed_in_run = 0
 
         for shot_idx in shots_to_run:
+            if STAGE4_CANCEL_FLAG:
+                print("  [STAGE 4] Generation cancelled by user.")
+                emit_progress("CANCELLED", "Generation cancelled by user.", shot_idx=shot_idx)
+                break
+            STAGE4_PAUSE_EVENT.wait()
             row = csv_map.get(shot_idx)
             if not row: continue
 
@@ -257,12 +569,28 @@ def run_stage4_image_gen(
 
             print(f"\n[{datetime.now().strftime('%H:%M:%S')}] GENERATING SHOT {shot_idx:03d} (Model: {current_model})")
             print(f"VO: {vo_text[:70]}...")
+            emit_progress("INJECTING", f"Shot #{shot_idx:03d}: Injecting prompt into Google Flow...", shot_idx=shot_idx)
 
-            # Inject prompt
+            # Ensure we are NOT inside the Characters tab or any modal dialog
+            try:
+                flow_page.evaluate("""() => {
+                    const listItems = Array.from(document.querySelectorAll('mat-list-item, .mdc-list-item'));
+                    const charItem = listItems.find(el => (el.innerText || '').toLowerCase().includes('characters'));
+                    if (charItem && (charItem.classList.contains('mdc-list-item--activated') || charItem.getAttribute('aria-selected') === 'true')) {
+                        const allMedia = listItems.find(el => (el.innerText || '').toLowerCase().includes('all media'));
+                        if (allMedia) allMedia.click();
+                    }
+                    const closeButtons = document.querySelectorAll('mat-dialog-container button[aria-label="Close"], button[aria-label="Close dialog"]');
+                    closeButtons.forEach(b => b.click());
+                }""")
+            except Exception:
+                pass
+
+            # Inject prompt specifically into the main generation ProseMirror editor
             type_success = False
             for attempt in range(3):
                 try:
-                    editor = flow_page.locator("div.ProseMirror, textarea, [contenteditable='true']").first
+                    editor = flow_page.locator("div.prosemirror-editor div.ProseMirror, div.ProseMirror[contenteditable='true'], div.ProseMirror").first
                     editor.click(timeout=4000)
                     time.sleep(0.3)
                     flow_page.keyboard.press("Control+A")
@@ -277,6 +605,15 @@ def run_stage4_image_gen(
             if not type_success:
                 print(f"  Error typing prompt for Shot {shot_idx}. Skipping.")
                 continue
+
+            # Snapshot existing images before submitting
+            existing_srcs = set(flow_page.evaluate("""() => {
+                const imgs = Array.from(document.querySelectorAll('img')).filter(i => {
+                    const s = i.src || '';
+                    return s.includes('googleusercontent') || s.includes('blob:') || s.includes('data:image') || s.includes('flow-content.google');
+                });
+                return imgs.map(i => i.src);
+            }""") or [])
 
             # Click generate
             clicked = False
@@ -295,6 +632,7 @@ def run_stage4_image_gen(
                 continue
 
             print("  Monitoring render stream (up to 55s)...")
+            emit_progress("RENDERING", f"Shot #{shot_idx:03d}: Waiting for Google Flow to render variations...", shot_idx=shot_idx)
             start_time = time.time()
             render_success = False
             new_srcs = []
@@ -315,18 +653,24 @@ def run_stage4_image_gen(
                             break
                     break
 
-                # Check for rendered images
+                # Check for newly rendered images
                 srcs = flow_page.evaluate("""() => {
                     const imgs = Array.from(document.querySelectorAll('img')).filter(i => {
                         const s = i.src || '';
-                        return s.includes('googleusercontent') || s.includes('blob:') || s.includes('data:image');
+                        return s.includes('googleusercontent') || s.includes('blob:') || s.includes('data:image') || s.includes('flow-content.google');
                     });
                     return imgs.map(i => i.src);
-                }""")
-                if len(srcs) >= config.TARGET_VARIATIONS:
-                    new_srcs = srcs
+                }""") or []
+                new_srcs = [s for s in srcs if s not in existing_srcs]
+                if len(new_srcs) >= config.TARGET_VARIATIONS:
+                    time.sleep(1.5)
                     render_success = True
                     break
+
+            # 1-Image Rule: if at least 1 image rendered despite timeout/error
+            if not render_success and len(new_srcs) >= 1:
+                print(f"  [1-IMAGE RULE] {len(new_srcs)} variation rendered under partial timeout. Evaluating viability...")
+                render_success = True
 
             if not render_success and len(new_srcs) < 1:
                 consecutive_failures += 1
@@ -342,6 +686,7 @@ def run_stage4_image_gen(
                 continue
 
             # Ingest rendered variations
+            emit_progress("SCORING", f"Shot #{shot_idx:03d}: Scoring variations & fetching {res_setting.upper()} image...", shot_idx=shot_idx)
             consecutive_failures = 0
             downloaded = []
             for var_idx, src in enumerate(new_srcs[:config.TARGET_VARIATIONS], 1):
@@ -366,13 +711,22 @@ def run_stage4_image_gen(
                     best_path = path
 
             if best_path and os.path.exists(best_path):
-                safe_copy_file(best_path, final_file)
+                # If 2K resolution requested, download native 2K version from Flow for winning variation
+                downloaded_2k = False
+                if res_setting == "2k" and best_var <= len(new_srcs):
+                    best_src = new_srcs[best_var - 1]
+                    downloaded_2k = download_flow_image_2k(flow_page, target_src=best_src, dest_path=final_file)
+
+                if not downloaded_2k or not os.path.exists(final_file):
+                    safe_copy_file(best_path, final_file)
+
                 # Also copy to root junction if present
                 root_final = os.path.join(config.ROOT_CANONICAL_IMAGES_DIR, f"shot_{shot_idx:03d}.jpg")
                 if os.path.exists(config.ROOT_CANONICAL_IMAGES_DIR):
-                    safe_copy_file(best_path, root_final)
+                    safe_copy_file(final_file, root_final)
 
-                print(f"  -> [APPROVED] Shot {shot_idx:03d} Var {best_var} (Score: {best_score:.1f}) saved to Final selected images!")
+                res_label = "2K Native Upscaled" if downloaded_2k else "1K Standard"
+                print(f"  -> [APPROVED] Shot {shot_idx:03d} Var {best_var} ({res_label}, Score: {best_score:.1f}) saved to Final selected images!")
 
                 # Update selection log
                 with open(selection_log, "a", newline="", encoding="utf-8") as f:
@@ -387,10 +741,31 @@ def run_stage4_image_gen(
                         json.dump(list(audit_map.values()), af, indent=2)
 
                 completed_in_run += 1
+                completed_on_disk += 1
+
+                last_shot_payload = {
+                    "shot_num": shot_idx,
+                    "score": round(best_score, 1),
+                    "res_label": res_label,
+                    "timecode": tc,
+                    "image_url": f"/images/{dirs['title']}/Final selected images/shot_{shot_idx:03d}.jpg",
+                    "vo_text": vo_text[:80]
+                }
+                emit_progress(
+                    phase="APPROVED",
+                    phase_text=f"Shot #{shot_idx:03d} Approved ({res_label}, Score: {best_score:.1f})!",
+                    shot_idx=shot_idx,
+                    score=round(best_score, 1),
+                    last_image=last_shot_payload
+                )
+                update_prompt_status_md(video_title, dirs["finals_dir"], len(rows), completed_on_disk, rows, selection_log)
 
             pacing = round(random.uniform(config.PACING_MIN_SEC, config.PACING_MAX_SEC), 1)
             print(f"  Pacing: Waiting {pacing}s...")
+            emit_progress("PACING", f"Resting {pacing}s anti-ban pacing before next shot...", shot_idx=shot_idx, pacing_sec=pacing)
             time.sleep(pacing)
 
+    emit_progress("COMPLETE", f"Stage 4 complete: {completed_in_run} shots generated.")
+    update_prompt_status_md(video_title, dirs["finals_dir"], len(rows), completed_on_disk, rows, selection_log)
     print(f"\n-> [STAGE 4 COMPLETE] Generated {completed_in_run} shots.")
     return {"completed_in_run": completed_in_run}

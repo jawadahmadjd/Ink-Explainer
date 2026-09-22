@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scene 1: Infographics Show Vector Animation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Poppins:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background-color: #090d16;
+      color: #f8fafc;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    header {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .badge-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pill-tag {
+      background: linear-gradient(135deg, #10b981, #047857);
+      color: #ffffff;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+
+    .status-text {
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    /* 16:9 Cinema Container */
+    #viewport-container {
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      aspect-ratio: 16 / 9;
+      background: #020617;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    #stage {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Modern Glass Control Bar */
+    #controls-container {
+      width: 100%;
+      max-width: 1200px;
+      margin-top: 14px;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 9px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    /* Scrubber Slider */
+    #timeline-slider {
+      flex: 1;
+      accent-color: #10b981;
+      height: 6px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .time-indicator {
+      font-family: monospace;
+      font-size: 14px;
+      font-weight: 600;
+      color: #38bdf8;
+      min-width: 125px;
+      text-align: right;
+    }
+
+    .frame-badge {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-family: monospace;
+      color: #a7f3d0;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge-title">
+      <span class="pill-tag">Infographics Show Style</span>
+      <h1>Scene 1: The $5 Daily Habit (Vector Animation)</h1>
+    </div>
+    <div class="status-text">
+      Agent 3 Kinetic Engine • 1080p 60fps Vector Pipeline
+    </div>
+  </header>
+
+  <!-- Cinema Viewport -->
+  <div id="viewport-container">
+    <div id="stage"></div>
+  </div>
+
+  <!-- Audio Element -->
+  <audio id="voiceover-audio" src="what-happens-if-you-take-five-.wav" preload="auto"></audio>
+
+  <!-- Playback Control Bar -->
+  <div id="controls-container">
+    <button id="play-btn" class="btn">▶ Play</button>
+    <button id="restart-btn" class="btn btn-secondary">↺ Restart</button>
+    
+    <input type="range" id="timeline-slider" min="0" max="4.85" step="0.01" value="0">
+    
+    <div class="time-indicator">
+      <span id="current-time">0.00s</span> / <span>4.85s</span>
+    </div>
+
+    <div class="frame-badge">
+      FRAME: <span id="frame-count">0</span>/291
+    </div>
+  </div>
+
+  <script type="module">
+    import { computeScene1Frame } from './scene1_animator.js';
+
+    const stage = document.getElementById('stage');
+    const audio = document.getElementById('voiceover-audio');
+    const playBtn = document.getElementById('play-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const timelineSlider = document.getElementById('timeline-slider');
+    const currentTimeDisplay = document.getElementById('current-time');
+    const frameCountDisplay = document.getElementById('frame-count');
+
+    const SCENE_DURATION = 4.85; // Scene 1 duration in seconds
+    let isPlaying = false;
+    let manualTime = 0.0;
+    let animFrameId = null;
+
+    // Headless hook for Playwright / Agent 4 Auditor
+    window.seekTo = function(seconds) {
+      manualTime = Math.min(Math.max(seconds, 0), SCENE_DURATION);
+      timelineSlider.value = manualTime;
+      currentTimeDisplay.textContent = manualTime.toFixed(2) + 's';
+      frameCountDisplay.textContent = Math.round(manualTime * 60);
+      stage.innerHTML = computeScene1Frame(manualTime);
+    };
+
+    function update() {
+      if (isPlaying) {
+        let t = audio.currentTime;
+        if (t >= SCENE_DURATION) {
+          audio.pause();
+          audio.currentTime = 0;
+          isPlaying = false;
+          playBtn.innerHTML = '▶ Play';
+          t = 0;
+        }
+        manualTime = t;
+        timelineSlider.value = t;
+        currentTimeDisplay.textContent = t.toFixed(2) + 's';
+        frameCountDisplay.textContent = Math.round(t * 60);
+        stage.innerHTML = computeScene1Frame(t);
+        animFrameId = requestAnimationFrame(update);
+      }
+    }
+
+    playBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        audio.pause();
+        isPlaying = false;
+        playBtn.innerHTML = '▶ Play';
+        cancelAnimationFrame(animFrameId);
+      } else {
+        if (audio.currentTime >= SCENE_DURATION) {
+          audio.currentTime = 0;
+        }
+        audio.play().then(() => {
+          isPlaying = true;
+          playBtn.innerHTML = '❚❚ Pause';
+          animFrameId = requestAnimationFrame(update);
+        }).catch(err => {
+          console.warn("Audio autoplay blocked, running animation silently:", err);
+          isPlaying = true;
+          playBtn.innerHTML = '❚❚ Pause';
+          animFrameId = requestAnimationFrame(update);
+        });
+      }
+    });
+
+    restartBtn.addEventListener('click', () => {
+      audio.currentTime = 0;
+      window.seekTo(0);
+      if (!isPlaying) {
+        playBtn.innerHTML = '▶ Play';
+      }
+    });
+
+    timelineSlider.addEventListener('input', (e) => {
+      const val = parseFloat(e.target.value);
+      audio.currentTime = val;
+      window.seekTo(val);
+    });
+
+    // Initial render at t=0
+    window.seekTo(0);
+  </script>
+</body>
+</html>

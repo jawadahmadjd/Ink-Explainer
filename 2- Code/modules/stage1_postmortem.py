@@ -49,10 +49,10 @@ def clean_vtt_subtitles(vtt_path: str) -> str:
     full_text = re.sub(r"\s+", " ", full_text).strip()
     return full_text
 
-def run_stage1_postmortem(video_url: str, custom_title: str = None) -> dict:
+def run_stage1_postmortem(video_url: str, custom_title: str = None, niche: str = None) -> dict:
     """
     Execute complete Stage 1 forensic postmortem on a reference video URL.
-    Returns dictionary with all extracted file paths and forensic metrics.
+    Returns dictionary with all extracted file paths, forensic metrics, and classified niche.
     """
     check_dependencies()
     print(f"\n[STAGE 1] Ingesting video URL: {video_url}")
@@ -68,8 +68,8 @@ def run_stage1_postmortem(video_url: str, custom_title: str = None) -> dict:
     if custom_title:
         video_title = config.sanitize_title(custom_title)
     else:
-        video_title = config.get_next_project_folder_name(info.get("title", "Ink Explainer Video"))
-    dirs = config.get_project_dirs(video_title)
+        video_title = config.get_next_project_folder_name(info.get("title", "Ink Explainer Video"), niche=niche)
+    dirs = config.get_project_dirs(video_title, niche=niche)
     pm_dir = dirs["postmortem_dir"]
     os.makedirs(pm_dir, exist_ok=True)
 
@@ -227,16 +227,29 @@ def run_stage1_postmortem(video_url: str, custom_title: str = None) -> dict:
     with open(report_md_path, "w", encoding="utf-8") as f:
         f.write(report_content.strip() + "\n")
 
-    # 8. Auto-ingest into AI Learning Codex
+    # 8. Auto-ingest into AI Learning Codex under classified niche
+    classified_niche = niche
     try:
-        from learning.learning_engine import ingest_postmortem_to_codex
-        ingest_postmortem_to_codex(pm_dir)
+        from learning.learning_engine import ingest_postmortem_to_codex, classify_script_niche
+        if not classified_niche:
+            clf = classify_script_niche(video_title, script_or_transcript=clean_text)
+            classified_niche = clf.get("niche", "history")
+        ingest_postmortem_to_codex(pm_dir, niche=classified_niche)
+
+        # Update video_info.json with niche tag
+        if os.path.exists(info_json_path):
+            with open(info_json_path, "r", encoding="utf-8") as f:
+                vinfo = json.load(f)
+            vinfo["niche"] = classified_niche
+            with open(info_json_path, "w", encoding="utf-8") as f:
+                json.dump(vinfo, f, indent=2)
     except Exception as e:
         print(f"[CODEX INGEST NOTICE] {e}")
 
-    print(f"\n-> [STAGE 1 COMPLETE] Postmortem Report generated at: {report_md_path}")
+    print(f"\n-> [STAGE 1 COMPLETE] Postmortem Report generated at: {report_md_path} (Niche: {classified_niche})")
     return {
         "title": video_title,
+        "niche": classified_niche,
         "duration": duration,
         "word_count": word_count,
         "cuts_count": scene_cuts_count,

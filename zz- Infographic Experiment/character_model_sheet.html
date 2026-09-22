@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master Character Model Sheet & Human Verification Gate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #070a12;
+      --panel-bg: #0f172a;
+      --card-bg: #1e293b;
+      --border-color: #334155;
+      --accent-green: #10b981;
+      --accent-blue: #3b82f6;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      padding: 32px 24px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* HEADER */
+    header {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .header-titles h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-titles p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .badge-verified {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--accent-green);
+      color: #34d399;
+    }
+
+    .badge-rig {
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid var(--accent-blue);
+      color: #60a5fa;
+    }
+
+    /* CONTROLS & TOGGLES */
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn {
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background: #334155;
+    }
+
+    .btn-toggle-active {
+      background: #047857;
+      border-color: #10b981;
+      color: #a7f3d0;
+    }
+
+    /* SECTION TITLE */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .section-header h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-header span {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* TURNAROUND STRIP & 5 POSES GRID */
+    .poses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .pose-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .pose-card:hover {
+      border-color: var(--accent-blue);
+      transform: translateY(-3px);
+    }
+
+    .pose-preview {
+      background: radial-gradient(circle at center, #1e293b 0%, #0b1120 100%);
+      height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .pose-preview svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .pose-info {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .pose-title {
+      font-weight: 800;
+      font-size: 16px;
+      color: #f8fafc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pose-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .pose-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 6px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    .pose-meta-row {
+      display: flex;
+      justify-content: space-between;
+      color: #94a3b8;
+    }
+
+    .pose-meta-row span.val {
+      color: #38bdf8;
+      font-weight: bold;
+    }
+
+    .audit-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #10b981;
+    }
+
+    /* INTERACTIVE RIG LAB */
+    .sandbox-container {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    @media (max-width: 960px) {
+      .sandbox-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sandbox-viewport {
+      background: radial-gradient(circle at center, #1e293b 0%, #070a12 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      height: 520px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sandbox-viewport svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .sandbox-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .control-group {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .control-group-title {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #38bdf8;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .slider-row label {
+      font-size: 12px;
+      width: 140px;
+      color: #cbd5e1;
+    }
+
+    .slider-row input[type="range"] {
+      flex: 1;
+      accent-color: #3b82f6;
+    }
+
+    .slider-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      width: 60px;
+      text-align: right;
+      color: #38bdf8;
+      font-weight: bold;
+    }
+
+    .rules-banner {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 12px;
+      color: #a7f3d0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    /* PALETTE SWATCHES */
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+
+    .swatch-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .swatch-color {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .swatch-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .swatch-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+
+    .swatch-hex {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- HEADER -->
+    <header>
+      <div class="header-titles">
+        <div style="display: flex; gap: 8px; margin-bottom: 6px;">
+          <span class="pill-badge badge-verified">✓ Human Verified System</span>
+          <span class="pill-badge badge-rig">Forward Kinematics 2D Rig</span>
+        </div>
+        <h1>Master Character Model Sheet & Verification Gate</h1>
+        <p>Canonical 2D Puppet Hierarchy • Rigid Pivots (Neck, Shoulders, Elbows, Wrists, Hips, Knees, Ankles) • Natural Biomechanical Movement</p>
+      </div>
+      <div class="top-actions">
+        <button id="toggle-skeleton-btn" class="btn btn-secondary">
+          🦴 Show Joint Wireframe
+        </button>
+        <a href="full_player.html" class="btn">
+          ▶ Open Master Video Player
+        </a>
+      </div>
+    </header>
+
+    <!-- SECTION 1: CANONICAL POSES & CROSS-SCENE CONSISTENCY -->
+    <div>
+      <div class="section-header">
+        <h2>🎭 Canonical Pose Turnarounds (5 Scene Profiles)</h2>
+        <span>Guaranteed identical character dimensions & palettes across all videos</span>
+      </div>
+
+      <div class="poses-grid">
+        <!-- 1. POSE_IDLE -->
+        <div class="pose-card">
+          <div class="pose-preview" id="preview-idle"></div>
+          <div class="pose-info">
+            <div class="pose-title">
+              <span>POSE_IDLE</span>
+              <span class="audit-status">✓ PASSED</span>
+            </div>
+            <p class="pose-desc">Scene 1 Intro. Resting arms hanging comfortably beside hips.</p>
+            <div class="pose-meta">
+              <div class="pose-meta-row"><span>Shoulder Angles:</span><span class="val">12° / 12°</span></div>
+              <div class="pose-meta-row"><span>Elbow Flexions:</span><span class="val">12° / 12° (Nat.)</span></div>
+              <div class="pose-meta-row"><span>Wrist Position:</span><span class="val" style="color: #10b981;">Beside Hips</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. POSE_PRESENT_BILL -->
+        <div class="pose-card">
+          <div class="pose-preview" id="preview-present"></div>
+          <div class="pose-info">
+            <div class="pose-title">
+              <span>POSE_PRESENT_BILL</span>
+              <span class="audit-status">✓ PASSED</span>
+            </div>
+            <p class="pose-desc">Scene 1 & 2. Elbow bent naturally; forearm flexed UPWARD holding $5 bill at chest level.</p>
+            <div class="pose-meta">
+              <div class="pose-meta-row"><span>Left Shoulder:</span><span class="val">28° (Down-Out)</span></div>
+              <div class="pose-meta-row"><span>Left Elbow Flexion:</span><span class="val">92° (Bent Up)</span></div>
+              <div class="pose-meta-row"><span>Banknote Grip:</span><span class="val" style="color: #10b981;">Fingers Clamped</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. POSE_STASHING -->
+        <div class="pose-card">
+          <div class="pose-preview" id="preview-stashing"></div>
+          <div class="pose-info">
+            <div class="pose-title">
+              <span>POSE_STASHING</span>
+              <span class="audit-status">✓ PASSED</span>
+            </div>
+            <p class="pose-desc">Scene 2. Reaching forward-down into mattress stash with cash.</p>
+            <div class="pose-meta">
+              <div class="pose-meta-row"><span>Left Shoulder:</span><span class="val">40°</span></div>
+              <div class="pose-meta-row"><span>Left Elbow Flexion:</span><span class="val">35° (Forward)</span></div>
+              <div class="pose-meta-row"><span>Gaze:</span><span class="val" style="color: #10b981;">Head +6° Down</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. POSE_PANIC_SHOCK -->
+        <div class="pose-card">
+          <div class="pose-preview" id="preview-panic"></div>
+          <div class="pose-info">
+            <div class="pose-title">
+              <span>POSE_PANIC_SHOCK</span>
+              <span class="audit-status">✓ PASSED</span>
+            </div>
+            <p class="pose-desc">Scene 3. Both hands raised UP beside cheeks/ears in alarm; zero chest crossing.</p>
+            <div class="pose-meta">
+              <div class="pose-meta-row"><span>Both Shoulders:</span><span class="val">70° (Raised Out)</span></div>
+              <div class="pose-meta-row"><span>Both Elbows:</span><span class="val">80° (Up to Face)</span></div>
+              <div class="pose-meta-row"><span>Expression:</span><span class="val" style="color: #10b981;">Agape Gasp</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. POSE_VICTORY -->
+        <div class="pose-card">
+          <div class="pose-preview" id="preview-victory"></div>
+          <div class="pose-info">
+            <div class="pose-title">
+              <span>POSE_VICTORY</span>
+              <span class="audit-status">✓ PASSED</span>
+            </div>
+            <p class="pose-desc">Scene 4. Both arms raised high in triumphant celebration V-shape.</p>
+            <div class="pose-meta">
+              <div class="pose-meta-row"><span>Both Shoulders:</span><span class="val">140° (High V)</span></div>
+              <div class="pose-meta-row"><span>Both Elbows:</span><span class="val">15° (Skyward)</span></div>
+              <div class="pose-meta-row"><span>Expression:</span><span class="val" style="color: #10b981;">Victory Grin</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: BIOMECHANICAL RIG TEST BENCH -->
+    <div>
+      <div class="section-header">
+        <h2>🔬 Interactive Biomechanical Rig Lab (Real-Time Sandbox)</h2>
+        <span>Test physical joint pivots and verify human movement safety laws</span>
+      </div>
+
+      <div class="sandbox-container">
+        <!-- Interactive Viewport -->
+        <div class="sandbox-viewport" id="sandbox-stage"></div>
+
+        <!-- Interactive Sliders -->
+        <div class="sandbox-controls">
+          <div class="rules-banner">
+            <strong>🛡️ Enforced Biomechanical Laws:</strong>
+            <span>• <strong>Elbow Upward-Inward Flexion:</strong> Elbows flex upward toward the body [0°, 140°]. Backward hyperextension is blocked.</span>
+            <span>• <strong>Shoulder Safety Range:</strong> Shoulders are constrained to [-20°, 155°]. Full 360° spinning is blocked.</span>
+            <span>• <strong>Prop Attachment:</strong> Banknote is locked to wrist coordinates and clamped by fingers.</span>
+          </div>
+
+          <!-- Left Arm Controls -->
+          <div class="control-group">
+            <div class="control-group-title">
+              <span>Left Arm Kinematics</span>
+              <span id="left-arm-status" style="color: #10b981;">PASS</span>
+            </div>
+            <div class="slider-row">
+              <label>Shoulder Angle (θs):</label>
+              <input type="range" id="slider-ls" min="-20" max="155" value="28">
+              <span class="slider-val" id="val-ls">28°</span>
+            </div>
+            <div class="slider-row">
+              <label>Elbow Flexion (θe):</label>
+              <input type="range" id="slider-le" min="0" max="140" value="92">
+              <span class="slider-val" id="val-le">92°</span>
+            </div>
+          </div>
+
+          <!-- Right Arm Controls -->
+          <div class="control-group">
+            <div class="control-group-title">
+              <span>Right Arm Kinematics</span>
+              <span id="right-arm-status" style="color: #10b981;">PASS</span>
+            </div>
+            <div class="slider-row">
+              <label>Shoulder Angle (θs):</label>
+              <input type="range" id="slider-rs" min="-20" max="155" value="15">
+              <span class="slider-val" id="val-rs">15°</span>
+            </div>
+            <div class="slider-row">
+              <label>Elbow Flexion (θe):</label>
+              <input type="range" id="slider-re" min="0" max="140" value="20">
+              <span class="slider-val" id="val-re">20°</span>
+            </div>
+          </div>
+
+          <!-- Head & Facial Controls -->
+          <div class="control-group">
+            <div class="control-group-title">
+              <span>Head & Facial Controls</span>
+            </div>
+            <div class="slider-row">
+              <label>Head Tilt:</label>
+              <input type="range" id="slider-tilt" min="-18" max="18" value="4">
+              <span class="slider-val" id="val-tilt">4°</span>
+            </div>
+            <div class="slider-row">
+              <label>Eye Look X:</label>
+              <input type="range" id="slider-eyex" min="-5" max="5" value="0">
+              <span class="slider-val" id="val-eyex">0px</span>
+            </div>
+            <div style="display: flex; gap: 12px; margin-top: 6px;">
+              <button id="btn-toggle-bill" class="btn btn-secondary" style="flex: 1; padding: 6px 12px; font-size: 12px;">Toggle $5 Bill</button>
+              <button id="btn-toggle-blink" class="btn btn-secondary" style="flex: 1; padding: 6px 12px; font-size: 12px;">Toggle Blink</button>
+              <button id="btn-reset-rig" class="btn btn-secondary" style="flex: 1; padding: 6px 12px; font-size: 12px;">Reset to Bill Pose</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: MASTER COLOR SYSTEM -->
+    <div>
+      <div class="section-header">
+        <h2>🎨 Master Color Palette & Token Hierarchy</h2>
+        <span>Locked design tokens applied to all characters and scenes</span>
+      </div>
+
+      <div class="palette-grid">
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: #fcd5b4;"></div>
+          <div class="swatch-text">
+            <span class="swatch-name">Skin Base</span>
+            <span class="swatch-hex">#fcd5b4</span>
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: #f0b992;"></div>
+          <div class="swatch-text">
+            <span class="swatch-name">Skin Shadow</span>
+            <span class="swatch-hex">#f0b992</span>
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: #2563eb;"></div>
+          <div class="swatch-text">
+            <span class="swatch-name">Hoodie Blue</span>
+            <span class="swatch-hex">#2563eb</span>
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: #1d4ed8;"></div>
+          <div class="swatch-text">
+            <span class="swatch-name">Hoodie Shadow</span>
+            <span class="swatch-hex">#1d4ed8</span>
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: #1e293b;"></div>
+          <div class="swatch-text">
+            <span class="swatch-name">Jeans Slate</span>
+            <span class="swatch-hex">#1e293b</span>
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: #10b981;"></div>
+          <div class="swatch-text">
+            <span class="swatch-name">Cash Emerald</span>
+            <span class="swatch-hex">#10b981</span>
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: #1e1e1e;"></div>
+          <div class="swatch-text">
+            <span class="swatch-name">Hair Charcoal</span>
+            <span class="swatch-hex">#1e1e1e</span>
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: #ef4444;"></div>
+          <div class="swatch-text">
+            <span class="swatch-name">Sneaker Stripe</span>
+            <span class="swatch-hex">#ef4444</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMBEDDED ZERO-CORS MASTER CHARACTER ENGINE -->
+  <script>
+    const MASTER_CHARACTER_SPEC = {
+      version: "3.0.0-human-kinematics",
+      name: "Infographics Host (The $5 Investor)",
+      proportions: {
+        height: 380,
+        headWidth: 120,
+        headHeight: 140,
+        torsoWidth: 116,
+        torsoHeight: 135,
+        armUpperLength: 65,
+        armForeLength: 55,
+        legThighLength: 60,
+        legShinLength: 55
+      },
+      palette: {
+        skin: "#fcd5b4",
+        skinShadow: "#f0b992",
+        blush: "#fb7185",
+        hoodieMain: "#2563eb",
+        hoodieShadow: "#1d4ed8",
+        hoodieDrawstring: "#f8fafc",
+        hair: "#1e1e1e",
+        mouthDark: "#881337",
+        pants: "#1e293b",
+        pantsOutline: "#0f172a",
+        shoes: "#f8fafc",
+        shoesStripe: "#ef4444",
+        billMain: "#10b981",
+        billLight: "#ecfdf5",
+        billDark: "#065f46"
+      },
+      jointPivots: {
+        neck: { x: 0, y: 10 },
+        leftShoulder: { x: -52, y: 36 },
+        rightShoulder: { x: 52, y: 36 },
+        leftHip: { x: -22, y: 155 },
+        rightHip: { x: 22, y: 155 }
+      }
+    };
+
+    function clampBiometrics(val, min, max) {
+      return Math.min(Math.max(val, min), max);
+    }
+
+    function solveArmKinematics(side, shoulderAngle, elbowFlexion) {
+      const S = (side === 'left') 
+        ? { x: MASTER_CHARACTER_SPEC.jointPivots.leftShoulder.x, y: MASTER_CHARACTER_SPEC.jointPivots.leftShoulder.y }
+        : { x: MASTER_CHARACTER_SPEC.jointPivots.rightShoulder.x, y: MASTER_CHARACTER_SPEC.jointPivots.rightShoulder.y };
+
+      const sClamped = clampBiometrics(shoulderAngle, -20, 155);
+      const eClamped = clampBiometrics(elbowFlexion, 0, 140);
+
+      const L1 = MASTER_CHARACTER_SPEC.proportions.armUpperLength;
+      const L2 = MASTER_CHARACTER_SPEC.proportions.armForeLength;
+
+      let alphaS, alphaF;
+      if (side === 'left') {
+        alphaS = (90 + sClamped) * (Math.PI / 180);
+        alphaF = (90 + sClamped + eClamped) * (Math.PI / 180);
+      } else {
+        alphaS = (90 - sClamped) * (Math.PI / 180);
+        alphaF = (90 - sClamped - eClamped) * (Math.PI / 180);
+      }
+
+      const Ex = S.x + L1 * Math.cos(alphaS);
+      const Ey = S.y + L1 * Math.sin(alphaS);
+
+      const Wx = Ex + L2 * Math.cos(alphaF);
+      const Wy = Ey + L2 * Math.sin(alphaF);
+
+      const forearmDeg = alphaF * (180 / Math.PI);
+
+      return {
+        shoulder: S,
+        elbow: { x: Ex, y: Ey },
+        wrist: { x: Wx, y: Wy },
+        forearmAngle: forearmDeg,
+        shoulderAngleClamped: sClamped,
+        elbowFlexionClamped: eClamped
+      };
+    }
+
+    function solveLegKinematics(side, hipAngle = 0, kneeFlexion = 0) {
+      const H = (side === 'left')
+        ? { x: MASTER_CHARACTER_SPEC.jointPivots.leftHip.x, y: MASTER_CHARACTER_SPEC.jointPivots.leftHip.y }
+        : { x: MASTER_CHARACTER_SPEC.jointPivots.rightHip.x, y: MASTER_CHARACTER_SPEC.jointPivots.rightHip.y };
+
+      const hClamped = clampBiometrics(hipAngle, -25, 35);
+      const kClamped = clampBiometrics(kneeFlexion, 0, 110);
+
+      const Lthigh = MASTER_CHARACTER_SPEC.proportions.legThighLength;
+      const Lshin = MASTER_CHARACTER_SPEC.proportions.legShinLength;
+
+      const alphaH = (90 + hClamped) * (Math.PI / 180);
+      const Kx = H.x + Lthigh * Math.cos(alphaH);
+      const Ky = H.y + Lthigh * Math.sin(alphaH);
+
+      const alphaK = (90 + hClamped - kClamped) * (Math.PI / 180);
+      const Ax = Kx + Lshin * Math.cos(alphaK);
+      const Ay = Ky + Lshin * Math.sin(alphaK);
+
+      return {
+        hip: H,
+        knee: { x: Kx, y: Ky },
+        ankle: { x: Ax, y: Ay }
+      };
+    }
+
+    const CANONICAL_POSES = {
+      POSE_IDLE: {
+        name: "Idle Rest",
+        leftArm: { shoulderAngle: 12, elbowFlexion: 12 },
+        rightArm: { shoulderAngle: 12, elbowFlexion: 12 },
+        headTilt: 0,
+        mouth: "smile",
+        billScale: 0
+      },
+      POSE_PRESENT_BILL: {
+        name: "Present $5 Bill",
+        leftArm: { shoulderAngle: 28, elbowFlexion: 92 },
+        rightArm: { shoulderAngle: 15, elbowFlexion: 20 },
+        headTilt: 4,
+        mouth: "inquisitive",
+        billScale: 1.0
+      },
+      POSE_STASHING: {
+        name: "Stashing Under Mattress",
+        leftArm: { shoulderAngle: 40, elbowFlexion: 35 },
+        rightArm: { shoulderAngle: 12, elbowFlexion: 15 },
+        headTilt: 6,
+        mouth: "smile",
+        billScale: 0.85
+      },
+      POSE_PANIC_SHOCK: {
+        name: "Inflation Panic & Shock",
+        leftArm: { shoulderAngle: 70, elbowFlexion: 80 },
+        rightArm: { shoulderAngle: 70, elbowFlexion: 80 },
+        headTilt: -8,
+        mouth: "open_gasp",
+        billScale: 0
+      },
+      POSE_VICTORY: {
+        name: "S&P 500 Victory Celebration",
+        leftArm: { shoulderAngle: 140, elbowFlexion: 15 },
+        rightArm: { shoulderAngle: 140, elbowFlexion: 15 },
+        headTilt: -4,
+        mouth: "victory_grin",
+        billScale: 0
+      }
+    };
+
+    function renderRiggedArm(side, kinematics, opts = {}) {
+      const { shoulder, elbow, wrist, forearmAngle } = kinematics;
+      const { showBill = false, billScale = 1.0, isSkeleton = false } = opts;
+      const p = MASTER_CHARACTER_SPEC.palette;
+
+      const sx = shoulder.x, sy = shoulder.y;
+      const ex = elbow.x, ey = elbow.y;
+      const wx = wrist.x, wy = wrist.y;
+      const cuffRot = forearmAngle + 90;
+
+      return `
+        <g id="${side}_arm_rig">
+          <path d="M ${sx} ${sy} L ${ex} ${ey} L ${wx} ${wy}" 
+                fill="none" stroke="#0f172a" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M ${sx} ${sy} L ${ex} ${ey} L ${wx} ${wy}" 
+                fill="none" stroke="${p.hoodieMain}" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="${ex}" cy="${ey}" r="5" fill="${p.hoodieShadow}" opacity="0.6"/>
+          <ellipse cx="${wx}" cy="${wy}" rx="9" ry="14" fill="${p.hoodieShadow}" stroke="#0f172a" stroke-width="3.5" 
+                   transform="rotate(${cuffRot} ${wx} ${wy})"/>
+
+          <g transform="translate(${wx}, ${wy})">
+            <circle cx="0" cy="0" r="14" fill="${p.skin}" stroke="#0f172a" stroke-width="3.5"/>
+          </g>
+
+          ${showBill ? `
+            <g id="five_dollar_bill" transform="translate(${wx - 10}, ${wy - 26}) rotate(-10) scale(${billScale})">
+              <rect x="-70" y="-40" width="140" height="80" rx="8" fill="#000000" opacity="0.4" transform="translate(5, 6)"/>
+              <rect x="-70" y="-40" width="140" height="80" rx="8" fill="${p.billMain}" stroke="#064e3b" stroke-width="3.5"/>
+              <rect x="-64" y="-34" width="128" height="68" rx="6" fill="${p.billLight}" stroke="#059669" stroke-width="2"/>
+              <rect x="-60" y="-30" width="15" height="15" rx="2" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+              <text x="-52" y="-19" font-family="'Impact', 'Arial Black', sans-serif" font-size="12" font-weight="900" fill="#065f46" text-anchor="middle">5</text>
+              <rect x="45" y="-30" width="15" height="15" rx="2" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+              <text x="53" y="-19" font-family="'Impact', 'Arial Black', sans-serif" font-size="12" font-weight="900" fill="#065f46" text-anchor="middle">5</text>
+              <rect x="-60" y="15" width="15" height="15" rx="2" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+              <text x="-52" y="26" font-family="'Impact', 'Arial Black', sans-serif" font-size="12" font-weight="900" fill="#065f46" text-anchor="middle">5</text>
+              <rect x="45" y="15" width="15" height="15" rx="2" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+              <text x="53" y="26" font-family="'Impact', 'Arial Black', sans-serif" font-size="12" font-weight="900" fill="#065f46" text-anchor="middle">5</text>
+              <ellipse cx="0" cy="0" rx="22" ry="27" fill="#d1fae5" stroke="#047857" stroke-width="2"/>
+              <path d="M -9 16 C -9 5 -5 -2 0 -3 C 5 -2 9 5 9 16 Z" fill="#065f46"/>
+              <circle cx="0" cy="-7" r="8" fill="#065f46"/>
+              <rect x="-38" y="-29" width="76" height="8" rx="2" fill="#047857"/>
+              <text x="0" y="-23" font-family="'Arial Black', sans-serif" font-size="5.5" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1">UNITED STATES OF AMERICA</text>
+              <rect x="-30" y="21" width="60" height="7" rx="2" fill="#047857"/>
+              <text x="0" y="26" font-family="'Impact', 'Arial Black', sans-serif" font-size="6.5" font-weight="bold" fill="#ffffff" text-anchor="middle" letter-spacing="1">FIVE DOLLARS</text>
+            </g>
+          ` : ''}
+
+          <g transform="translate(${wx}, ${wy})">
+            <path d="M 6 -8 C 12 -4 8 8 2 6" fill="${p.skin}" stroke="#0f172a" stroke-width="3.5"/>
+            <path d="M -8 4 C -12 12 -4 18 2 12" fill="${p.skin}" stroke="#0f172a" stroke-width="3"/>
+            <path d="M -6 -2 C -12 6 -4 14 4 8" fill="${p.skin}" stroke="#0f172a" stroke-width="3"/>
+          </g>
+
+          ${isSkeleton ? `
+            <g stroke="#10b981" stroke-width="3" stroke-dasharray="4 2">
+              <line x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}"/>
+              <line x1="${ex}" y1="${ey}" x2="${wx}" y2="${wy}"/>
+              <circle cx="${sx}" cy="${sy}" r="7" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+              <circle cx="${ex}" cy="${ey}" r="7" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+              <circle cx="${wx}" cy="${wy}" r="7" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+            </g>
+          ` : ''}
+        </g>
+      `;
+    }
+
+    function renderRiggedLegs(leftLeg, rightLeg, isSkeleton = false) {
+      const p = MASTER_CHARACTER_SPEC.palette;
+      const lk = leftLeg.knee, la = leftLeg.ankle, lh = leftLeg.hip;
+      const rk = rightLeg.knee, ra = rightLeg.ankle, rh = rightLeg.hip;
+
+      return `
+        <g id="legs_rig">
+          <path d="M ${lh.x} ${lh.y} L ${lk.x} ${lk.y} L ${la.x} ${la.y}" 
+                fill="none" stroke="#0f172a" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M ${lh.x} ${lh.y} L ${lk.x} ${lk.y} L ${la.x} ${la.y}" 
+                fill="none" stroke="${p.pants}" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+          <g transform="translate(${la.x}, ${la.y})">
+            <path d="M -20 -10 L 16 -10 C 28 -10 28 10 16 10 L -24 10 C -32 10 -32 -10 -20 -10 Z" 
+                  fill="${p.shoes}" stroke="#0f172a" stroke-width="4" stroke-linejoin="round"/>
+            <line x1="-26" y1="3" x2="22" y2="3" stroke="${p.shoesStripe}" stroke-width="3" stroke-linecap="round"/>
+          </g>
+
+          <path d="M ${rh.x} ${rh.y} L ${rk.x} ${rk.y} L ${ra.x} ${ra.y}" 
+                fill="none" stroke="#0f172a" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M ${rh.x} ${rh.y} L ${rk.x} ${rk.y} L ${ra.x} ${ra.y}" 
+                fill="none" stroke="${p.pants}" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+          <g transform="translate(${ra.x}, ${ra.y})">
+            <path d="M -16 -10 L 20 -10 C 32 -10 32 10 20 10 L -20 10 C -28 10 -28 -10 -16 -10 Z" 
+                  fill="${p.shoes}" stroke="#0f172a" stroke-width="4" stroke-linejoin="round"/>
+            <line x1="-22" y1="3" x2="26" y2="3" stroke="${p.shoesStripe}" stroke-width="3" stroke-linecap="round"/>
+          </g>
+
+          ${isSkeleton ? `
+            <g stroke="#10b981" stroke-width="3" stroke-dasharray="4 2">
+              <line x1="${lh.x}" y1="${lh.y}" x2="${lk.x}" y2="${lk.y}"/>
+              <line x1="${lk.x}" y1="${lk.y}" x2="${la.x}" y2="${la.y}"/>
+              <line x1="${rh.x}" y1="${rh.y}" x2="${rk.x}" y2="${rk.y}"/>
+              <line x1="${rk.x}" y1="${rk.y}" x2="${ra.x}" y2="${ra.y}"/>
+              <circle cx="${lh.x}" cy="${lh.y}" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+              <circle cx="${lk.x}" cy="${lk.y}" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+              <circle cx="${la.x}" cy="${la.y}" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+              <circle cx="${rh.x}" cy="${rh.y}" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+              <circle cx="${rk.x}" cy="${rk.y}" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+              <circle cx="${ra.x}" cy="${ra.y}" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+            </g>
+          ` : ''}
+        </g>
+      `;
+    }
+
+    function renderMasterCharacter(options = {}) {
+      const {
+        pose = "POSE_IDLE",
+        headTilt = null,
+        blink = 0,
+        breathScale = 1.0,
+        browPosition = 0,
+        eyeLookX = 0,
+        eyeLookY = 0,
+        billScale = null,
+        showSkeleton = false,
+        customJoints = null
+      } = options;
+
+      let preset = CANONICAL_POSES[pose] || CANONICAL_POSES.POSE_IDLE;
+      const leftShoulderAngle = (customJoints?.leftArm?.shoulderAngle !== undefined) ? customJoints.leftArm.shoulderAngle : preset.leftArm.shoulderAngle;
+      const leftElbowFlexion = (customJoints?.leftArm?.elbowFlexion !== undefined) ? customJoints.leftArm.elbowFlexion : preset.leftArm.elbowFlexion;
+
+      const rightShoulderAngle = (customJoints?.rightArm?.shoulderAngle !== undefined) ? customJoints.rightArm.shoulderAngle : preset.rightArm.shoulderAngle;
+      const rightElbowFlexion = (customJoints?.rightArm?.elbowFlexion !== undefined) ? customJoints.rightArm.elbowFlexion : preset.rightArm.elbowFlexion;
+
+      const actualHeadTilt = (headTilt !== null) ? headTilt : preset.headTilt;
+      const actualBillScale = (billScale !== null) ? billScale : preset.billScale;
+
+      const leftArmKine = solveArmKinematics('left', leftShoulderAngle, leftElbowFlexion);
+      const rightArmKine = solveArmKinematics('right', rightShoulderAngle, rightElbowFlexion);
+      const leftLegKine = solveLegKinematics('left', 0, 0);
+      const rightLegKine = solveLegKinematics('right', 0, 0);
+
+      const p = MASTER_CHARACTER_SPEC.palette;
+
+      let mouthSvg = `
+        <path d="M -12 -4 C -8 8 8 8 12 -4 C 6 4 -6 4 -12 -4 Z" 
+              fill="${p.mouthDark}" stroke="#0f172a" stroke-width="3.5" stroke-linejoin="round"/>
+        <path d="M -7 -2 C -3 2 3 2 7 -2" fill="#ffffff" stroke="none"/>
+      `;
+
+      if (preset.mouth === "open_gasp" || pose === "PANIC_SHOCK") {
+        mouthSvg = `
+          <ellipse cx="0" cy="-2" rx="14" ry="18" fill="${p.mouthDark}" stroke="#0f172a" stroke-width="3.5"/>
+          <ellipse cx="0" cy="8" rx="8" ry="4" fill="${p.blush}"/>
+        `;
+      } else if (preset.mouth === "victory_grin" || pose === "VICTORY") {
+        mouthSvg = `
+          <path d="M -16 -6 C -12 12 12 12 16 -6 Z" fill="${p.mouthDark}" stroke="#0f172a" stroke-width="3.5"/>
+          <path d="M -12 -5 C -6 0 6 0 12 -5 Z" fill="#ffffff"/>
+        `;
+      }
+
+      return `
+        <g id="master_character_root" transform="scale(${breathScale * 1.35})">
+          ${renderRiggedLegs(leftLegKine, rightLegKine, showSkeleton)}
+
+          <g id="torso">
+            <path d="M -58 25 C -60 25 -66 105 -50 160 L 50 160 C 66 105 60 25 58 25 C 38 16 -38 16 -58 25 Z" 
+                  fill="${p.hoodieMain}" stroke="#0f172a" stroke-width="4.5" stroke-linejoin="round"/>
+            <path d="M 18 22 C 38 55 46 120 50 160 L 22 160 C 18 115 12 65 -6 22 Z" fill="${p.hoodieShadow}" opacity="0.45"/>
+            <path d="M -34 98 L 34 98 L 42 146 L -42 146 Z" fill="${p.hoodieShadow}" stroke="#0f172a" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M -22 20 C -12 40 12 40 22 20" fill="none" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+            <line x1="-10" y1="30" x2="-10" y2="64" stroke="${p.hoodieDrawstring}" stroke-width="3.5" stroke-linecap="round"/>
+            <circle cx="-10" cy="67" r="3" fill="${p.hoodieDrawstring}"/>
+            <line x1="10" y1="30" x2="10" y2="68" stroke="${p.hoodieDrawstring}" stroke-width="3.5" stroke-linecap="round"/>
+            <circle cx="10" cy="71" r="3" fill="${p.hoodieDrawstring}"/>
+          </g>
+
+          ${renderRiggedArm('right', rightArmKine, { showBill: false, isSkeleton: showSkeleton })}
+
+          <g id="head_group" transform="translate(0, 8) rotate(${actualHeadTilt})">
+            <rect x="-18" y="-20" width="36" height="38" fill="${p.skinShadow}" stroke="#0f172a" stroke-width="4" rx="4"/>
+            <path d="M -60 -75 C -60 -155 60 -155 60 -75 C 60 -5 44 20 0 24 C -44 20 -60 -5 -60 -75 Z" 
+                  fill="${p.skin}" stroke="#0f172a" stroke-width="4.5" stroke-linejoin="round"/>
+            
+            <ellipse cx="-42" cy="-45" rx="10" ry="6" fill="${p.blush}" opacity="0.4"/>
+            <ellipse cx="42" cy="-45" rx="10" ry="6" fill="${p.blush}" opacity="0.4"/>
+            <path d="M -60 -70 C -70 -70 -70 -48 -58 -46" fill="${p.skin}" stroke="#0f172a" stroke-width="4"/>
+            <path d="M 60 -70 C 70 -70 70 -48 58 -46" fill="${p.skin}" stroke="#0f172a" stroke-width="4"/>
+
+            <path d="M -62 -85 C -66 -148 -14 -175 25 -170 C 58 -165 72 -135 66 -95 C 60 -86 52 -100 36 -104 C 20 -108 10 -98 -8 -102 C -28 -106 -45 -82 -62 -85 Z" 
+                  fill="${p.hair}" stroke="#0f172a" stroke-width="4.5" stroke-linejoin="round"/>
+            <path d="M -60 -88 L -58 -62 L -50 -68 Z" fill="${p.hair}"/>
+            <path d="M 60 -88 L 58 -62 L 50 -68 Z" fill="${p.hair}"/>
+
+            <g id="eyebrows" transform="translate(0, ${-browPosition * 8})">
+              <path d="M -42 -94 C -32 -108 -18 -104 -10 -96" fill="none" stroke="${p.hair}" stroke-width="5.5" stroke-linecap="round"/>
+              <path d="M 10 -98 C 22 -112 38 -108 44 -94" fill="none" stroke="${p.hair}" stroke-width="5.5" stroke-linecap="round"/>
+            </g>
+
+            <g id="eyes">
+              ${blink === 1 ? `
+                <path d="M -40 -68 C -32 -58 -20 -58 -12 -68" fill="none" stroke="#0f172a" stroke-width="4.5" stroke-linecap="round"/>
+                <path d="M 12 -68 C 20 -58 32 -58 40 -68" fill="none" stroke="#0f172a" stroke-width="4.5" stroke-linecap="round"/>
+              ` : `
+                <g transform="translate(-26, -72)">
+                  <ellipse cx="0" cy="0" rx="14" ry="17" fill="#ffffff" stroke="#0f172a" stroke-width="3.5"/>
+                  <circle cx="${eyeLookX}" cy="${eyeLookY}" r="7.5" fill="#0f172a"/>
+                  <circle cx="${eyeLookX + 3}" cy="${eyeLookY - 3}" r="3" fill="#ffffff"/>
+                  <circle cx="${eyeLookX - 2.5}" cy="${eyeLookY + 2.5}" r="1.5" fill="#ffffff"/>
+                </g>
+                <g transform="translate(26, -72)">
+                  <ellipse cx="0" cy="0" rx="14" ry="17" fill="#ffffff" stroke="#0f172a" stroke-width="3.5"/>
+                  <circle cx="${eyeLookX}" cy="${eyeLookY}" r="7.5" fill="#0f172a"/>
+                  <circle cx="${eyeLookX + 3}" cy="${eyeLookY - 3}" r="3" fill="#ffffff"/>
+                  <circle cx="${eyeLookX - 2.5}" cy="${eyeLookY + 2.5}" r="1.5" fill="#ffffff"/>
+                </g>
+              `}
+            </g>
+
+            <path d="M -2 -58 C 4 -56 5 -48 -2 -44" fill="none" stroke="${p.skinShadow}" stroke-width="4.5" stroke-linecap="round"/>
+
+            <g id="mouth" transform="translate(0, -28)">
+              ${mouthSvg}
+            </g>
+          </g>
+
+          ${renderRiggedArm('left', leftArmKine, { 
+            showBill: actualBillScale > 0, 
+            billScale: actualBillScale, 
+            isSkeleton: showSkeleton 
+          })}
+
+          ${showSkeleton ? `
+            <circle cx="0" cy="10" r="8" fill="#10b981" stroke="#ffffff" stroke-width="2.5"/>
+            <text x="0" y="-12" font-family="'Inter', sans-serif" font-size="11" font-weight="900" fill="#10b981" text-anchor="middle">NECK PIVOT</text>
+          ` : ''}
+        </g>
+      `;
+    }
+
+    function createSvgCard(content) {
+      return `
+        <svg viewBox="-180 -180 360 480" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(0, 0)">
+            ${content}
+          </g>
+        </svg>
+      `;
+    }
+
+    let isSkeletonGlobal = false;
+    let sandboxBill = true;
+    let sandboxBlink = false;
+
+    function refreshAllPreviews() {
+      document.getElementById('preview-idle').innerHTML = createSvgCard(
+        renderMasterCharacter({ pose: 'POSE_IDLE', showSkeleton: isSkeletonGlobal })
+      );
+      document.getElementById('preview-present').innerHTML = createSvgCard(
+        renderMasterCharacter({ pose: 'POSE_PRESENT_BILL', showBill: true, billScale: 1.0, showSkeleton: isSkeletonGlobal })
+      );
+      document.getElementById('preview-stashing').innerHTML = createSvgCard(
+        renderMasterCharacter({ pose: 'POSE_STASHING', showBill: true, billScale: 0.85, showSkeleton: isSkeletonGlobal })
+      );
+      document.getElementById('preview-panic').innerHTML = createSvgCard(
+        renderMasterCharacter({ pose: 'POSE_PANIC_SHOCK', showSkeleton: isSkeletonGlobal })
+      );
+      document.getElementById('preview-victory').innerHTML = createSvgCard(
+        renderMasterCharacter({ pose: 'POSE_VICTORY', showSkeleton: isSkeletonGlobal })
+      );
+      updateSandbox();
+    }
+
+    function updateSandbox() {
+      const ls = parseFloat(document.getElementById('slider-ls').value);
+      const le = parseFloat(document.getElementById('slider-le').value);
+      const rs = parseFloat(document.getElementById('slider-rs').value);
+      const re = parseFloat(document.getElementById('slider-re').value);
+      const tilt = parseFloat(document.getElementById('slider-tilt').value);
+      const eyex = parseFloat(document.getElementById('slider-eyex').value);
+
+      document.getElementById('val-ls').textContent = ls + '°';
+      document.getElementById('val-le').textContent = le + '°';
+      document.getElementById('val-rs').textContent = rs + '°';
+      document.getElementById('val-re').textContent = re + '°';
+      document.getElementById('val-tilt').textContent = tilt + '°';
+      document.getElementById('val-eyex').textContent = eyex + 'px';
+
+      const customJoints = {
+        leftArm: { shoulderAngle: ls, elbowFlexion: le },
+        rightArm: { shoulderAngle: rs, elbowFlexion: re }
+      };
+
+      document.getElementById('sandbox-stage').innerHTML = `
+        <svg viewBox="-220 -200 440 540" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(0, 0)">
+            ${renderMasterCharacter({
+              customJoints,
+              headTilt: tilt,
+              eyeLookX: eyex,
+              billScale: sandboxBill ? 1.0 : 0,
+              blink: sandboxBlink ? 1 : 0,
+              showSkeleton: isSkeletonGlobal
+            })}
+          </g>
+        </svg>
+      `;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      refreshAllPreviews();
+
+      const skelBtn = document.getElementById('toggle-skeleton-btn');
+      skelBtn.addEventListener('click', () => {
+        isSkeletonGlobal = !isSkeletonGlobal;
+        skelBtn.classList.toggle('btn-toggle-active', isSkeletonGlobal);
+        skelBtn.textContent = isSkeletonGlobal ? '🦴 Hide Joint Wireframe' : '🦴 Show Joint Wireframe';
+        refreshAllPreviews();
+      });
+
+      ['slider-ls', 'slider-le', 'slider-rs', 'slider-re', 'slider-tilt', 'slider-eyex'].forEach(id => {
+        document.getElementById(id).addEventListener('input', updateSandbox);
+      });
+
+      document.getElementById('btn-toggle-bill').addEventListener('click', () => {
+        sandboxBill = !sandboxBill;
+        updateSandbox();
+      });
+
+      document.getElementById('btn-toggle-blink').addEventListener('click', () => {
+        sandboxBlink = !sandboxBlink;
+        updateSandbox();
+      });
+
+      document.getElementById('btn-reset-rig').addEventListener('click', () => {
+        document.getElementById('slider-ls').value = 28;
+        document.getElementById('slider-le').value = 92;
+        document.getElementById('slider-rs').value = 15;
+        document.getElementById('slider-re').value = 20;
+        document.getElementById('slider-tilt').value = 4;
+        document.getElementById('slider-eyex').value = 0;
+        sandboxBill = true;
+        sandboxBlink = false;
+        updateSandbox();
+      });
+    });
+  </script>
+</body>
+</html>

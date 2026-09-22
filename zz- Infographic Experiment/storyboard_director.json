@@ -1,0 +1,112 @@
+{
+  "project_title": "The $5 Daily Habit",
+  "style": "Infographics Show Vector Motion",
+  "target_duration_sec": 30,
+  "aspect_ratio": "16:9",
+  "scenes": [
+    {
+      "scene_id": "scene_01",
+      "time_range": "0:00 - 0:05",
+      "vo_segment": "What happens if you take five dollars every single day and simply never spend it?",
+      "visual_description": "Character holding a crisp $5 bill with question marks popping around head. Background splits into calendar pages rapidly flying off.",
+      "characters": [
+        {
+          "name": "Everyman Character",
+          "action": "holding_cash",
+          "expression": "curious"
+        }
+      ],
+      "infographics": [
+        {
+          "type": "floating_badge",
+          "text": "$5.00 / DAY",
+          "animation": "pop_in_bounce"
+        }
+      ],
+      "sfx": ["whoosh_in", "cash_flutter", "curious_ding"]
+    },
+    {
+      "scene_id": "scene_02",
+      "time_range": "0:05 - 0:11",
+      "vo_segment": "Tuck it under your mattress, and in thirty years, you'll have fifty-four thousand dollars.",
+      "visual_description": "Cut to bedroom. Character slides stack of cash under a mattress. Calendar clock fast-forwards 30 years (hair turns slightly grey). A giant vault counter rolls up to $54,000.",
+      "characters": [
+        {
+          "name": "Everyman Character",
+          "action": "stuffing_mattress",
+          "expression": "proud_smile"
+        }
+      ],
+      "infographics": [
+        {
+          "type": "rolling_counter",
+          "start_val": 0,
+          "end_val": 54000,
+          "prefix": "$",
+          "label": "Total Cash Saved (30 Yrs)"
+        }
+      ],
+      "sfx": ["clock_tick_fast", "cash_counter_roll", "ding_bell"]
+    },
+    {
+      "scene_id": "scene_03",
+      "time_range": "0:11 - 0:16",
+      "vo_segment": "Sounds decent, right? Wrong. Inflation quietly eats half of that buying power.",
+      "visual_description": "Giant red 'WRONG' stamp slams across screen. A cartoon inflation monster (or Pac-Man style chomper labeled 'INFLATION') bites the stack of cash in half.",
+      "characters": [
+        {
+          "name": "Inflation Monster",
+          "action": "chomping_cash",
+          "expression": "menacing_grin"
+        }
+      ],
+      "infographics": [
+        {
+          "type": "stat_drop",
+          "text": "Purchasing Power: -50%",
+          "color": "#e74c3c",
+          "animation": "stamp_slam"
+        }
+      ],
+      "sfx": ["record_scratch", "heavy_stamp_slam", "cartoon_bite"]
+    },
+    {
+      "scene_id": "scene_04",
+      "time_range": "0:16 - 0:24",
+      "vo_segment": "But put that exact same five dollars a day into the S&P 500, and compound interest turns it into over three hundred and thirty thousand dollars.",
+      "visual_description": "Screen wipes with green grid. S&P 500 rocket/exponential curve shoots upward. Split screen comparison: tiny $54K cash pile vs towering $330K+ gold vault.",
+      "characters": [
+        {
+          "name": "Everyman Character",
+          "action": "jaw_dropped_excited",
+          "expression": "shocked_happy"
+        }
+      ],
+      "infographics": [
+        {
+          "type": "exponential_chart",
+          "baseline": "$54,000 (Mattress)",
+          "growth_target": "$330,000+ (S&P 500 @ 10%)",
+          "animation": "rocket_trail"
+        }
+      ],
+      "sfx": ["rocket_whoosh", "slot_machine_win", "fireworks_pop"]
+    },
+    {
+      "scene_id": "scene_05",
+      "time_range": "0:24 - 0:30",
+      "vo_segment": "Start today.",
+      "visual_description": "Clean, bold call-to-action screen. Minimalist modern typography with an animated pulsing start button and compounding spark icon.",
+      "characters": [],
+      "infographics": [
+        {
+          "type": "hero_text",
+          "text": "START TODAY.",
+          "subtext": "$5 A DAY = $330K+",
+          "animation": "pulse_glow"
+        }
+      ],
+      "sfx": ["subtle_bass_drop", "clean_chime"]
+    }
+  ]
+}

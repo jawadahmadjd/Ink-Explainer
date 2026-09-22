@@ -1,0 +1,96 @@
+{
+  "project": "The $5 Daily Habit",
+  "director_role": "Creative Flow, Emotional Arc & Cinematic Motivation",
+  "runtime_seconds": 26.85,
+  "style_benchmark": "The Infographics Show Signature 2D Vector Motion",
+  "scenes": [
+    {
+      "scene_id": 1,
+      "name": "The Hook ($5 Daily Question)",
+      "time_range": "0:00 - 4.40s",
+      "emotional_arc": "Inquisitive curiosity -> revelation",
+      "focal_trajectory": [
+        { "t": 0.5, "focus": "Character head & question marks", "pos": [960, 480] },
+        { "t": 1.4, "focus": "$5 banknote whip-reveal & $5/DAY badge", "pos": [960, 160] },
+        { "t": 2.8, "focus": "Floating calendar pages drifting", "pos": [1500, 350] }
+      ],
+      "character_pose": "PRESENT_BILL",
+      "transition_out": {
+        "type": "horizontal_whip_pan_right",
+        "start": 4.40,
+        "midpoint": 4.75,
+        "end": 5.10,
+        "motivation": "Carry the character and $5 bill from the abstract studio into the bedroom"
+      }
+    },
+    {
+      "scene_id": 2,
+      "name": "The Mattress Stash ($54,000)",
+      "time_range": "4.75 - 9.30s",
+      "emotional_arc": "Smug complacency & proud accumulation",
+      "focal_trajectory": [
+        { "t": 5.5, "focus": "Lifted mattress & cash bundles", "pos": [480, 560] },
+        { "t": 7.5, "focus": "Spinning 30-year clock & rolling odometer", "pos": [960, 160] }
+      ],
+      "character_pose": "STASHING_PROUD",
+      "transition_out": {
+        "type": "punch_in_freeze",
+        "start": 9.30,
+        "midpoint": 9.70,
+        "end": 10.10,
+        "motivation": "Tight zoom on proud smile for comedic contrast right before the threat strikes"
+      }
+    },
+    {
+      "scene_id": 3,
+      "name": "The Inflation Threat & Wrong! Stamp",
+      "time_range": "9.70 - 15.70s",
+      "emotional_arc": "Comedic turn -> sudden shock -> destruction",
+      "focal_trajectory": [
+        { "t": 11.0, "focus": "Character questioning face ('Sounds decent, right?')", "pos": [480, 480] },
+        { "t": 12.04, "focus": "Giant red 'WRONG!' rubber stamp impact", "pos": [960, 260] },
+        { "t": 13.8, "focus": "Inflation Chomper lunging & biting cash in half", "pos": [940, 520] },
+        { "t": 14.8, "focus": "Stat badge: -50% PURCHASING POWER", "pos": [960, 820] }
+      ],
+      "character_pose": "PANIC_SHOCK",
+      "transition_out": {
+        "type": "emerald_diagonal_wipe",
+        "start": 15.70,
+        "midpoint": 16.10,
+        "end": 16.50,
+        "motivation": "Wash away the red destruction with optimistic emerald market energy"
+      }
+    },
+    {
+      "scene_id": 4,
+      "name": "The S&P 500 Rocket Engine ($330,000+)",
+      "time_range": "16.10 - 24.80s",
+      "emotional_arc": "High-energy revelation -> awe & victory",
+      "focal_trajectory": [
+        { "t": 17.5, "focus": "Exponential curve line beginning", "pos": [420, 820] },
+        { "t": 20.5, "focus": "Surging rocket tracking curve tangent with flame trail", "pos": [1100, 500] },
+        { "t": 23.0, "focus": "Split comparison ($54K flat vs $330K+ gold vault)", "pos": [1540, 580] }
+      ],
+      "character_pose": "VICTORY_CELEBRATE",
+      "transition_out": {
+        "type": "rocket_center_starburst",
+        "start": 24.80,
+        "midpoint": 25.07,
+        "end": 25.35,
+        "motivation": "Rocket bursts into blinding golden light that reveals the final call to action"
+      }
+    },
+    {
+      "scene_id": 5,
+      "name": "The Climax (START TODAY)",
+      "time_range": "25.07 - 26.85s",
+      "emotional_arc": "Decisive, memorable, empowering call to action",
+      "focal_trajectory": [
+        { "t": 25.5, "focus": "Golden compounding star", "pos": [960, 300] },
+        { "t": 26.2, "focus": "START TODAY hero typography & $5 A DAY = $330K+", "pos": [960, 480] }
+      ],
+      "character_pose": "NONE",
+      "transition_out": null
+    }
+  ]
+}

@@ -55,6 +55,7 @@ Examples:
     parser.add_argument("--skip-images", action="store_true", help="Skip Google Flow image generation (Stage 4)")
     parser.add_argument("--skip-vo", action="store_true", help="Skip ElevenLabs voiceover generation (Stage 3)")
     parser.add_argument("--force-vo", action="store_true", help="Force regenerate voiceover even if cached")
+    parser.add_argument("--missing-only", action="store_true", help="Generate only missing images in Stage 4")
 
     args = parser.parse_args()
 
@@ -157,7 +158,8 @@ Examples:
             img_res = run_stage4_image_gen(
                 video_title=video_title,
                 target_shots=target_list,
-                model=args.model
+                model=args.model,
+                only_missing=args.missing_only
             )
             reporter.end_stage(4, img_res)
 

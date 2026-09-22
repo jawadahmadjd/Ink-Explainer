@@ -23,7 +23,11 @@ from typing import Dict, List, Any, Optional
 # Add parent directory to path for config
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import config
-from learning.learning_engine import split_script_into_fast_paced_shots
+from learning.learning_engine import (
+    split_script_into_fast_paced_shots,
+    split_script_into_elastic_steps,
+    generate_smart_scene_description
+)
 
 TASKS_DIR = os.path.join(config.CODE_DIR, "tasks")
 CURRENT_TASK_FILE = os.path.join(TASKS_DIR, "current_task.json")
@@ -40,37 +44,84 @@ def dispatch_task(task_type: str,
                   project_title: str,
                   user_prompt: str = "",
                   matched_blueprint: Optional[Dict[str, Any]] = None,
-                  reference_transcript: str = "") -> Dict[str, Any]:
+                  reference_transcript: str = "",
+                  niche: Optional[str] = None,
+                  video_info: Optional[Dict[str, Any]] = None,
+                  cuts_data: Optional[List[Any]] = None) -> Dict[str, Any]:
     """
     Creates and dispatches a new AI task for Antigravity.
+    Handles SCRIPT_REPURPOSING_AND_STORYBOARD (Mode A with reference transcript)
+    and SCRIPT_CREATION_AND_STORYBOARD (Mode B from topic/prompt).
     """
     ensure_tasks_dir()
     with TASK_LOCK:
         TASK_COMPLETION_EVENT.clear()
         task_id = f"task_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
 
+        if not niche:
+            from learning.learning_engine import classify_script_niche
+            niche = classify_script_niche(project_title, user_prompt or reference_transcript).get("niche", "history")
+
+        is_repurposing = bool(reference_transcript) or task_type == "SCRIPT_REPURPOSING_AND_STORYBOARD"
+        mode_label = "REPURPOSING INGESTED REFERENCE SCRIPT" if is_repurposing else "CREATING ORIGINAL SCRIPT FROM TOPIC"
+
         instructions = (
-            "ANTIGRAVITY INSTRUCTIONS:\n"
-            "1. Synthesize a compelling, high-retention 7-act spoken narration script for this title.\n"
-            "2. Split into fast-paced comic visual beats averaging 16 to 32 characters per shot.\n"
-            "3. Enforce MinutePhysics stick-figure comic rules: white-filled round heads, bold black outlines, "
-            "zero realistic anatomy or flesh tones, full bleed 16:9 widescreen environment.\n"
-            "4. Write output to storyboard_master.csv and complete the task."
+            f"ANTIGRAVITY SCRIPT & STORYBOARD SYNTHESIS INSTRUCTIONS (Niche: {niche.upper()} | Mode: {mode_label}):\n\n"
+            "1. TONE & NARRATIVE ARCHITECTURE (SOP 03):\n"
+            "   - Tone: Witty, deadpan, self-effacing, relatable explainer narration in the style of 'Casually Explained' and 'MinutePhysics'.\n"
+            "   - Follow the 7-Act Retention Architecture:\n"
+            "       * Act 1: The Paradox Hook (undeniable modern vs ancestral contradiction; question that feels impossible to answer simply).\n"
+            "       * Act 2: The Common Misconception (what pop culture / school taught vs reality).\n"
+            "       * Act 3: The Historical/Scientific Origin (the prehistoric/evolutionary root moment).\n"
+            "       * Act 4: The Hidden Mechanism (the physical gears broken down with simple visual analogies).\n"
+            "       * Act 5: The Turning Point / Catastrophic Failure (when the system fails or goes wrong).\n"
+            "       * Act 6: The Modern Parallel (how modern humans do the exact same thing with phones/emails/debt).\n"
+            "       * Act 7: The Unresolved Irony & Epilogue (dry, thought-provoking philosophical reflection).\n\n"
+            "2. ZERO PLAGIARISM REPURPOSING MANDATE:\n"
+            "   - 100% original phrasing (0% verbatim copy-pasting from reference).\n"
+            "   - Preserve all historical/scientific facts, archaeological sites, names, numbers, citations, and core thesis.\n"
+            "   - Transform dry academic explanations into funny, high-dopamine visual thought-experiments.\n\n"
+            "3. ELASTIC ACTION STEP PACING & NEVER-ORPHAN GRAMMAR SHIELD:\n"
+            "   - Split narration into Elastic Action Steps (~20 to 65 characters / ~1.0s to 2.2s per shot).\n"
+            "   - Every shot must represent an atomic cognitive thought or character action.\n"
+            "   - Never guillotine sentences mid-clause, split adjective chains, or orphan introductory adverbs.\n"
+            "   - Shield decimals and numbers ('99.9%', '$3.50', '50,000 years ago').\n\n"
+            "4. MINUTEPHYSICS STICK-FIGURE PROMPT ENGINEERING:\n"
+            "   - All human characters MUST be drawn strictly as simple minimalist stick figures:\n"
+            "     thin black ink lines, solid white circle heads, minimal dot eyes, simple neutral line mouths.\n"
+            "     Zero realistic human anatomy, zero flesh skin tones.\n"
+            "   - Edge-to-edge full bleed 16:9 widescreen environment grounding, zero white borders or floating cards.\n"
+            "   - Creative comedic visual gags, relatable props, expressive stick-figure body language.\n\n"
+            "5. OUTPUT TARGETS:\n"
+            "   - Compile into storyboard_master.csv, clean_ai_voiceover_script.txt, and all_prompts.txt.\n"
+            "   - Call apply_antigravity_script_and_storyboard() or complete_task() to signal the studio pipeline.\n"
         )
+
+        ref_file_path = os.path.join(TASKS_DIR, "reference_transcript.txt")
+        if reference_transcript:
+            with open(ref_file_path, "w", encoding="utf-8") as rf:
+                rf.write(reference_transcript)
 
         task_payload = {
             "task_id": task_id,
-            "task_type": task_type,
+            "task_type": "SCRIPT_REPURPOSING_AND_STORYBOARD" if is_repurposing else "SCRIPT_CREATION_AND_STORYBOARD",
             "project_title": project_title,
+            "niche": niche,
             "status": "PENDING_ANTIGRAVITY",
             "created_at": datetime.now().isoformat(),
             "updated_at": datetime.now().isoformat(),
             "input_payload": {
                 "title": project_title,
+                "niche": niche,
                 "user_prompt": user_prompt,
+                "is_repurposing": is_repurposing,
                 "matched_blueprint": matched_blueprint or {},
                 "has_reference_transcript": bool(reference_transcript),
-                "reference_transcript_preview": reference_transcript[:500] if reference_transcript else ""
+                "reference_transcript_path": ref_file_path if reference_transcript else None,
+                "reference_word_count": len(reference_transcript.split()) if reference_transcript else 0,
+                "reference_transcript_preview": reference_transcript[:600] if reference_transcript else "",
+                "video_info": video_info or {},
+                "cuts_count": len(cuts_data) if cuts_data else 0
             },
             "instructions": instructions,
             "result_summary": None
@@ -79,7 +130,25 @@ def dispatch_task(task_type: str,
         with open(CURRENT_TASK_FILE, "w", encoding="utf-8") as f:
             json.dump(task_payload, f, indent=2, ensure_ascii=False)
 
+        print(f"[ANTIGRAVITY BRIDGE] Task dispatched: {task_id} ({task_payload['task_type']}) for '{project_title}'")
         return task_payload
+
+def load_active_task_context() -> Optional[Dict[str, Any]]:
+    """
+    Returns full dictionary of active task, reading reference transcript if available.
+    """
+    task = get_active_task()
+    if not task:
+        return None
+    inp = task.get("input_payload", {})
+    ref_path = inp.get("reference_transcript_path")
+    if ref_path and os.path.exists(ref_path):
+        try:
+            with open(ref_path, "r", encoding="utf-8") as rf:
+                inp["reference_transcript_full"] = rf.read()
+        except Exception:
+            pass
+    return task
 
 def get_active_task() -> Optional[Dict[str, Any]]:
     """Returns the current active task if it exists."""
@@ -165,9 +234,10 @@ def is_character_shot(vo_text: str, visual_desc: str) -> bool:
 
 def synthesize_storyboard_from_script(script_text: str,
                                       project_title: str,
-                                      custom_shots: Optional[List[Dict[str, str]]] = None) -> Dict[str, Any]:
+                                      custom_shots: Optional[List[Dict[str, str]]] = None,
+                                      niche: Optional[str] = None) -> Dict[str, Any]:
     """
-    Takes complete narration script or shot objects, breaks it down into 16-32 char beats,
+    Takes complete narration script or shot objects, breaks it down into 20-50 char beats,
     applies MinutePhysics stick-figure comic styling, and writes all production files:
       1. storyboard_master.csv
       2. all_prompts.txt
@@ -192,12 +262,27 @@ def synthesize_storyboard_from_script(script_text: str,
     audit_list = []
     prompt_lines = []
 
-    base_stick_style = config.MANDATORY_STICK_FIGURE_STYLE
+    if not niche:
+        from learning.learning_engine import classify_script_niche
+        niche = classify_script_niche(project_title, script_text).get("niche", "history")
+
+    from learning.learning_engine import load_codex
+    codex = load_codex()
+    n_data = codex.get("niches", {}).get(niche, {})
+    color_palette = n_data.get("visual_style", {}).get("color_palette", "Flat muted earthy color palette with subtle paper texture.")
+
+    base_stick_style = (
+        "Minimalist hand-drawn 2D vector illustration, clean bold black ink comic line art. "
+        "Hand-drawn doodle comic style, Casually Explained and MinutePhysics aesthetic. "
+        "All human characters MUST be drawn strictly as simple, minimalist stick figures: "
+        "thin black line bodies, plain empty white circle heads, minimal dot eyes, simple neutral line mouths. "
+        f"Full bleed edge-to-edge illustration, grounded background environment completely filling 16:9 widescreen frame without borders. {color_palette}"
+    )
     base_nonchar_style = (
         "Minimalist hand-drawn 2D vector illustration, clean bold black ink comic line art. "
         "Hand-drawn doodle comic style, Casually Explained and MinutePhysics aesthetic. "
-        "Full bleed edge-to-edge illustration, grounded background environment, completely filling the 16:9 widescreen frame without borders, "
-        "matted margins, or white card edges. Flat muted earthy color palette with subtle paper texture."
+        f"Full bleed edge-to-edge illustration, grounded background environment, completely filling the 16:9 widescreen frame without borders, "
+        f"matted margins, or white card edges. {color_palette}"
     )
 
     if custom_shots and len(custom_shots) > 0:
@@ -223,9 +308,9 @@ def synthesize_storyboard_from_script(script_text: str,
                 "cv_info": {"total_score": 95.0, "character_detected": is_char}
             })
     else:
-        # Decompose continuous script into fast-paced shots (16-32 chars)
+        # Decompose continuous script into natural elastic action steps (~1.0s to 2.2s)
         clean_text = script_text.strip()
-        shot_texts = split_script_into_fast_paced_shots(clean_text, target_min_chars=16, target_max_chars=32)
+        shot_texts = split_script_into_elastic_steps(clean_text, target_min_chars=16, target_max_chars=65)
 
         nominal_duration = 2.0  # nominal ~2s per micro-beat
         for i, cut_vo in enumerate(shot_texts, 1):
@@ -235,7 +320,9 @@ def synthesize_storyboard_from_script(script_text: str,
             e_min, e_sec = int(e_time // 60), e_time % 60
             tc = f"{s_min:02d}:{s_sec:04.1f} - {e_min:02d}:{e_sec:04.1f}"
 
-            desc = f"Concept visual for: {cut_vo}"
+            prev_vo = shot_texts[i-2] if i > 1 else ""
+            next_vo = shot_texts[i] if i < len(shot_texts) else ""
+            desc = generate_smart_scene_description(cut_vo, prev_vo=prev_vo, next_vo=next_vo, niche=niche)
             is_char = is_character_shot(cut_vo, desc)
             if is_char:
                 prompt = f"{base_stick_style} Scene depicts: {desc}"
@@ -289,7 +376,7 @@ def synthesize_storyboard_from_script(script_text: str,
 **Project**: `{project_title}`
 **Total Shots**: `{total_shots}`
 **Generated via**: Antigravity Studio Engine (MinutePhysics Stick-Figure Standard)
-**Pacing**: 16–32 characters per cut with strict punctuation divider enforcement.
+**Pacing**: 20–50 characters per cut with strict punctuation divider enforcement.
 
 | Shot # | Timecode | Status | Visual Description | Spoken VO Script |
 | :--- | :--- | :--- | :--- | :--- |
@@ -311,3 +398,46 @@ def synthesize_storyboard_from_script(script_text: str,
         "character_audit": audit_json_path,
         "prompt_status_md": prompt_status_md
     }
+
+def apply_antigravity_script_and_storyboard(
+    project_title: str,
+    script_text: str = "",
+    custom_shots: Optional[List[Dict[str, Any]]] = None,
+    niche: Optional[str] = None,
+    task_id: Optional[str] = None
+) -> Dict[str, Any]:
+    """
+    Applies an Antigravity-synthesized script and/or shots list,
+    compiles all required studio artifacts (CSV, prompts, character audit),
+    and completes the active bridge task so downstream pipeline stages resume.
+    """
+    res = synthesize_storyboard_from_script(
+        script_text=script_text,
+        project_title=project_title,
+        custom_shots=custom_shots,
+        niche=niche
+    )
+    summary = f"Synthesized {res.get('total_shots', 0)} shots for '{project_title}' via Antigravity Engine."
+    complete_task(task_id=task_id, result_summary=summary)
+    return res
+
+def cancel_active_task(task_id: str = None, reason: str = "Cancelled by user") -> bool:
+    """Cancels the active task and unblocks waiting pipeline worker threads."""
+    ensure_tasks_dir()
+    with TASK_LOCK:
+        if not os.path.exists(CURRENT_TASK_FILE):
+            return False
+        try:
+            with open(CURRENT_TASK_FILE, "r", encoding="utf-8") as f:
+                task = json.load(f)
+            task["status"] = "CANCELLED"
+            task["updated_at"] = datetime.now().isoformat()
+            task["result_summary"] = reason
+            with open(CURRENT_TASK_FILE, "w", encoding="utf-8") as f:
+                json.dump(task, f, indent=2, ensure_ascii=False)
+            TASK_COMPLETION_EVENT.set()
+            return True
+        except Exception as e:
+            print(f"[ANTIGRAVITY BRIDGE ERROR] cancel_active_task failed: {e}")
+            return False
+

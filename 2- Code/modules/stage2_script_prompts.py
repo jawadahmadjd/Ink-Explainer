@@ -24,33 +24,59 @@ def is_likely_character_shot(vo_text: str, visual_desc: str) -> bool:
     combined = (vo_text + " " + visual_desc).lower()
     return any(re.search(r"\b" + re.escape(kw) + r"\b", combined) for kw in CHARACTER_KEYWORDS)
 
-def format_stick_figure_prompt(visual_description: str, is_character: bool) -> str:
-    """Format prompt strictly with full bleed and stick figure standards."""
-    base_prefix = config.MANDATORY_STICK_FIGURE_STYLE
+def format_stick_figure_prompt(visual_description: str, is_character: bool, niche: str = None) -> str:
+    """Format prompt strictly with full bleed and stick figure standards, respecting niche visual tokens."""
+    color_palette = "Flat muted earthy color palette with subtle paper texture."
+    if niche:
+        try:
+            from learning.learning_engine import load_codex
+            codex = load_codex()
+            n_data = codex.get("niches", {}).get(niche, {})
+            color_palette = n_data.get("visual_style", {}).get("color_palette", color_palette)
+        except Exception:
+            pass
+
     clean_desc = visual_description.strip()
     if is_character:
+        base_prefix = (
+            "Minimalist hand-drawn 2D vector illustration, clean bold black ink comic line art. "
+            "Hand-drawn doodle comic style, Casually Explained and MinutePhysics aesthetic. "
+            "All human characters MUST be drawn strictly as simple, minimalist stick figures: "
+            "thin black line bodies, plain empty white circle heads, minimal dot eyes, simple neutral line mouths. "
+            f"Full bleed edge-to-edge illustration, grounded background environment completely filling 16:9 widescreen frame without borders. {color_palette}"
+        )
         return f"{base_prefix} Scene depicts: {clean_desc}"
     else:
         # Non-character objects/landscapes
         non_char_prefix = (
             "Minimalist hand-drawn 2D vector illustration, clean bold black ink comic line art. "
             "Hand-drawn doodle comic style, Casually Explained and MinutePhysics aesthetic. "
-            "Full bleed edge-to-edge illustration, grounded background environment, completely filling the 16:9 widescreen frame without borders, "
-            "matted margins, or white card edges. Flat muted earthy color palette with subtle paper texture."
+            f"Full bleed edge-to-edge illustration, grounded background environment, completely filling the 16:9 widescreen frame without borders, "
+            f"matted margins, or white card edges. {color_palette}"
         )
         return f"{non_char_prefix} Detailed illustration of: {clean_desc}"
 
 from learning.learning_engine import (
     find_matching_reference_video,
     generate_script_and_shots,
-    split_script_into_fast_paced_shots
+    split_script_into_fast_paced_shots,
+    split_script_into_elastic_steps,
+    generate_smart_scene_description,
+    classify_script_niche
 )
 
-def run_stage2_script_prompts(video_title: str, custom_script_path: str = None, user_prompt: str = None, force_regenerate: bool = False) -> dict:
+def run_stage2_script_prompts(
+    video_title: str,
+    custom_script_path: str = None,
+    user_prompt: str = None,
+    force_regenerate: bool = False,
+    niche: str = None,
+    use_offline_fallback: bool = False
+) -> dict:
     """
     Generate or sync script, master storyboard CSV, all prompts, and character audit.
-    Enforces 16-32 character fast pacing with mandatory punctuation dividers.
-    If video title matches an existing reference, mirrors its ideation and narrative arc.
+    By default, script repurposing/creation and prompt generation are handled entirely by Antigravity.
+    Provides use_offline_fallback=True as a local regex/heuristic fallback.
     """
     dirs = config.get_project_dirs(video_title)
     finals_dir = dirs["finals_dir"]
@@ -66,6 +92,30 @@ def run_stage2_script_prompts(video_title: str, custom_script_path: str = None, 
     audit_json_path = dirs["character_audit"]
     prompt_status_md = dirs["prompt_status_md"]
 
+    # Detect or recover niche for project
+    info_json_path = os.path.join(postmortem_dir, "video_info.json")
+    vinfo = {}
+    if os.path.exists(info_json_path):
+        try:
+            with open(info_json_path, "r", encoding="utf-8") as f:
+                vinfo = json.load(f)
+                if not niche:
+                    niche = vinfo.get("niche")
+        except Exception:
+            pass
+    if not niche:
+        niche = classify_script_niche(video_title, user_prompt or "").get("niche", "history")
+
+    cuts_path = os.path.join(postmortem_dir, "cuts_data.json")
+    cuts_list = []
+    if os.path.exists(cuts_path):
+        try:
+            with open(cuts_path, "r", encoding="utf-8") as f:
+                cdata = json.load(f)
+                cuts_list = cdata if isinstance(cdata, list) else cdata.get("cuts", [])
+        except Exception:
+            pass
+
     # 1. If existing master CSV exists in Finals, preserve and load it unless forced
     existing_rows = []
     if os.path.exists(master_csv_path) and not force_regenerate:
@@ -75,65 +125,32 @@ def run_stage2_script_prompts(video_title: str, custom_script_path: str = None, 
             header = next(reader, None)
             existing_rows = list(reader)
 
-    # If no existing master CSV, construct using fast pacing & reference matching
-    if not existing_rows:
-        cuts_path = os.path.join(postmortem_dir, "cuts_data.json")
+    # If no existing master CSV, construct using Antigravity AI Engine (or offline fallback)
+    if not existing_rows or force_regenerate:
         transcript_path = custom_script_path or os.path.join(postmortem_dir, "clean_transcript.txt")
-
-        # Check if reference video matches
-        match = find_matching_reference_video(video_title)
-        if match:
-            print(f"[REFERENCE MATCH FOUND] '{match['title']}' (Score: {match['score']})")
-            print(f"   Mirroring reference ideation, hook formula, and 7-act progression...")
-
-        rows = []
+        raw_text = ""
         if os.path.exists(transcript_path):
             with open(transcript_path, "r", encoding="utf-8") as f:
                 raw_text = f.read()
 
-            from modules.script_spinner import get_spun_script_for_title
-            # Intelligently spin and rewrite transcript to prevent copy-pasting reference video
-            print("   [SCRIPT SPINNER] Rewriting reference transcript into original narration (0% verbatim)...")
-            spun_script = get_spun_script_for_title(video_title, raw_transcript=raw_text)
-            final_script_text = spun_script if spun_script else raw_text
+        match = find_matching_reference_video(video_title, niche=niche)
+        if match:
+            print(f"[REFERENCE MATCH FOUND] '{match['title']}' in niche '{match.get('niche', niche)}' (Score: {match['score']})")
 
-            # Split spun script into fast-paced shots (16-32 chars + punctuation dividers)
-            shot_texts = split_script_into_fast_paced_shots(final_script_text, target_min_chars=16, target_max_chars=32)
-            total_shots_count = len(shot_texts)
-
-            # Estimate or align timecodes
-            total_dur = 60.0
-            if os.path.exists(cuts_path):
-                try:
-                    with open(cuts_path, "r", encoding="utf-8") as f:
-                        cdata = json.load(f)
-                        cuts_list = cdata.get("cuts", [])
-                        if cuts_list: total_dur = cuts_list[-1]
-                except Exception:
-                    pass
-            
-            shot_dur = total_dur / float(max(1, total_shots_count))
-            for i, cut_vo in enumerate(shot_texts, 1):
-                s_time = (i - 1) * shot_dur
-                e_time = i * shot_dur
-                s_min, s_sec = int(s_time // 60), s_time % 60
-                e_min, e_sec = int(e_time // 60), e_time % 60
-                tc_str = f"{s_min:02d}:{s_sec:04.1f} - {e_min:02d}:{e_sec:04.1f}"
-
-                desc = f"Concept visual for narration: {cut_vo}"
-                is_char = is_likely_character_shot(cut_vo, desc)
-                prompt = format_stick_figure_prompt(desc, is_char)
-                rows.append([i, tc_str, cut_vo, desc, prompt])
-
-        else:
+        if not use_offline_fallback:
+            # Primary path: Handled entirely by Antigravity
             from modules.antigravity_bridge import dispatch_task, wait_for_task_completion
-            print(f"No existing transcript or storyboard found for '{video_title}'.")
-            print(f"Dispatching task to Antigravity AI Engine...")
+            task_type = "SCRIPT_REPURPOSING_AND_STORYBOARD" if raw_text else "SCRIPT_CREATION_AND_STORYBOARD"
+            print(f"\n[STAGE 2] Dispatching to Antigravity AI Engine ({task_type}) for '{video_title}' (Niche: {niche})...")
             dispatch_task(
-                task_type="SCRIPT_AND_STORYBOARD_SYNTHESIS",
+                task_type=task_type,
                 project_title=video_title,
                 user_prompt=user_prompt or "",
-                matched_blueprint=match
+                matched_blueprint=match,
+                reference_transcript=raw_text,
+                niche=niche,
+                video_info=vinfo,
+                cuts_data=cuts_list
             )
             print(f"Awaiting Antigravity script synthesis and storyboard generation...")
             completed = wait_for_task_completion(timeout_sec=3600, poll_interval=1.0)
@@ -144,8 +161,41 @@ def run_stage2_script_prompts(video_title: str, custom_script_path: str = None, 
                 reader = csv.reader(f)
                 header = next(reader, None)
                 existing_rows = list(reader)
+        else:
+            # Fallback path: Offline heuristic generation
+            print("   [STAGE 2 FALLBACK] Running offline rule-based script & prompt generator...")
+            rows = []
+            if raw_text:
+                from modules.script_spinner import get_spun_script_for_title
+                spun_script = get_spun_script_for_title(video_title, raw_transcript=raw_text)
+                final_script_text = spun_script if spun_script else raw_text
+                shot_texts = split_script_into_elastic_steps(final_script_text, target_min_chars=16, target_max_chars=65)
+                total_shots_count = len(shot_texts)
 
-        if force_regenerate or not os.path.exists(master_csv_path):
+                total_dur = 60.0
+                if cuts_list:
+                    try:
+                        total_dur = cuts_list[-1].get("end_sec", 60.0) if isinstance(cuts_list[-1], dict) else cuts_list[-1]
+                    except Exception:
+                        pass
+
+                shot_dur = total_dur / float(max(1, total_shots_count))
+                for i, cut_vo in enumerate(shot_texts, 1):
+                    s_time = (i - 1) * shot_dur
+                    e_time = i * shot_dur
+                    s_min, s_sec = int(s_time // 60), s_time % 60
+                    e_min, e_sec = int(e_time // 60), e_time % 60
+                    tc_str = f"{s_min:02d}:{s_sec:04.1f} - {e_min:02d}:{e_sec:04.1f}"
+
+                    prev_vo = shot_texts[i-2] if i > 1 else ""
+                    next_vo = shot_texts[i] if i < len(shot_texts) else ""
+                    desc = generate_smart_scene_description(cut_vo, prev_vo=prev_vo, next_vo=next_vo, niche=niche)
+                    is_char = is_likely_character_shot(cut_vo, desc)
+                    prompt = format_stick_figure_prompt(desc, is_char, niche=niche)
+                    rows.append([i, tc_str, cut_vo, desc, prompt])
+            else:
+                raise ValueError("Offline fallback requires an existing reference transcript. Please use Antigravity mode.")
+
             existing_rows = rows
             with open(master_csv_path, "w", newline="", encoding="utf-8") as f:
                 writer = csv.writer(f)

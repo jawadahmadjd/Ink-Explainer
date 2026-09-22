@@ -10,6 +10,7 @@ import json
 import csv
 import xml.etree.ElementTree as ET
 import soundfile as sf
+from PIL import Image
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import config
@@ -36,16 +37,60 @@ def run_stage5_timeline_xml(video_title: str, fps: int = 24) -> dict:
     master_mp3_path = os.path.join(vo_dir, "voiceover_master_normalized.mp3")
     xml_output_path = dirs["timeline_xml"]
 
-    if not os.path.exists(shots_align_path):
-        raise FileNotFoundError(f"Missing shots alignment file: {shots_align_path}. Run Stage 3 first.")
-
-    with open(shots_align_path, "r", encoding="utf-8") as f:
-        shot_timings = json.load(f)
-
     # Determine master audio file and length
     audio_path = master_wav_path if os.path.exists(master_wav_path) else master_mp3_path
-    if not os.path.exists(audio_path):
+    if not audio_path or not os.path.exists(audio_path):
+        if os.path.exists(vo_dir):
+            for fname in sorted(os.listdir(vo_dir)):
+                if fname.lower().endswith((".wav", ".mp3")) and not fname.endswith("_raw.mp3"):
+                    audio_path = os.path.join(vo_dir, fname)
+                    break
+
+    if not audio_path or not os.path.exists(audio_path):
         raise FileNotFoundError(f"Missing master audio file in: {vo_dir}")
+
+    # Fallback to storyboard_master.csv if shots_timing_alignment.json is missing
+    if not os.path.exists(shots_align_path):
+        master_csv = dirs["master_csv"]
+        if os.path.exists(master_csv):
+            print(f"  [AUTO-BUILD] Deriving shots_timing_alignment.json from {os.path.basename(master_csv)}...")
+            with open(master_csv, "r", encoding="utf-8") as f:
+                rows = list(csv.reader(f))[1:]
+
+            def to_sec(s):
+                s = s.strip()
+                if ":" in s:
+                    m, sec = s.split(":")
+                    return float(m) * 60.0 + float(sec)
+                return float(s)
+
+            shot_timings = []
+            for r in rows:
+                if not r: continue
+                s_num = int(r[0])
+                tc_str = r[1]
+                vo_str = r[2] if len(r) > 2 else ""
+                desc_str = r[3] if len(r) > 3 else ""
+                parts = [p.strip() for p in tc_str.split("-")]
+                st = to_sec(parts[0])
+                en = to_sec(parts[1]) if len(parts) > 1 else st + 1.38
+                shot_timings.append({
+                    "shot_num": s_num,
+                    "vo_text": vo_str,
+                    "desc": desc_str,
+                    "start_sec": round(st, 3),
+                    "end_sec": round(en, 3),
+                    "duration_sec": round(en - st, 3),
+                    "image_file": f"shot_{s_num:03d}.jpg"
+                })
+            with open(shots_align_path, "w", encoding="utf-8") as f_out:
+                json.dump(shot_timings, f_out, indent=2)
+            print(f"  -> Generated {shots_align_path} ({len(shot_timings)} shots)")
+        else:
+            raise FileNotFoundError(f"Missing shots alignment file: {shots_align_path} and master CSV.")
+    else:
+        with open(shots_align_path, "r", encoding="utf-8") as f:
+            shot_timings = json.load(f)
 
     a_info = sf.info(audio_path)
     audio_duration_sec = a_info.duration
@@ -99,6 +144,16 @@ def run_stage5_timeline_xml(video_title: str, fps: int = 24) -> dict:
     ET.SubElement(timecode, "string").text = "00:00:00:00"
     ET.SubElement(timecode, "frame").text = "0"
 
+    # Determine video dimensions dynamically from first existing image clip
+    seq_w = config.TARGET_WIDTH
+    seq_h = config.TARGET_HEIGHT
+    if clips and os.path.exists(clips[0]["path"]):
+        try:
+            with Image.open(clips[0]["path"]) as first_im:
+                seq_w, seq_h = first_im.size
+        except Exception:
+            pass
+
     media = ET.SubElement(seq, "media")
 
     # 1. VIDEO TRACK
@@ -108,8 +163,8 @@ def run_stage5_timeline_xml(video_title: str, fps: int = 24) -> dict:
     v_rate = ET.SubElement(v_sample, "rate")
     ET.SubElement(v_rate, "timebase").text = str(fps)
     ET.SubElement(v_rate, "ntsc").text = "FALSE"
-    ET.SubElement(v_sample, "width").text = str(config.TARGET_WIDTH)
-    ET.SubElement(v_sample, "height").text = str(config.TARGET_HEIGHT)
+    ET.SubElement(v_sample, "width").text = str(seq_w)
+    ET.SubElement(v_sample, "height").text = str(seq_h)
 
     v_track = ET.SubElement(video, "track")
 
@@ -137,8 +192,8 @@ def run_stage5_timeline_xml(video_title: str, fps: int = 24) -> dict:
         f_media = ET.SubElement(c_file, "media")
         f_video = ET.SubElement(f_media, "video")
         f_sample = ET.SubElement(f_video, "samplecharacteristics")
-        ET.SubElement(f_sample, "width").text = str(config.TARGET_WIDTH)
-        ET.SubElement(f_sample, "height").text = str(config.TARGET_HEIGHT)
+        ET.SubElement(f_sample, "width").text = str(seq_w)
+        ET.SubElement(f_sample, "height").text = str(seq_h)
 
     # 2. AUDIO TRACK
     audio = ET.SubElement(media, "audio")

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { background: #070a12; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+    .row { display: flex; gap: 40px; margin-top: 20px; }
+    .card { background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 16px; text-align: center; }
+  </style>
+</head>
+<body>
+  <h1>Apex Kaiju Beast: Lunge vs Chomp</h1>
+  <div class="row">
+    <div class="card">
+      <h3>Attacking (Jaws Gaping Wide)</h3>
+      <svg width="600" height="500" viewBox="-350 -260 700 520" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="beastSkin" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ef4444"/>
+            <stop offset="40%" stop-color="#dc2626"/>
+            <stop offset="80%" stop-color="#991b1b"/>
+            <stop offset="100%" stop-color="#450a0a"/>
+          </linearGradient>
+          <linearGradient id="beastBelly" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#f87171"/>
+            <stop offset="100%" stop-color="#b91c1c"/>
+          </linearGradient>
+          <linearGradient id="eyeGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fef08a"/>
+            <stop offset="60%" stop-color="#f59e0b"/>
+            <stop offset="100%" stop-color="#d97706"/>
+          </linearGradient>
+          <filter id="monsterGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="8" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+        </defs>
+        
+    <g id="apex_kaiju_beast">
+      <!-- Fiery Smoldering Aura -->
+      <radialGradient id="monsterAura" cx="40%" cy="40%" r="60%">
+        <stop offset="0%" stop-color="#ef4444" stop-opacity="0.5"/>
+        <stop offset="50%" stop-color="#991b1b" stop-opacity="0.2"/>
+        <stop offset="100%" stop-color="#180c10" stop-opacity="0"/>
+      </radialGradient>
+      <ellipse cx="60" cy="0" rx="360" ry="260" fill="url(#monsterAura)"/>
+
+      <!-- 1. Obsidian Dorsal Spines along Neck & Spine -->
+      <g id="dorsal_spikes">
+        <polygon points="60,-110 120,-190 110,-90" fill="#0f172a" stroke="#450a0a" stroke-width="4"/>
+        <polygon points="120,-90 190,-170 170,-70" fill="#1e1b4b" stroke="#0f172a" stroke-width="4"/>
+        <polygon points="180,-70 260,-140 230,-50" fill="#1e1b4b" stroke="#0f172a" stroke-width="4"/>
+        <polygon points="240,-50 330,-110 290,-30" fill="#0f172a" stroke="#450a0a" stroke-width="4"/>
+      </g>
+
+      <!-- 2. Muscular Draconic Neck & Body (Extending dynamically to the right) -->
+      <g id="draconic_neck">
+        <!-- Main Muscular Neck Path -->
+        <path d="M -30 -70 C 60 -110 180 -100 350 -70 L 350 180 C 220 180 120 170 10 140 C -40 100 -50 40 -30 -70 Z" 
+              fill="url(#beastSkin)" stroke="#450a0a" stroke-width="8" stroke-linejoin="round"/>
+
+        <!-- Armored Neck Muscle Strands & Highlights -->
+        <path d="M 10 -60 C 100 -80 220 -65 340 -40" fill="none" stroke="#f87171" stroke-width="6" stroke-linecap="round" opacity="0.45"/>
+        <path d="M 30 -20 C 120 -35 240 -20 340 10" fill="none" stroke="#f87171" stroke-width="5" stroke-linecap="round" opacity="0.35"/>
+        
+        <!-- Scaled Ventral Underbelly Plates -->
+        <path d="M 0 60 C 60 140 180 160 350 150 L 350 180 C 220 180 120 170 10 140 Z" 
+              fill="url(#beastBelly)" stroke="#450a0a" stroke-width="4.5"/>
+        <line x1="80" y1="95" x2="140" y2="155" stroke="#7f1d1d" stroke-width="4" stroke-linecap="round"/>
+        <line x1="160" y1="105" x2="220" y2="165" stroke="#7f1d1d" stroke-width="4" stroke-linecap="round"/>
+        <line x1="240" y1="115" x2="300" y2="175" stroke="#7f1d1d" stroke-width="4" stroke-linecap="round"/>
+      </g>
+
+      <!-- 3. Sweeping Curved Horns -->
+      <g id="horns">
+        <path d="M -20 -90 C 20 -180 120 -230 220 -200 C 140 -180 60 -140 40 -80 Z" 
+              fill="#0f172a" stroke="#450a0a" stroke-width="6" stroke-linejoin="round"/>
+        <path d="M 20 -150 C 70 -195 130 -205 190 -195" fill="none" stroke="#6366f1" stroke-width="3.5" stroke-linecap="round" opacity="0.7"/>
+
+        <path d="M -50 -80 C -20 -150 50 -200 130 -185 C 80 -155 30 -120 10 -70 Z" 
+              fill="#1e1b4b" stroke="#0f172a" stroke-width="5" stroke-linejoin="round"/>
+      </g>
+
+      <!-- 4. HINGED LOWER JAW & CAVERNOUS MAW (Hinged at (0, 25)) -->
+      <g id="lower_jaw_rig" transform="translate(0, 25) rotate(26.0)">
+        <!-- Deep Dark Cavernous Throat -->
+        <path d="M -200 10 C -130 -15 -10 -20 10 5 C -10 50 -100 70 -190 30 Z" fill="#180c10"/>
+        
+        <!-- Predatory Sinuous Tongue with Saliva Droplets -->
+        <path d="M -130 10 Q -60 -8 0 10 Q -60 25 -130 20 Z" fill="#e11d48" stroke="#9f1239" stroke-width="3"/>
+        
+        <!-- Lower Jaw Bone Structure -->
+        <path d="M -210 15 C -180 75 -60 90 20 15 C -10 80 -110 95 -200 40 Z" 
+              fill="url(#beastSkin)" stroke="#450a0a" stroke-width="7" stroke-linejoin="round"/>
+
+        <!-- Lower Jaw Razor Fangs -->
+        <g id="lower_fangs">
+          <polygon points="-200,16 -185,-26 -172,22" fill="#ffffff" stroke="#450a0a" stroke-width="3.5"/>
+          <polygon points="-168,22 -154,-15 -142,26" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+          <polygon points="-138,26 -125,-6 -112,28" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+          <polygon points="-108,28 -98,4 -88,28" fill="#ffffff" stroke="#450a0a" stroke-width="2.5"/>
+        </g>
+      </g>
+
+      <!-- 5. UPPER SNOUT & SKULL -->
+      <g id="upper_skull">
+        <!-- Snout Profile -->
+        <path d="M -30 -80 C -110 -90 -190 -70 -240 -10 C -200 20 -130 15 -70 12 C -40 10 -25 -20 -30 -80 Z" 
+              fill="url(#beastSkin)" stroke="#450a0a" stroke-width="8" stroke-linejoin="round"/>
+        
+        <!-- Snout Contour Highlight -->
+        <path d="M -110 -70 C -170 -60 -210 -30 -230 -5" fill="none" stroke="#f87171" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+
+        <!-- Snorting Nostril with Fiery Embers -->
+        <ellipse cx="-215" cy="-18" rx="14" ry="8.5" fill="#180c10" transform="rotate(-15 -215 -18)"/>
+        <path d="M -235 -25 Q -280 -50 -260 -85 Q -240 -50 -220 -35" fill="none" stroke="#fca5a5" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="14 8" opacity="0.75"/>
+        <circle cx="-265" cy="-45" r="5" fill="#f59e0b"/>
+        <circle cx="-285" cy="-65" r="7" fill="#ef4444"/>
+        <circle cx="-300" cy="-55" r="4" fill="#fbbf24"/>
+
+        <!-- Glowing Predator Eye & Heavy Obsidian Brow -->
+        <g transform="translate(-110, -50)">
+          <polygon points="-50,-10 10,-32 45,-6 10,18 -45,14" fill="#180c10" stroke="#450a0a" stroke-width="4"/>
+          <ellipse cx="-2" cy="-4" rx="36" ry="17" fill="url(#eyeGlow)" stroke="#450a0a" stroke-width="3" transform="rotate(-8)"/>
+          <polygon points="-7,-16 -1,-4 -7,10 -12,-4" fill="#0f172a"/>
+          <circle cx="-12" cy="-8" r="4" fill="#ffffff"/>
+          <circle cx="8" cy="-2" r="2" fill="#ffffff" opacity="0.8"/>
+          <path d="M -62 -16 C -28 -42 20 -40 55 -5 C 20 -20 -20 -24 -50 -10 Z" fill="#0f172a" stroke="#450a0a" stroke-width="5"/>
+        </g>
+
+        <!-- Upper Jaw Fangs (Bone White with Dark Border) -->
+        <g id="upper_fangs">
+          <polygon points="-90,10 -80,30 -70,10" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+          <polygon points="-120,10 -108,36 -96,10" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+          <polygon points="-150,8 -136,42 -124,9" fill="#ffffff" stroke="#450a0a" stroke-width="3.5"/>
+          <!-- Massive Saber Fang -->
+          <polygon points="-185,2 -168,54 -152,6" fill="#ffffff" stroke="#450a0a" stroke-width="4"/>
+          <!-- Front Fang -->
+          <polygon points="-220,-4 -204,36 -192,2" fill="#ffffff" stroke="#450a0a" stroke-width="3.5"/>
+        </g>
+      </g>
+
+      <!-- 6. PREDATOR TALON CLAW (Snatching at the Cash) -->
+      <g id="predator_claw" transform="translate(-10, 75) rotate(-12)">
+        <path d="M 20 -10 C -40 20 -100 45 -160 35" fill="none" stroke="#450a0a" stroke-width="32" stroke-linecap="round"/>
+        <path d="M 20 -10 C -40 20 -100 45 -160 35" fill="none" stroke="url(#beastSkin)" stroke-width="24" stroke-linecap="round"/>
+        <polygon points="15,-15 55,-35 25,10" fill="#0f172a" stroke="#450a0a" stroke-width="3.5"/>
+
+        <g transform="translate(-160, 35)">
+          <circle cx="0" cy="0" r="18" fill="#991b1b" stroke="#450a0a" stroke-width="4"/>
+          <path d="M -8 -8 Q -40 -12 -55 -30 Q -32 4 -8 4 Z" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+          <path d="M -12 2 Q -50 8 -65 -5 Q -38 20 -10 14 Z" fill="#ffffff" stroke="#450a0a" stroke-width="3.5"/>
+          <path d="M -8 12 Q -42 28 -50 18 Q -30 35 -6 20 Z" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+        </g>
+      </g>
+
+      <!-- 7. CHOMP IMPACT BURST -->
+      
+
+      <!-- 8. HERALDIC GOLD & OBSIDIAN MONSTER PLAQUE -->
+      <g transform="translate(70, -180)" filter="url(#monsterGlow)">
+        <polygon points="-120,-30 120,-30 140,12 0,44 -140,12" fill="#0f172a" stroke="#f59e0b" stroke-width="5"/>
+        <polygon points="-112,-25 112,-25 130,10 0,38 -130,10" fill="#7f1d1d" stroke="#ef4444" stroke-width="2.5"/>
+        <text x="0" y="2" font-family="'Montserrat', 'Impact', sans-serif" font-size="28" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="4">INFLATION</text>
+        <text x="0" y="24" font-family="'Inter', sans-serif" font-size="10" font-weight="900" fill="#fde047" text-anchor="middle" letter-spacing="2.5">THE WEALTH DESTROYER</text>
+      </g>
+    </g>
+    
+      </svg>
+    </div>
+
+    <div class="card">
+      <h3>CHOMP! (Jaws Clamped Shut)</h3>
+      <svg width="600" height="500" viewBox="-350 -260 700 520" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="beastSkin" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ef4444"/>
+            <stop offset="40%" stop-color="#dc2626"/>
+            <stop offset="80%" stop-color="#991b1b"/>
+            <stop offset="100%" stop-color="#450a0a"/>
+          </linearGradient>
+          <linearGradient id="beastBelly" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#f87171"/>
+            <stop offset="100%" stop-color="#b91c1c"/>
+          </linearGradient>
+          <linearGradient id="eyeGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fef08a"/>
+            <stop offset="60%" stop-color="#f59e0b"/>
+            <stop offset="100%" stop-color="#d97706"/>
+          </linearGradient>
+          <filter id="monsterGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="8" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+        </defs>
+        
+    <g id="apex_kaiju_beast">
+      <!-- Fiery Smoldering Aura -->
+      <radialGradient id="monsterAura" cx="40%" cy="40%" r="60%">
+        <stop offset="0%" stop-color="#ef4444" stop-opacity="0.5"/>
+        <stop offset="50%" stop-color="#991b1b" stop-opacity="0.2"/>
+        <stop offset="100%" stop-color="#180c10" stop-opacity="0"/>
+      </radialGradient>
+      <ellipse cx="60" cy="0" rx="360" ry="260" fill="url(#monsterAura)"/>
+
+      <!-- 1. Obsidian Dorsal Spines along Neck & Spine -->
+      <g id="dorsal_spikes">
+        <polygon points="60,-110 120,-190 110,-90" fill="#0f172a" stroke="#450a0a" stroke-width="4"/>
+        <polygon points="120,-90 190,-170 170,-70" fill="#1e1b4b" stroke="#0f172a" stroke-width="4"/>
+        <polygon points="180,-70 260,-140 230,-50" fill="#1e1b4b" stroke="#0f172a" stroke-width="4"/>
+        <polygon points="240,-50 330,-110 290,-30" fill="#0f172a" stroke="#450a0a" stroke-width="4"/>
+      </g>
+
+      <!-- 2. Muscular Draconic Neck & Body (Extending dynamically to the right) -->
+      <g id="draconic_neck">
+        <!-- Main Muscular Neck Path -->
+        <path d="M -30 -70 C 60 -110 180 -100 350 -70 L 350 180 C 220 180 120 170 10 140 C -40 100 -50 40 -30 -70 Z" 
+              fill="url(#beastSkin)" stroke="#450a0a" stroke-width="8" stroke-linejoin="round"/>
+
+        <!-- Armored Neck Muscle Strands & Highlights -->
+        <path d="M 10 -60 C 100 -80 220 -65 340 -40" fill="none" stroke="#f87171" stroke-width="6" stroke-linecap="round" opacity="0.45"/>
+        <path d="M 30 -20 C 120 -35 240 -20 340 10" fill="none" stroke="#f87171" stroke-width="5" stroke-linecap="round" opacity="0.35"/>
+        
+        <!-- Scaled Ventral Underbelly Plates -->
+        <path d="M 0 60 C 60 140 180 160 350 150 L 350 180 C 220 180 120 170 10 140 Z" 
+              fill="url(#beastBelly)" stroke="#450a0a" stroke-width="4.5"/>
+        <line x1="80" y1="95" x2="140" y2="155" stroke="#7f1d1d" stroke-width="4" stroke-linecap="round"/>
+        <line x1="160" y1="105" x2="220" y2="165" stroke="#7f1d1d" stroke-width="4" stroke-linecap="round"/>
+        <line x1="240" y1="115" x2="300" y2="175" stroke="#7f1d1d" stroke-width="4" stroke-linecap="round"/>
+      </g>
+
+      <!-- 3. Sweeping Curved Horns -->
+      <g id="horns">
+        <path d="M -20 -90 C 20 -180 120 -230 220 -200 C 140 -180 60 -140 40 -80 Z" 
+              fill="#0f172a" stroke="#450a0a" stroke-width="6" stroke-linejoin="round"/>
+        <path d="M 20 -150 C 70 -195 130 -205 190 -195" fill="none" stroke="#6366f1" stroke-width="3.5" stroke-linecap="round" opacity="0.7"/>
+
+        <path d="M -50 -80 C -20 -150 50 -200 130 -185 C 80 -155 30 -120 10 -70 Z" 
+              fill="#1e1b4b" stroke="#0f172a" stroke-width="5" stroke-linejoin="round"/>
+      </g>
+
+      <!-- 4. HINGED LOWER JAW & CAVERNOUS MAW (Hinged at (0, 25)) -->
+      <g id="lower_jaw_rig" transform="translate(0, 25) rotate(0.0)">
+        <!-- Deep Dark Cavernous Throat -->
+        <path d="M -200 10 C -130 -15 -10 -20 10 5 C -10 50 -100 70 -190 30 Z" fill="#180c10"/>
+        
+        <!-- Predatory Sinuous Tongue with Saliva Droplets -->
+        <path d="M -130 10 Q -60 -8 0 10 Q -60 25 -130 20 Z" fill="#e11d48" stroke="#9f1239" stroke-width="3"/>
+        
+        <!-- Lower Jaw Bone Structure -->
+        <path d="M -210 15 C -180 75 -60 90 20 15 C -10 80 -110 95 -200 40 Z" 
+              fill="url(#beastSkin)" stroke="#450a0a" stroke-width="7" stroke-linejoin="round"/>
+
+        <!-- Lower Jaw Razor Fangs -->
+        <g id="lower_fangs">
+          <polygon points="-200,16 -185,-26 -172,22" fill="#ffffff" stroke="#450a0a" stroke-width="3.5"/>
+          <polygon points="-168,22 -154,-15 -142,26" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+          <polygon points="-138,26 -125,-6 -112,28" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+          <polygon points="-108,28 -98,4 -88,28" fill="#ffffff" stroke="#450a0a" stroke-width="2.5"/>
+        </g>
+      </g>
+
+      <!-- 5. UPPER SNOUT & SKULL -->
+      <g id="upper_skull">
+        <!-- Snout Profile -->
+        <path d="M -30 -80 C -110 -90 -190 -70 -240 -10 C -200 20 -130 15 -70 12 C -40 10 -25 -20 -30 -80 Z" 
+              fill="url(#beastSkin)" stroke="#450a0a" stroke-width="8" stroke-linejoin="round"/>
+        
+        <!-- Snout Contour Highlight -->
+        <path d="M -110 -70 C -170 -60 -210 -30 -230 -5" fill="none" stroke="#f87171" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+
+        <!-- Snorting Nostril with Fiery Embers -->
+        <ellipse cx="-215" cy="-18" rx="14" ry="8.5" fill="#180c10" transform="rotate(-15 -215 -18)"/>
+        <path d="M -235 -25 Q -280 -50 -260 -85 Q -240 -50 -220 -35" fill="none" stroke="#fca5a5" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="14 8" opacity="0.75"/>
+        <circle cx="-265" cy="-45" r="5" fill="#f59e0b"/>
+        <circle cx="-285" cy="-65" r="7" fill="#ef4444"/>
+        <circle cx="-300" cy="-55" r="4" fill="#fbbf24"/>
+
+        <!-- Glowing Predator Eye & Heavy Obsidian Brow -->
+        <g transform="translate(-110, -50)">
+          <polygon points="-50,-10 10,-32 45,-6 10,18 -45,14" fill="#180c10" stroke="#450a0a" stroke-width="4"/>
+          <ellipse cx="-2" cy="-4" rx="36" ry="17" fill="url(#eyeGlow)" stroke="#450a0a" stroke-width="3" transform="rotate(-8)"/>
+          <polygon points="-7,-16 -1,-4 -7,10 -12,-4" fill="#0f172a"/>
+          <circle cx="-12" cy="-8" r="4" fill="#ffffff"/>
+          <circle cx="8" cy="-2" r="2" fill="#ffffff" opacity="0.8"/>
+          <path d="M -62 -16 C -28 -42 20 -40 55 -5 C 20 -20 -20 -24 -50 -10 Z" fill="#0f172a" stroke="#450a0a" stroke-width="5"/>
+        </g>
+
+        <!-- Upper Jaw Fangs (Bone White with Dark Border) -->
+        <g id="upper_fangs">
+          <polygon points="-90,10 -80,30 -70,10" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+          <polygon points="-120,10 -108,36 -96,10" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+          <polygon points="-150,8 -136,42 -124,9" fill="#ffffff" stroke="#450a0a" stroke-width="3.5"/>
+          <!-- Massive Saber Fang -->
+          <polygon points="-185,2 -168,54 -152,6" fill="#ffffff" stroke="#450a0a" stroke-width="4"/>
+          <!-- Front Fang -->
+          <polygon points="-220,-4 -204,36 -192,2" fill="#ffffff" stroke="#450a0a" stroke-width="3.5"/>
+        </g>
+      </g>
+
+      <!-- 6. PREDATOR TALON CLAW (Snatching at the Cash) -->
+      <g id="predator_claw" transform="translate(-10, 75) rotate(-12)">
+        <path d="M 20 -10 C -40 20 -100 45 -160 35" fill="none" stroke="#450a0a" stroke-width="32" stroke-linecap="round"/>
+        <path d="M 20 -10 C -40 20 -100 45 -160 35" fill="none" stroke="url(#beastSkin)" stroke-width="24" stroke-linecap="round"/>
+        <polygon points="15,-15 55,-35 25,10" fill="#0f172a" stroke="#450a0a" stroke-width="3.5"/>
+
+        <g transform="translate(-160, 35)">
+          <circle cx="0" cy="0" r="18" fill="#991b1b" stroke="#450a0a" stroke-width="4"/>
+          <path d="M -8 -8 Q -40 -12 -55 -30 Q -32 4 -8 4 Z" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+          <path d="M -12 2 Q -50 8 -65 -5 Q -38 20 -10 14 Z" fill="#ffffff" stroke="#450a0a" stroke-width="3.5"/>
+          <path d="M -8 12 Q -42 28 -50 18 Q -30 35 -6 20 Z" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+        </g>
+      </g>
+
+      <!-- 7. CHOMP IMPACT BURST -->
+      
+      <g id="chomp_fx" transform="translate(-185, 20)" filter="url(#monsterGlow)">
+        <polygon points="0,-75 25,-25 80,-45 40,0 85,35 25,25 35,85 -10,35 -60,75 -35,15 -85,-10 -25,-25" 
+                 fill="#fbbf24" stroke="#dc2626" stroke-width="5"/>
+        <polygon points="0,-55 18,-18 60,-30 28,0 65,25 18,18 25,62 -8,25 -45,55 -25,10 -62,-8 -18,-18" 
+                 fill="#ffffff" stroke="#f59e0b" stroke-width="2.5"/>
+        <text x="0" y="10" font-family="'Impact', 'Arial Black', sans-serif" font-size="30" font-weight="900" fill="#dc2626" text-anchor="middle" letter-spacing="2">CHOMP!</text>
+      </g>
+      
+
+      <!-- 8. HERALDIC GOLD & OBSIDIAN MONSTER PLAQUE -->
+      <g transform="translate(70, -180)" filter="url(#monsterGlow)">
+        <polygon points="-120,-30 120,-30 140,12 0,44 -140,12" fill="#0f172a" stroke="#f59e0b" stroke-width="5"/>
+        <polygon points="-112,-25 112,-25 130,10 0,38 -130,10" fill="#7f1d1d" stroke="#ef4444" stroke-width="2.5"/>
+        <text x="0" y="2" font-family="'Montserrat', 'Impact', sans-serif" font-size="28" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="4">INFLATION</text>
+        <text x="0" y="24" font-family="'Inter', sans-serif" font-size="10" font-weight="900" fill="#fde047" text-anchor="middle" letter-spacing="2.5">THE WEALTH DESTROYER</text>
+      </g>
+    </g>
+    
+      </svg>
+    </div>
+  </div>
+</body>
+</html>

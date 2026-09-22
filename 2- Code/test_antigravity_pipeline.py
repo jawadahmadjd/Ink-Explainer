@@ -3,7 +3,7 @@ End-to-End Verification Test Suite for Antigravity-Driven Studio UI
 Author: Google DeepMind Antigravity System
 Validates:
 1. Antigravity task dispatch and synchronization.
-2. 16-32 character shot pacing and MinutePhysics prompt generation.
+2. 20-50 character shot pacing and MinutePhysics prompt generation.
 3. Master CSV, All Prompts, and Character Audit file integrity.
 4. Web UI Flask endpoints (/api/antigravity/task, submit-script, complete, etc.).
 5. Apple xmeml timeline XML generation readiness.
@@ -72,7 +72,7 @@ class TestAntigravityPipeline(unittest.TestCase):
         print("[PASS] Test 1 Passed: Task dispatch and retrieval via /api/antigravity/task successful.")
 
     def test_02_script_synthesis_and_pacing(self):
-        """Test decomposing a 7-act script into 16-32 char beats with MinutePhysics prompts."""
+        """Test decomposing a 7-act script into 20-50 char beats with MinutePhysics prompts."""
         test_script = (
             "Right now, you are dreaming. "
             "Your body is completely paralyzed, "

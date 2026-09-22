@@ -1,0 +1,293 @@
+import os
+import asyncio
+from pathlib import Path
+from playwright.async_api import async_playwright
+
+def generate_inflation_beast_svg(jaw_state=1.0, show_chomp=False, show_debris=False):
+    """
+    jaw_state: 1.0 (roaring wide open ~32 deg), 0.0 (fully clamped shut, fangs interlocking)
+    """
+    # Jaw hinge at (20, 20).
+    # Positive rotation swings the lower jaw DOWNWARD (+Y) into open mouth.
+    # 0 deg means fully closed: lower jaw meets upper snout, fangs interlace.
+    jaw_angle = 30.0 * jaw_state
+
+    return f"""
+    <g id="apex_inflation_beast">
+      <!-- 0. Ambient Dark Aura / Hellfire Glow -->
+      <radialGradient id="beastAuraGlow" cx="25%" cy="30%" r="70%">
+        <stop offset="0%" stop-color="#ef4444" stop-opacity="0.6"/>
+        <stop offset="45%" stop-color="#7f1d1d" stop-opacity="0.3"/>
+        <stop offset="85%" stop-color="#180c10" stop-opacity="0"/>
+      </radialGradient>
+      <ellipse cx="-40" cy="20" rx="420" ry="320" fill="url(#beastAuraGlow)"/>
+
+      <!-- 1. Offscreen Muscular Torso & Spines -->
+      <g id="torso_and_dorsal_ridge">
+        <!-- Huge Jagged Obsidian Spines (Back Ridge) -->
+        <polygon points="120,-160 170,-260 210,-140" fill="#0f172a" stroke="#450a0a" stroke-width="4"/>
+        <polygon points="190,-130 260,-240 280,-110" fill="#1e1b4b" stroke="#0f172a" stroke-width="4"/>
+        <polygon points="260,-100 340,-200 360,-70" fill="#0f172a" stroke="#450a0a" stroke-width="4"/>
+        <polygon points="340,-70 420,-160 430,-40" fill="#1e1b4b" stroke="#0f172a" stroke-width="4"/>
+
+        <!-- Massive Muscular Neck Base -->
+        <path d="M 0 -100 C 120 -150 260 -130 450 -80 L 450 240 C 300 250 160 220 0 170 C -40 100 -40 -20 0 -100 Z" 
+              fill="url(#beastSkin)" stroke="#300505" stroke-width="8" stroke-linejoin="round"/>
+
+        <!-- Overlapping Armor Scute Plates (Dorsal to Ventral) -->
+        <path d="M 60 -110 C 180 -130 300 -100 450 -60 L 450 20 C 300 -20 180 -30 60 -10 Z" 
+              fill="#991b1b" opacity="0.6" stroke="#450a0a" stroke-width="3"/>
+        <path d="M 40 20 C 160 0 280 20 450 60 L 450 140 C 280 110 160 90 40 80 Z" 
+              fill="#7f1d1d" opacity="0.7" stroke="#450a0a" stroke-width="3"/>
+        
+        <!-- Glowing Molten Ventral Underbelly -->
+        <path d="M 10 130 C 140 170 280 190 450 200 L 450 240 C 300 250 160 220 0 170 Z" 
+              fill="url(#beastBelly)" stroke="#450a0a" stroke-width="5"/>
+        <line x1="80" y1="150" x2="130" y2="205" stroke="#450a0a" stroke-width="4" stroke-linecap="round"/>
+        <line x1="160" y1="168" x2="210" y2="220" stroke="#450a0a" stroke-width="4" stroke-linecap="round"/>
+        <line x1="250" y1="182" x2="300" y2="232" stroke="#450a0a" stroke-width="4" stroke-linecap="round"/>
+        <line x1="340" y1="192" x2="390" y2="240" stroke="#450a0a" stroke-width="4" stroke-linecap="round"/>
+      </g>
+
+      <!-- 2. Sweeping Obsidian & Indigo Horns (Arcing above head) -->
+      <g id="epic_horns">
+        <!-- Back Horn (darker depth) -->
+        <path d="M -40 -120 C -20 -230 90 -290 220 -270 C 130 -240 50 -180 20 -100 Z" 
+              fill="#0f172a" stroke="#2e0505" stroke-width="6"/>
+        <path d="M 10 -200 C 60 -245 130 -265 195 -260" fill="none" stroke="#6366f1" stroke-width="4" opacity="0.6" stroke-linecap="round"/>
+
+        <!-- Front Primary Horn (Massive, Menacing, Curved) -->
+        <path d="M -80 -100 C -60 -220 50 -290 180 -280 C 90 -245 10 -170 -20 -70 Z" 
+              fill="#180c1e" stroke="#450a0a" stroke-width="7" stroke-linejoin="round"/>
+        <!-- Horn Specular Ridge -->
+        <path d="M -50 -130 C -20 -210 60 -265 160 -265" fill="none" stroke="#a855f7" stroke-width="4.5" stroke-linecap="round" opacity="0.75"/>
+        <path d="M -45 -115 C -20 -185 45 -235 130 -245" fill="none" stroke="#f43f5e" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+
+        <!-- Brow Spike -->
+        <polygon points="-120,-85 -145,-140 -85,-95" fill="#0f172a" stroke="#450a0a" stroke-width="4"/>
+      </g>
+
+      <!-- 3. HINGED LOWER JAW RIG (Pivot at (10, 15)) -->
+      <!-- At angle=0, jaw snaps tightly closed against upper snout. At angle=30, mouth gapes wide open -->
+      <g id="hinged_lower_jaw" transform="translate(10, 15) rotate({jaw_angle}) translate(-10, -15)">
+        <!-- Inside Throat Black Void (Visible when open) -->
+        <path d="M -230 15 C -150 -5 -20 -5 15 15 C -20 65 -120 70 -220 30 Z" fill="#090507"/>
+        
+        <!-- Serrated Predator Tongue with Acid/Fire Droplets -->
+        <path d="M -150 18 Q -70 5 0 16 Q -60 38 -140 25 Z" fill="#e11d48" stroke="#881337" stroke-width="3"/>
+        <circle cx="-110" cy="18" r="3" fill="#facc15"/>
+        <circle cx="-70" cy="14" r="2.5" fill="#facc15"/>
+
+        <!-- Lower Jaw Bone Structure -->
+        <path d="M -240 18 C -220 70 -120 95 15 25 C -5 65 -110 80 -210 32 Z" 
+              fill="url(#beastSkin)" stroke="#300505" stroke-width="7" stroke-linejoin="round"/>
+
+        <!-- Lower Chin Armored Plate -->
+        <path d="M -235 24 C -210 60 -150 75 -90 60 L -120 78 C -180 80 -225 55 -235 24 Z" 
+              fill="#7f1d1d" stroke="#300505" stroke-width="3.5"/>
+        
+        <!-- Lower Jaw Razor Fangs (White Daggers pointing UP) -->
+        <g id="lower_fangs">
+          <!-- Big Front Canine Fang (Interlocks behind upper saber) -->
+          <polygon points="-225,20 -205,-22 -190,22" fill="#ffffff" stroke="#300505" stroke-width="3.5"/>
+          <polygon points="-188,22 -172,-12 -158,24" fill="#ffffff" stroke="#300505" stroke-width="3"/>
+          <polygon points="-155,24 -142,0 -128,24" fill="#ffffff" stroke="#300505" stroke-width="3"/>
+          <polygon points="-125,24 -114,4 -102,22" fill="#ffffff" stroke="#300505" stroke-width="2.5"/>
+          <polygon points="-98,22 -88,8 -78,20" fill="#ffffff" stroke="#300505" stroke-width="2.5"/>
+        </g>
+      </g>
+
+      <!-- 4. UPPER CRANIUM, SNOUT, EYE & FANGS -->
+      <g id="upper_cranium_and_snout">
+        <!-- Main Skull Contour -->
+        <path d="M -70 -95 C -140 -115 -210 -85 -270 -15 C -255 12 -180 18 -100 15 C -40 15 0 -10 -20 -80 Z" 
+              fill="url(#beastSkin)" stroke="#300505" stroke-width="8" stroke-linejoin="round"/>
+
+        <!-- Chiseled Snout Ridge & Nasal Bone Highlights -->
+        <path d="M -130 -80 C -190 -70 -235 -40 -260 -10" fill="none" stroke="#f87171" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+        <path d="M -90 -65 C -150 -55 -195 -30 -220 -5" fill="none" stroke="#fca5a5" stroke-width="3.5" stroke-linecap="round" opacity="0.4"/>
+
+        <!-- Snorting Nostril & Smoke/Fire Embers -->
+        <ellipse cx="-245" cy="-22" rx="14" ry="8" fill="#090507" stroke="#300505" stroke-width="2.5" transform="rotate(-18 -245 -22)"/>
+        <!-- Fiery Smolder Jetting from Nostril -->
+        <path d="M -260 -28 Q -310 -55 -285 -90 Q -260 -55 -245 -40" fill="none" stroke="#fdba74" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="12 8" opacity="0.85"/>
+        <circle cx="-295" cy="-55" r="5" fill="#f59e0b" filter="url(#monsterGlow)"/>
+        <circle cx="-320" cy="-75" r="7" fill="#ef4444" filter="url(#monsterGlow)"/>
+        <circle cx="-335" cy="-60" r="4" fill="#fbbf24" filter="url(#monsterGlow)"/>
+
+        <!-- PREDATORY EYE & HEAVY ARMORED BROW -->
+        <g id="predator_eye" transform="translate(-135, -45)">
+          <!-- Deep Dark Eye Socket Cavity -->
+          <polygon points="-45,-12 12,-30 48,-4 12,20 -40,16" fill="#090507" stroke="#300505" stroke-width="4"/>
+          <!-- Glowing Sulfur-Molten Iris -->
+          <ellipse cx="2" cy="-3" rx="34" ry="16" fill="url(#eyeGlow)" stroke="#300505" stroke-width="2.5" transform="rotate(-6)"/>
+          <!-- Razor Slit Pupil (Cat/Dragon Style) -->
+          <polygon points="-4,-14 2,-2 -4,12 -9,-2" fill="#0f172a"/>
+          <!-- Piercing White Highlights -->
+          <circle cx="-8" cy="-6" r="4" fill="#ffffff"/>
+          <circle cx="9" cy="-1" r="2.5" fill="#ffffff" opacity="0.8"/>
+          <!-- Heavy Armored Obsidian Brow Ridge -->
+          <path d="M -58 -18 C -24 -44 24 -42 60 -4 C 24 -22 -18 -26 -46 -12 Z" 
+                fill="#0f172a" stroke="#300505" stroke-width="5" stroke-linejoin="round"/>
+          <polygon points="-58,-18 -40,-32 -25,-25" fill="#1e1b4b"/>
+        </g>
+
+        <!-- UPPER JAW RAZOR FANGS (White Daggers pointing DOWN) -->
+        <g id="upper_fangs">
+          <!-- Back Molars -->
+          <polygon points="-85,14 -75,34 -65,14" fill="#ffffff" stroke="#300505" stroke-width="3"/>
+          <polygon points="-115,15 -104,38 -92,15" fill="#ffffff" stroke="#300505" stroke-width="3"/>
+          <polygon points="-145,15 -132,44 -120,15" fill="#ffffff" stroke="#300505" stroke-width="3.5"/>
+          <!-- Secondary Fang -->
+          <polygon points="-178,14 -164,48 -150,14" fill="#ffffff" stroke="#300505" stroke-width="3.5"/>
+          <!-- MASSIVE APEX SABER FANG (Menacing Primary Weapon) -->
+          <polygon points="-218,8 -198,62 -182,12" fill="#ffffff" stroke="#300505" stroke-width="4.5"/>
+          <!-- Front Snout Tip Fang -->
+          <polygon points="-250,0 -234,42 -222,6" fill="#ffffff" stroke="#300505" stroke-width="3.5"/>
+        </g>
+      </g>
+
+      <!-- 5. REACHING PREDATOR TALON / CLAW (Clutching Forward into Frame) -->
+      <g id="predator_talon_arm" transform="translate(-20, 80) rotate(-10)">
+        <!-- Muscular Arm Forelimb -->
+        <path d="M 40 -15 C -20 20 -80 50 -150 40" fill="none" stroke="#300505" stroke-width="36" stroke-linecap="round"/>
+        <path d="M 40 -15 C -20 20 -80 50 -150 40" fill="none" stroke="url(#beastSkin)" stroke-width="26" stroke-linecap="round"/>
+        <!-- Armored Elbow Scute -->
+        <polygon points="35,-25 80,-48 45,6" fill="#0f172a" stroke="#300505" stroke-width="4"/>
+        
+        <!-- Claw Knuckle & 3 Deadly Talons -->
+        <g transform="translate(-150, 40)">
+          <!-- Wrist Joint -->
+          <circle cx="0" cy="0" r="22" fill="#7f1d1d" stroke="#300505" stroke-width="4"/>
+          <!-- Top Talon -->
+          <path d="M -8 -10 Q -45 -15 -68 -36 Q -38 6 -8 6 Z" fill="#ffffff" stroke="#300505" stroke-width="3.5"/>
+          <!-- Center Main Talon -->
+          <path d="M -12 2 Q -60 10 -80 -8 Q -44 26 -10 18 Z" fill="#ffffff" stroke="#300505" stroke-width="4"/>
+          <!-- Bottom Talon -->
+          <path d="M -8 14 Q -50 36 -62 24 Q -35 44 -6 24 Z" fill="#ffffff" stroke="#300505" stroke-width="3.5"/>
+        </g>
+      </g>
+
+      <!-- 6. HIGH-IMPACT CHOMP BURST FX (When Clamped Shut) -->
+      {'''
+      <g id="chomp_fx" transform="translate(-200, 25)" filter="url(#monsterGlow)">
+        <!-- Outer Shockwave Blast Star -->
+        <polygon points="0,-95 32,-32 105,-55 52,0 110,48 35,32 45,110 -12,45 -80,95 -45,18 -110,-12 -32,-32" 
+                 fill="#fbbf24" stroke="#dc2626" stroke-width="6"/>
+        <!-- Inner Core Star -->
+        <polygon points="0,-70 24,-24 78,-40 38,0 82,35 26,24 32,80 -9,32 -58,70 -32,14 -80,-9 -24,-24" 
+                 fill="#ffffff" stroke="#f59e0b" stroke-width="3.5"/>
+        <text x="0" y="14" font-family="'Impact', 'Arial Black', sans-serif" font-size="38" font-weight="900" fill="#dc2626" text-anchor="middle" letter-spacing="3">CHOMP!</text>
+      </g>
+      ''' if show_chomp else ''}
+
+      <!-- 7. FLYING SHREDDED CURRENCY PARTICLES (When Biting) -->
+      {'''
+      <g id="currency_debris" transform="translate(-220, 30)">
+        <!-- Flying Torn Green Dollars -->
+        <g transform="translate(-60, -40) rotate(24)"><rect x="-20" y="-12" width="40" height="24" rx="4" fill="#10b981" stroke="#047857" stroke-width="2"/><text x="0" y="5" font-size="12" font-weight="900" fill="#ffffff" text-anchor="middle">$</text></g>
+        <g transform="translate(-80, 50) rotate(-35)"><rect x="-18" y="-10" width="36" height="20" rx="4" fill="#34d399" stroke="#047857" stroke-width="2"/><text x="0" y="4" font-size="10" font-weight="900" fill="#ffffff" text-anchor="middle">$</text></g>
+        <g transform="translate(-30, 85) rotate(18)"><rect x="-15" y="-9" width="30" height="18" rx="3" fill="#10b981" stroke="#065f46" stroke-width="2"/></g>
+        <circle cx="-45" cy="-70" r="6" fill="#34d399"/>
+        <circle cx="-100" cy="10" r="8" fill="#10b981"/>
+        <circle cx="-70" cy="95" r="5" fill="#6ee7b7"/>
+      </g>
+      ''' if show_debris else ''}
+
+      <!-- 8. HERALDIC GOLD & OBSIDIAN BADGE -->
+      <g transform="translate(60, -195)" filter="url(#monsterGlow)">
+        <polygon points="-130,-32 130,-32 150,14 0,48 -150,14" fill="#0f172a" stroke="#f59e0b" stroke-width="5"/>
+        <polygon points="-122,-26 122,-26 140,10 0,42 -140,10" fill="#7f1d1d" stroke="#ef4444" stroke-width="2.5"/>
+        <text x="0" y="3" font-family="'Montserrat', 'Impact', sans-serif" font-size="30" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="4">INFLATION</text>
+        <text x="0" y="27" font-family="'Inter', sans-serif" font-size="11" font-weight="900" fill="#fde047" text-anchor="middle" letter-spacing="2.5">THE WEALTH DESTROYER</text>
+      </g>
+    </g>
+    """
+
+test_html = f"""<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {{ background: #070a12; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; font-family: sans-serif; }}
+    .row {{ display: flex; gap: 30px; margin-top: 20px; }}
+    .card {{ background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 16px; text-align: center; }}
+    svg {{ background: #180c10; border-radius: 8px; }}
+  </style>
+</head>
+<body>
+  <h1>Apex Kaiju Beast v2: Jaw Joint Geometry & Teeth Interlock</h1>
+  <div class="row">
+    <div class="card">
+      <h3>1. Gaping Roar (Jaw Open 100%)</h3>
+      <svg width="620" height="520" viewBox="-360 -260 720 540" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="beastSkin" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ef4444"/>
+            <stop offset="40%" stop-color="#dc2626"/>
+            <stop offset="80%" stop-color="#991b1b"/>
+            <stop offset="100%" stop-color="#450a0a"/>
+          </linearGradient>
+          <linearGradient id="beastBelly" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#f87171"/>
+            <stop offset="100%" stop-color="#b91c1c"/>
+          </linearGradient>
+          <linearGradient id="eyeGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fef08a"/>
+            <stop offset="60%" stop-color="#f59e0b"/>
+            <stop offset="100%" stop-color="#d97706"/>
+          </linearGradient>
+          <filter id="monsterGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="8" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+        </defs>
+        {generate_inflation_beast_svg(jaw_state=1.0, show_chomp=False, show_debris=False)}
+      </svg>
+    </div>
+
+    <div class="card">
+      <h3>2. Snapped Clamped Chomp (Jaw Closed 0%)</h3>
+      <svg width="620" height="520" viewBox="-360 -260 720 540" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="beastSkin" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ef4444"/>
+            <stop offset="40%" stop-color="#dc2626"/>
+            <stop offset="80%" stop-color="#991b1b"/>
+            <stop offset="100%" stop-color="#450a0a"/>
+          </linearGradient>
+          <linearGradient id="beastBelly" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#f87171"/>
+            <stop offset="100%" stop-color="#b91c1c"/>
+          </linearGradient>
+          <linearGradient id="eyeGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fef08a"/>
+            <stop offset="60%" stop-color="#f59e0b"/>
+            <stop offset="100%" stop-color="#d97706"/>
+          </linearGradient>
+          <filter id="monsterGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="8" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+        </defs>
+        {generate_inflation_beast_svg(jaw_state=0.0, show_chomp=True, show_debris=True)}
+      </svg>
+    </div>
+  </div>
+</body>
+</html>"""
+
+exp_dir = Path(__file__).resolve().parent
+html_path = exp_dir / "test_kaiju.html"
+with open(html_path, "w", encoding="utf-8") as f:
+    f.write(test_html)
+
+async def main():
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True)
+        page = await browser.new_page(viewport={"width": 1400, "height": 750})
+        await page.goto(html_path.as_uri())
+        await page.screenshot(path=str(exp_dir / "test_kaiju_result.png"))
+        await browser.close()
+    print("Screenshot saved to test_kaiju_result.png")
+
+asyncio.run(main())

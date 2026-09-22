@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { background: #070a12; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; font-family: sans-serif; }
+    .row { display: flex; gap: 30px; margin-top: 20px; }
+    .card { background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 16px; text-align: center; }
+    svg { background: #180c10; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Clean Pac-Man Monster with Mouth Moving & Teeth</h1>
+  <div class="row">
+    <div class="card">
+      <h3>1. Wide Open Mouth (35&deg;)</h3>
+      <svg width="400" height="400" viewBox="-220 -220 440 440" xmlns="http://www.w3.org/2000/svg">
+        
+    <g id="pacman_inflation_monster">
+      <!-- Outer Monster Glow -->
+      <filter id="pacGlow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#7f1d1d" flood-opacity="0.5"/>
+      </filter>
+
+      <!-- Main Red Pac-Man Body with Pie-Cut Mouth -->
+      <path d="M 0 0 L -131.1 -91.8 A 160 160 0 1 1 -131.1 91.8 Z" 
+            fill="#dc2626" 
+            stroke="#450a0a" 
+            stroke-width="8" 
+            stroke-linejoin="round"
+            filter="url(#pacGlow)"/>
+
+      <!-- Sharp Upper & Lower Triangular Teeth -->
+      <g id="pacman_teeth">
+        <polygon points="-3.3,-2.3 -30.1,8.2 -29.5,-20.6" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+<polygon points="-36.0,-25.2 -62.9,-14.8 -62.3,-43.6" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+<polygon points="-68.8,-48.2 -95.7,-37.7 -95.0,-66.5" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+<polygon points="-101.6,-71.1 -128.4,-60.6 -127.8,-89.5" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+        <polygon points="-3.3,2.3 -2.6,-8.2 -29.5,20.6" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+<polygon points="-36.0,25.2 -35.4,14.8 -62.3,43.6" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+<polygon points="-68.8,48.2 -68.1,37.7 -95.0,66.5" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+<polygon points="-101.6,71.1 -100.9,60.6 -127.8,89.5" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+      </g>
+
+      <!-- Angry Infographic Brow & Eye -->
+      <g id="angry_eye" transform="translate(10, -85)">
+        <!-- Eye Sclera -->
+        <circle cx="0" cy="0" r="28" fill="#fef08a" stroke="#450a0a" stroke-width="4.5"/>
+        <!-- Pupil Looking Forward/Down toward money -->
+        <circle cx="-10" cy="2" r="13" fill="#0f172a"/>
+        <circle cx="-6" cy="-2" r="4.5" fill="#ffffff"/>
+        <!-- Fierce Slanted Angry Eyebrow -->
+        <polygon points="-38,-14 26,-36 32,-24 -34,-2" fill="#450a0a"/>
+      </g>
+
+      <!-- Bold "INFLATION" Typography Centered on the Body -->
+      <g transform="translate(45, 10)">
+        <!-- Subtle dark backing banner for maximum readability -->
+        <rect x="-85" y="-22" width="170" height="44" rx="10" fill="#450a0a" stroke="#ef4444" stroke-width="2.5"/>
+        <text x="0" y="8" 
+              font-family="'Impact', 'Arial Black', sans-serif" 
+              font-size="28" 
+              font-weight="900" 
+              fill="#ffffff" 
+              text-anchor="middle" 
+              letter-spacing="2">
+          INFLATION
+        </text>
+      </g>
+    </g>
+    
+      </svg>
+    </div>
+
+    <div class="card">
+      <h3>2. Mid-Chomp (18&deg;)</h3>
+      <svg width="400" height="400" viewBox="-220 -220 440 440" xmlns="http://www.w3.org/2000/svg">
+        
+    <g id="pacman_inflation_monster">
+      <!-- Outer Monster Glow -->
+      <filter id="pacGlow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#7f1d1d" flood-opacity="0.5"/>
+      </filter>
+
+      <!-- Main Red Pac-Man Body with Pie-Cut Mouth -->
+      <path d="M 0 0 L -152.2 -49.4 A 160 160 0 1 1 -152.2 49.4 Z" 
+            fill="#dc2626" 
+            stroke="#450a0a" 
+            stroke-width="8" 
+            stroke-linejoin="round"
+            filter="url(#pacGlow)"/>
+
+      <!-- Sharp Upper & Lower Triangular Teeth -->
+      <g id="pacman_teeth">
+        <polygon points="-3.8,-1.2 -26.4,16.6 -34.2,-11.1" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+<polygon points="-41.8,-13.6 -64.5,4.3 -72.3,-23.5" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+<polygon points="-79.9,-26.0 -102.5,-8.1 -110.3,-35.8" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+<polygon points="-117.9,-38.3 -140.6,-20.4 -148.4,-48.2" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+        <polygon points="-3.8,1.2 -11.6,-16.6 -34.2,11.1" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+<polygon points="-41.8,13.6 -49.6,-4.3 -72.3,23.5" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+<polygon points="-79.9,26.0 -87.7,8.1 -110.3,35.8" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+<polygon points="-117.9,38.3 -125.7,20.4 -148.4,48.2" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+      </g>
+
+      <!-- Angry Infographic Brow & Eye -->
+      <g id="angry_eye" transform="translate(10, -85)">
+        <!-- Eye Sclera -->
+        <circle cx="0" cy="0" r="28" fill="#fef08a" stroke="#450a0a" stroke-width="4.5"/>
+        <!-- Pupil Looking Forward/Down toward money -->
+        <circle cx="-10" cy="2" r="13" fill="#0f172a"/>
+        <circle cx="-6" cy="-2" r="4.5" fill="#ffffff"/>
+        <!-- Fierce Slanted Angry Eyebrow -->
+        <polygon points="-38,-14 26,-36 32,-24 -34,-2" fill="#450a0a"/>
+      </g>
+
+      <!-- Bold "INFLATION" Typography Centered on the Body -->
+      <g transform="translate(45, 10)">
+        <!-- Subtle dark backing banner for maximum readability -->
+        <rect x="-85" y="-22" width="170" height="44" rx="10" fill="#450a0a" stroke="#ef4444" stroke-width="2.5"/>
+        <text x="0" y="8" 
+              font-family="'Impact', 'Arial Black', sans-serif" 
+              font-size="28" 
+              font-weight="900" 
+              fill="#ffffff" 
+              text-anchor="middle" 
+              letter-spacing="2">
+          INFLATION
+        </text>
+      </g>
+    </g>
+    
+      </svg>
+    </div>
+
+    <div class="card">
+      <h3>3. Clamped Shut on Cash (4&deg;)</h3>
+      <svg width="400" height="400" viewBox="-220 -220 440 440" xmlns="http://www.w3.org/2000/svg">
+        
+    <g id="pacman_inflation_monster">
+      <!-- Outer Monster Glow -->
+      <filter id="pacGlow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#7f1d1d" flood-opacity="0.5"/>
+      </filter>
+
+      <!-- Main Red Pac-Man Body with Pie-Cut Mouth -->
+      <path d="M 0 0 L -159.6 -11.2 A 160 160 0 1 1 -159.6 11.2 Z" 
+            fill="#dc2626" 
+            stroke="#450a0a" 
+            stroke-width="8" 
+            stroke-linejoin="round"
+            filter="url(#pacGlow)"/>
+
+      <!-- Sharp Upper & Lower Triangular Teeth -->
+      <g id="pacman_teeth">
+        <polygon points="-4.0,-0.3 -21.6,22.5 -35.9,-2.5" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+<polygon points="-43.9,-3.1 -61.5,19.8 -75.8,-5.3" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+<polygon points="-83.8,-5.9 -101.4,17.0 -115.7,-8.1" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+<polygon points="-123.7,-8.6 -141.3,14.2 -155.6,-10.9" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+        <polygon points="-4.0,0.3 -18.3,-22.5 -35.9,2.5" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+<polygon points="-43.9,3.1 -58.2,-19.8 -75.8,5.3" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+<polygon points="-83.8,5.9 -98.1,-17.0 -115.7,8.1" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+<polygon points="-123.7,8.6 -138.0,-14.2 -155.6,10.9" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+      </g>
+
+      <!-- Angry Infographic Brow & Eye -->
+      <g id="angry_eye" transform="translate(10, -85)">
+        <!-- Eye Sclera -->
+        <circle cx="0" cy="0" r="28" fill="#fef08a" stroke="#450a0a" stroke-width="4.5"/>
+        <!-- Pupil Looking Forward/Down toward money -->
+        <circle cx="-10" cy="2" r="13" fill="#0f172a"/>
+        <circle cx="-6" cy="-2" r="4.5" fill="#ffffff"/>
+        <!-- Fierce Slanted Angry Eyebrow -->
+        <polygon points="-38,-14 26,-36 32,-24 -34,-2" fill="#450a0a"/>
+      </g>
+
+      <!-- Bold "INFLATION" Typography Centered on the Body -->
+      <g transform="translate(45, 10)">
+        <!-- Subtle dark backing banner for maximum readability -->
+        <rect x="-85" y="-22" width="170" height="44" rx="10" fill="#450a0a" stroke="#ef4444" stroke-width="2.5"/>
+        <text x="0" y="8" 
+              font-family="'Impact', 'Arial Black', sans-serif" 
+              font-size="28" 
+              font-weight="900" 
+              fill="#ffffff" 
+              text-anchor="middle" 
+              letter-spacing="2">
+          INFLATION
+        </text>
+      </g>
+    </g>
+    
+      </svg>
+    </div>
+  </div>
+</body>
+</html>

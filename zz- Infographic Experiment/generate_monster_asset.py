@@ -1,0 +1,163 @@
+import os
+import asyncio
+from pathlib import Path
+from playwright.async_api import async_playwright
+
+def get_monster_svg(jaw_angle=24, is_chomping=True, scale=1.0):
+    return f"""
+    <g id="inflation_monster_master" transform="scale({scale})">
+      <!-- 1. Aura / Dark Glow Field -->
+      <circle cx="20" cy="10" r="240" fill="#450a0a" opacity="0.45" filter="url(#monsterGlow)"/>
+
+      <!-- 2. Spiny Dorsal Plates (Running along back and neck) -->
+      <g id="dorsal_spikes">
+        <!-- Spikes top to back -->
+        <polygon points="-10,-140 40,-240 60,-130" fill="#0f172a" stroke="#450a0a" stroke-width="4"/>
+        <polygon points="50,-120 120,-210 110,-100" fill="#1e1b4b" stroke="#0f172a" stroke-width="4"/>
+        <polygon points="100,-80 190,-160 160,-60" fill="#1e1b4b" stroke="#0f172a" stroke-width="4"/>
+        <polygon points="150,-30 240,-90 200,0" fill="#0f172a" stroke="#450a0a" stroke-width="4"/>
+        <polygon points="180,20 260,-20 220,60" fill="#0f172a" stroke="#450a0a" stroke-width="4"/>
+      </g>
+
+      <!-- 3. Muscular Draconic Beast Body -->
+      <g id="beast_body">
+        <path d="M -140 -60 C -150 -160 40 -190 130 -140 C 220 -90 240 40 190 140 C 140 220 -20 230 -110 160 C -180 100 -200 10 -140 -60 Z" 
+              fill="url(#beastSkin)" stroke="#450a0a" stroke-width="8" stroke-linejoin="round"/>
+        
+        <!-- Scaly Armored Ridge Highlights -->
+        <path d="M -110 -110 C -20 -150 80 -120 140 -80" fill="none" stroke="#f87171" stroke-width="6" stroke-linecap="round" opacity="0.4"/>
+        <path d="M -130 -40 C -80 -70 20 -70 80 -40" fill="none" stroke="#f87171" stroke-width="5" stroke-linecap="round" opacity="0.3"/>
+
+        <!-- Ribbed Segmented Underbelly -->
+        <path d="M -100 60 C -60 150 40 170 120 130 C 90 90 30 50 -20 30 C -60 20 -90 35 -100 60 Z" 
+              fill="url(#beastBelly)" stroke="#450a0a" stroke-width="4.5"/>
+        <path d="M -70 70 Q -20 50 50 90" stroke="#7f1d1d" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+        <path d="M -50 110 Q 10 90 80 125" stroke="#7f1d1d" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <!-- 4. Monster Head & Heavy Spiked Brow -->
+      <g id="monster_head">
+        <path d="M -120 -70 C -170 -130 -100 -200 -30 -160 C -70 -140 -90 -110 -70 -75 Z" 
+              fill="#2a0404" stroke="#0f172a" stroke-width="4.5" stroke-linejoin="round"/>
+
+        <!-- Snout Ridge & Nostril with Fiery Smoldering Breath -->
+        <ellipse cx="-150" cy="-35" rx="12" ry="8" fill="#180c10" transform="rotate(-18 -150 -35)"/>
+        <!-- Smoke & Embers -->
+        <circle cx="-175" cy="-45" r="5" fill="#f59e0b" opacity="0.7"/>
+        <circle cx="-190" cy="-60" r="7" fill="#ef4444" opacity="0.5"/>
+        <circle cx="-210" cy="-55" r="4" fill="#fbbf24" opacity="0.8"/>
+
+        <!-- Menacing Glowing Predatory Eye -->
+        <g id="predator_eye" transform="translate(-75, -80)">
+          <path d="M -50 -18 Q 0 -38 50 -10 Q 0 18 -50 -18 Z" fill="#180c10"/>
+          <ellipse cx="0" cy="-6" rx="40" ry="22" fill="url(#eyeGlow)" stroke="#450a0a" stroke-width="3.5" transform="rotate(-10)"/>
+          <ellipse cx="-5" cy="-6" rx="8" ry="20" fill="#0f172a" transform="rotate(-6)"/>
+          <circle cx="-9" cy="-12" r="4" fill="#ffffff"/>
+          <!-- Heavy Jagged Obsidian Brow -->
+          <path d="M -60 -24 C -30 -48 25 -42 58 -10 C 28 -24 -15 -28 -48 -15 Z" fill="#0f172a" stroke="#450a0a" stroke-width="4.5"/>
+        </g>
+      </g>
+
+      <!-- 5. THE GAPING PREDATOR MAW (Chomping Upper & Lower Jaws) -->
+      <g id="chomping_maw">
+        <!-- Deep Dark Cavernous Throat -->
+        <path d="M -160 -15 Q -70 12 30 -8 Q -70 75 -160 -15 Z" fill="#180c10" stroke="#450a0a" stroke-width="6"/>
+        
+        <!-- Sinuous Forked Predatory Tongue -->
+        <path d="M -75 22 Q -40 10 -5 32 Q -40 50 -75 32" fill="#e11d48" stroke="#881337" stroke-width="3"/>
+
+        <!-- UPPER JAW SERRATED RAZOR FANGS (Solid White with Crimson Accent) -->
+        <polygon points="-155,-14 -142,22 -130,-10" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+        <polygon points="-130,-10 -115,32 -100,-5" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+        <polygon points="-100,-5 -85,28 -70,-2" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+        <polygon points="-70,-2 -56,22 -42,1" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+        <polygon points="-42,1 -30,16 -18,2" fill="#ffffff" stroke="#450a0a" stroke-width="2.5"/>
+
+        <!-- HINGED LOWER JAW WITH MASSIVE LOWER FANGS -->
+        <g transform="rotate({jaw_angle} -50 35)">
+          <!-- Jaw Rim -->
+          <path d="M -165 15 C -145 65 -50 95 30 25" fill="#991b1b" stroke="#450a0a" stroke-width="7" stroke-linecap="round"/>
+          <path d="M -165 15 C -145 65 -50 95 30 25" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+          
+          <!-- Lower Razor Fangs -->
+          <polygon points="-148,24 -135,-14 -122,30" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+          <polygon points="-120,32 -106,-8 -92,38" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+          <polygon points="-90,40 -76,4 -62,42" fill="#ffffff" stroke="#450a0a" stroke-width="3"/>
+          <polygon points="-60,42 -48,12 -36,40" fill="#ffffff" stroke="#450a0a" stroke-width="2.5"/>
+        </g>
+      </g>
+
+      <!-- 6. PREDATORY TALON / CLAW (Snatching Forward) -->
+      <g transform="translate(-85, 75) rotate(-12)">
+        <path d="M 0 0 C -45 22 -80 55 -120 42" fill="none" stroke="#450a0a" stroke-width="28" stroke-linecap="round"/>
+        <path d="M 0 0 C -45 22 -80 55 -120 42" fill="none" stroke="#dc2626" stroke-width="20" stroke-linecap="round"/>
+        <path d="M 0 0 C -45 22 -80 55 -120 42" fill="none" stroke="#f87171" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+        
+        <!-- Wicked Curved Razor Talons -->
+        <path d="M -120 34 Q -148 32 -160 14 Q -142 42 -120 44 Z" fill="#f8fafc" stroke="#450a0a" stroke-width="3"/>
+        <path d="M -125 46 Q -158 52 -168 36 Q -148 64 -122 56 Z" fill="#f8fafc" stroke="#450a0a" stroke-width="3"/>
+        <path d="M -118 58 Q -145 74 -152 64 Q -135 78 -112 68 Z" fill="#f8fafc" stroke="#450a0a" stroke-width="3"/>
+      </g>
+
+      <!-- 7. HERO DEMONIC NAMEPLATE (Integrated Spiked Shield) -->
+      <g transform="translate(60, -170)" filter="url(#monsterGlow)">
+        <polygon points="-105,-28 105,-28 125,14 0,42 -125,14" fill="#180c10" stroke="#f59e0b" stroke-width="4"/>
+        <polygon points="-98,-24 98,-24 116,11 0,36 -116,11" fill="#7f1d1d" stroke="#ef4444" stroke-width="2"/>
+        <text x="0" y="2" font-family="'Montserrat', 'Impact', sans-serif" font-size="26" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="3">INFLATION</text>
+        <text x="0" y="22" font-family="'Inter', sans-serif" font-size="9" font-weight="900" fill="#fde047" text-anchor="middle" letter-spacing="2">THE WEALTH DESTROYER</text>
+      </g>
+    </g>
+    """
+
+standalone_html = f"""<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {{ background: #070a12; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }}
+  </style>
+</head>
+<body>
+  <h1>New Inflation Beast (The Infographics Show Style)</h1>
+  <svg width="1000" height="700" viewBox="-400 -300 800 600" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="beastSkin" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ef4444"/>
+        <stop offset="40%" stop-color="#dc2626"/>
+        <stop offset="80%" stop-color="#991b1b"/>
+        <stop offset="100%" stop-color="#450a0a"/>
+      </linearGradient>
+      <linearGradient id="beastBelly" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#f87171"/>
+        <stop offset="100%" stop-color="#b91c1c"/>
+      </linearGradient>
+      <linearGradient id="eyeGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#fef08a"/>
+        <stop offset="60%" stop-color="#f59e0b"/>
+        <stop offset="100%" stop-color="#d97706"/>
+      </linearGradient>
+      <filter id="monsterGlow" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="8" result="blur"/>
+        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+      </filter>
+    </defs>
+    {get_monster_svg(jaw_angle=26)}
+  </svg>
+</body>
+</html>"""
+
+exp_dir = Path(__file__).resolve().parent
+html_file = exp_dir / "preview_monster.html"
+with open(html_file, "w", encoding="utf-8") as f:
+    f.write(standalone_html)
+print(f"Written preview to {html_file}")
+
+async def take_screenshot():
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True)
+        page = await browser.new_page(viewport={"width": 1280, "height": 800})
+        await page.goto(html_file.as_uri())
+        await page.screenshot(path=str(exp_dir / "preview_monster.png"))
+        await browser.close()
+    print("Screenshot saved to preview_monster.png")
+
+asyncio.run(take_screenshot())

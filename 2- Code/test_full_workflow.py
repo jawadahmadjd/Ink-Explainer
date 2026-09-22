@@ -32,7 +32,7 @@ def run_simulation():
     print(f"   Task dispatched: {task['task_id']} | Status: {task['status']}")
 
     # 2. Antigravity synthesizes 7-act script
-    print("\n2. Antigravity Synthesizing 7-Act Script & Micro-Beats (16-32 chars)...")
+    print("\n2. Antigravity Synthesizing 7-Act Script & Micro-Beats (20-50 chars)...")
     sample_script = (
         "Right now, you remember nothing. "
         "Ten minutes ago, you were soaring over neon mountain ranges, "
