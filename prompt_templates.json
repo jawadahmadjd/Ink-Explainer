@@ -10,7 +10,7 @@
     {
       "id": "custom",
       "name": "Custom User Base Template",
-      "base_prompt": "A minimalist 2D colored digital illustration webcomic style. Simple stick-figure aesthetic, doodle-style, vector minimalism, no gradients, no 3D shading, 16:9 aspect ratio.",
+      "base_prompt": "A minimalist 2D colored digital illustration webcomic style. do not add much text Simple stick-figure aesthetic, doodle-style, vector minimalism, no gradients, no 3D shading, 16:9 aspect ratio. Clean bold black ink comic line art. All human characters MUST be minimalist white-filled black-outlined stick figures with simple circular heads, pure solid white head fill, simple black stick limbs, zero realistic human anatomy, zero flesh skin tones. Hand-drawn doodle comic style, MinutePhysics aesthetic. Grounded environment filling 16:9 frame without borders or margins.",
       "character_style": ""
     }
   ]

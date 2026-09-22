@@ -27,6 +27,7 @@ sys.path.insert(0, CODE_DIR)
 import config
 from modules.stage1_postmortem import run_stage1_postmortem
 from modules.stage2_script_prompts import run_stage2_script_prompts
+from modules.gemini_stage2 import validate_gemini_key, run_gemini_stage2
 from modules.stage3_voiceover import (
     run_stage3_voiceover,
     validate_elevenlabs_api_key,
@@ -305,11 +306,19 @@ def run_pipeline_worker(url: str, custom_title: str, model: str, pause_mode: boo
         has_transcript = os.path.exists(os.path.join(dirs["postmortem_dir"], "clean_transcript.txt"))
 
         if not has_existing_script:
-            STATE["state"] = "AWAITING_ANTIGRAVITY_SCRIPT"
-            STATE["step2"] = "AWAITING_ANTIGRAVITY"
-            task_mode = "Repurposing Ingested Script" if has_transcript else "Creating Script From Topic"
-            STATE["task_description"] = f"Awaiting Antigravity AI Engine ({task_mode}) for '{project_folder}' (Niche: {niche})..."
-            add_log(f"Stage 2: Dispatched task to Antigravity AI Engine ({task_mode}) for '{project_folder}'. Waiting for Antigravity...")
+            gem_key = config.get_gemini_api_key()
+            if gem_key:
+                STATE["state"] = "RUNNING_SCRIPT"
+                STATE["step2"] = "RUNNING"
+                task_mode = "Autonomous Repurposing via Gemini" if has_transcript else "Autonomous Creation via Gemini"
+                STATE["task_description"] = f"Stage 2: {task_mode} for '{project_folder}'..."
+                add_log(f"Stage 2: {task_mode} using Google Gemini API...")
+            else:
+                STATE["state"] = "AWAITING_ANTIGRAVITY_SCRIPT"
+                STATE["step2"] = "AWAITING_ANTIGRAVITY"
+                task_mode = "Repurposing Ingested Script" if has_transcript else "Creating Script From Topic"
+                STATE["task_description"] = f"Awaiting Antigravity AI Engine ({task_mode}) for '{project_folder}' (Niche: {niche})..."
+                add_log(f"Stage 2: Dispatched task to Antigravity AI Engine ({task_mode}) for '{project_folder}'. Waiting for Antigravity...")
         else:
             STATE["state"] = "RUNNING_SCRIPT"
             STATE["step2"] = "RUNNING"
@@ -398,11 +407,19 @@ def run_single_stage_worker(folder_name: str, stage_num: int, url: str, model: s
             has_transcript = os.path.exists(os.path.join(dirs["postmortem_dir"], "clean_transcript.txt"))
 
             if not has_existing_script:
-                STATE["state"] = "AWAITING_ANTIGRAVITY_SCRIPT"
-                STATE["step2"] = "AWAITING_ANTIGRAVITY"
-                task_mode = "Repurposing Ingested Script" if has_transcript else "Creating Script From Topic"
-                STATE["task_description"] = f"Awaiting Antigravity AI Engine ({task_mode}) for '{title}' (Niche: {niche or 'Auto'})..."
-                add_log(f"Standalone Stage 2: Dispatched task to Antigravity AI Engine ({task_mode}) for '{title}'...")
+                gem_key = config.get_gemini_api_key()
+                if gem_key:
+                    STATE["state"] = "RUNNING_SCRIPT"
+                    STATE["step2"] = "RUNNING"
+                    task_mode = "Autonomous Repurposing via Gemini" if has_transcript else "Autonomous Creation via Gemini"
+                    STATE["task_description"] = f"Stage 2: {task_mode} for '{title}'..."
+                    add_log(f"Standalone Stage 2: {task_mode} using Google Gemini API...")
+                else:
+                    STATE["state"] = "AWAITING_ANTIGRAVITY_SCRIPT"
+                    STATE["step2"] = "AWAITING_ANTIGRAVITY"
+                    task_mode = "Repurposing Ingested Script" if has_transcript else "Creating Script From Topic"
+                    STATE["task_description"] = f"Awaiting Antigravity AI Engine ({task_mode}) for '{title}' (Niche: {niche or 'Auto'})..."
+                    add_log(f"Standalone Stage 2: Dispatched task to Antigravity AI Engine ({task_mode}) for '{title}'...")
             else:
                 STATE["state"] = "RUNNING_SCRIPT"
                 STATE["step2"] = "RUNNING"
@@ -552,6 +569,7 @@ def get_status():
     st["active_stage"] = active_stage
     st["paused_stage"] = paused_stage
     st["current_action"] = current_action
+    st["gemini_configured"] = bool(config.get_gemini_api_key())
 
     return jsonify(st)
 
@@ -1308,6 +1326,7 @@ def api_save_settings():
 
     if gemini and not gemini.startswith("****") and not "..." in gemini:
         env_lines = update_key_in_lines(env_lines, "GEMINI_API_KEY", gemini)
+        config.set_gemini_api_key(gemini)
     if google and not google.startswith("****") and not "..." in google:
         env_lines = update_key_in_lines(env_lines, "GOOGLE_API_KEY", google)
     if voice_id:
@@ -1915,6 +1934,78 @@ def api_stage2_run_fallback():
     t = threading.Thread(target=fallback_worker, daemon=True)
     t.start()
     return jsonify({"success": True, "message": f"Offline fallback started for '{folder_name}'."})
+
+# -----------------------------------------------------------------------------
+# GOOGLE GEMINI API ENDPOINTS
+# -----------------------------------------------------------------------------
+@app.route("/api/gemini/status", methods=["GET"])
+def api_get_gemini_status():
+    """Check Gemini API key configuration, validity, and available models."""
+    k = config.get_gemini_api_key(force_reload=True)
+    if not k:
+        return jsonify({
+            "success": True,
+            "configured": False,
+            "valid": False,
+            "key_masked": "",
+            "message": "No Gemini API key configured. Stage 2 will use Antigravity IDE Engine.",
+            "models": []
+        })
+
+    is_valid, msg, models = validate_gemini_key(k)
+    masked = f"{k[:6]}...{k[-4:]}" if len(k) > 10 else "***"
+    return jsonify({
+        "success": True,
+        "configured": True,
+        "valid": is_valid,
+        "key_masked": masked,
+        "message": msg,
+        "models": models
+    })
+
+@app.route("/api/gemini/key", methods=["POST"])
+def api_set_gemini_key():
+    """Update and persist Gemini API key."""
+    data = request.json or {}
+    new_key = data.get("key", "").strip()
+    config.set_gemini_api_key(new_key)
+    is_valid, msg, models = validate_gemini_key(new_key) if new_key else (False, "Key cleared", [])
+    masked = f"{new_key[:6]}...{new_key[-4:]}" if len(new_key) > 10 else ""
+    return jsonify({
+        "success": True,
+        "configured": bool(new_key),
+        "valid": is_valid,
+        "key_masked": masked,
+        "message": msg,
+        "models": models
+    })
+
+@app.route("/api/stage2/run-gemini", methods=["POST"])
+def api_stage2_run_gemini():
+    """Trigger autonomous Gemini Stage 2 generation for current or specified project."""
+    data = request.json or {}
+    folder_name = data.get("folder_name") or STATE.get("project_title", "").strip()
+    if not folder_name:
+        return jsonify({"success": False, "error": "No project specified."}), 400
+
+    def gemini_worker():
+        try:
+            STATE["state"] = "RUNNING_SCRIPT"
+            STATE["step2"] = "RUNNING"
+            add_log(f"Stage 2: Starting autonomous Gemini generation for '{folder_name}'...")
+            res = run_gemini_stage2(folder_name)
+            STATE["step2"] = "COMPLETED"
+            STATE["state"] = "COMPLETED"
+            STATE["task_description"] = f"Stage 2 complete via Gemini ({res.get('total_shots', 0)} shots). Ready for Stage 3."
+            add_log(f"Stage 2: Autonomous Gemini generation complete for '{folder_name}' ({res.get('total_shots', 0)} shots).")
+        except Exception as ex:
+            STATE["state"] = "ERROR"
+            STATE["step2"] = "ERROR"
+            add_log(f"Stage 2 Gemini error: {ex}")
+
+    t = threading.Thread(target=gemini_worker, daemon=True)
+    t.start()
+    return jsonify({"success": True, "message": f"Autonomous Gemini generation started for '{folder_name}'."})
 
 def get_chrome_flow_page(playwright_instance):
     """Safely connect to Chrome CDP and retrieve Google Flow page, returning (page, error_msg)."""

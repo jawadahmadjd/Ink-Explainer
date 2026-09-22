@@ -2086,6 +2086,14 @@
             </div>
           </div>
 
+          <!-- Gemini Engine Card -->
+          <div class="system-health-card" id="geminiBadge" title="Google Gemini API Status — Click to configure" onclick="openSettingsModal()" style="cursor: pointer;">
+            <div class="health-row">
+              <span class="health-title"><span style="color: #38BDF8;">✨</span>Gemini API</span>
+              <span id="geminiLabel" class="brand-tag" style="background: rgba(56, 189, 248, 0.15); color: #38BDF8; font-size: 10px; padding: 2px 6px;">Checking...</span>
+            </div>
+          </div>
+
           <!-- Antigravity Engine Card -->
           <div class="system-health-card" id="antigravityBadge" title="Antigravity AI Reasoning Engine Active">
             <div class="health-row">
@@ -2285,6 +2293,21 @@
           <span class="step-num">STAGE 02</span>
           <span class="step-title">Inspired Script & Prompts</span>
           <span class="step-status-text" id="step2Status">Waiting</span>
+
+          <!-- STAGE 2 ENGINE SELECTOR BADGE -->
+          <div id="step2EngineBox" style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: var(--radius-sm); padding: 6px 10px; margin: 6px 0; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span id="step2EngineIcon" style="font-size: 13px;">✨</span>
+              <div>
+                <div style="font-size: 11px; font-weight: 700; color: #38bdf8;" id="step2EngineName">Gemini API (Auto)</div>
+                <div style="font-size: 9.5px; color: var(--text-muted);" id="step2EngineSub">Autonomous 1-Click Script & Prompts</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 4px;">
+              <button class="btn" id="btnRunGeminiDirect" onclick="runGeminiStage2Direct()" style="padding: 2px 7px; font-size: 10px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.35); font-weight: 600;" title="Force 1-click autonomous generation via Gemini API">⚡ 1-Click</button>
+              <button class="btn" id="btnToggleEngine" onclick="toggleStage2EngineMode()" style="padding: 2px 7px; font-size: 10px; background: rgba(255,255,255,0.06); color: var(--text-muted); border: 1px solid var(--border-color);" title="Switch between Gemini and Antigravity">🔄 Switch</button>
+            </div>
+          </div>
 
           <!-- ANTIGRAVITY TASK STATUS WIDGET -->
           <div id="step2AntigravityBox" style="background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(168, 85, 247, 0.35); border-radius: var(--radius-sm); padding: 8px 10px; margin: 8px 0; text-align: left; display: none;">
@@ -3345,6 +3368,7 @@
       }
       initSSEStream();
       startPolling();
+      checkGeminiStatusLive();
     });
 
     function initSSEStream() {
@@ -3793,7 +3817,12 @@
           }
         } else {
           btn2.disabled = isRunning || !has_pm;
-          btn2.innerHTML = has_script ? '🔄 Re-Synthesize (Antigravity)' : '🤖 Synthesize (Antigravity)';
+          const isGeminiMode = stage2EnginePreference !== 'antigravity' && geminiApiStatus.configured && geminiApiStatus.valid;
+          if (isGeminiMode) {
+            btn2.innerHTML = has_script ? '🔄 Re-Generate (Gemini API)' : '✨ Generate (Gemini API)';
+          } else {
+            btn2.innerHTML = has_script ? '🔄 Re-Synthesize (Antigravity)' : '🤖 Synthesize (Antigravity)';
+          }
         }
       }
       const btnCustomScript = document.getElementById('btnCustomScript');
@@ -5525,6 +5554,97 @@
         }
       } catch (err) {
         alert('Failed to copy task prompt: ' + err.message);
+      }
+    }
+
+    let stage2EnginePreference = localStorage.getItem('ink_stage2_engine') || 'auto';
+    let geminiApiStatus = { configured: false, valid: false, message: '' };
+
+    async function checkGeminiStatusLive() {
+      try {
+        const res = await fetch('/api/gemini/status');
+        const data = await res.json();
+        geminiApiStatus = data;
+        const geminiLabel = document.getElementById('geminiLabel');
+        const engineName = document.getElementById('step2EngineName');
+        const engineSub = document.getElementById('step2EngineSub');
+        const engineIcon = document.getElementById('step2EngineIcon');
+
+        if (geminiLabel) {
+          if (data.configured && data.valid) {
+            geminiLabel.textContent = 'Active';
+            geminiLabel.style.background = 'rgba(16, 185, 129, 0.15)';
+            geminiLabel.style.color = '#10B981';
+          } else if (data.configured && !data.valid) {
+            geminiLabel.textContent = 'Denied (403)';
+            geminiLabel.style.background = 'rgba(239, 68, 68, 0.15)';
+            geminiLabel.style.color = '#F87171';
+            geminiLabel.title = data.message;
+          } else {
+            geminiLabel.textContent = 'Not Set';
+            geminiLabel.style.background = 'rgba(255, 255, 255, 0.08)';
+            geminiLabel.style.color = 'var(--text-muted)';
+          }
+        }
+
+        if (engineName && engineSub) {
+          if (stage2EnginePreference === 'antigravity') {
+            if (engineIcon) engineIcon.textContent = '🤖';
+            engineName.textContent = 'Antigravity (IDE Bridge)';
+            engineSub.textContent = 'Interactive Script & Storyboard Synthesis';
+            engineName.style.color = '#C084FC';
+          } else if (data.configured && data.valid) {
+            if (engineIcon) engineIcon.textContent = '✨';
+            engineName.textContent = 'Gemini API (Autonomous)';
+            engineSub.textContent = '1-Click Multi-Model Storyboard Synthesis';
+            engineName.style.color = '#38BDF8';
+          } else if (data.configured && !data.valid) {
+            if (engineIcon) engineIcon.textContent = '⚠️';
+            engineName.textContent = 'Antigravity Fallback (Key Denied)';
+            engineSub.textContent = 'Gemini key 403; using Antigravity IDE';
+            engineName.style.color = '#F59E0B';
+          } else {
+            if (engineIcon) engineIcon.textContent = '🤖';
+            engineName.textContent = 'Antigravity IDE Engine';
+            engineSub.textContent = 'Zero external API key dependency';
+            engineName.style.color = '#C084FC';
+          }
+        }
+      } catch (err) {
+        console.warn('Gemini status check error:', err);
+      }
+    }
+
+    function toggleStage2EngineMode() {
+      if (stage2EnginePreference === 'antigravity') {
+        stage2EnginePreference = 'auto';
+      } else {
+        stage2EnginePreference = 'antigravity';
+      }
+      localStorage.setItem('ink_stage2_engine', stage2EnginePreference);
+      checkGeminiStatusLive();
+      fetchStatus();
+    }
+
+    async function runGeminiStage2Direct() {
+      if (!activeProjectFolder) {
+        alert('Please select an active project first.');
+        return;
+      }
+      try {
+        const res = await fetch('/api/stage2/run-gemini', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ folder_name: activeProjectFolder })
+        });
+        const data = await res.json();
+        if (data.success) {
+          fetchStatus();
+        } else {
+          alert('Failed to start Gemini stage: ' + (data.error || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('Error starting Gemini stage: ' + err.message);
       }
     }
 

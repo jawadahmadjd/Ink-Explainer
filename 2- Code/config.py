@@ -274,6 +274,45 @@ def get_project_dirs(video_title: str, niche: str = None):
     }
 
 # ------------------------------------------------------------------------------
+# GEMINI API CONFIGURATION (STAGE 2 SCRIPT REPURPOSING & PROMPTS)
+# ------------------------------------------------------------------------------
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or ""
+
+def get_gemini_api_key(force_reload: bool = False) -> str:
+    """Returns the current Gemini API key, reloading .env if requested."""
+    if force_reload:
+        reload_env_keys()
+    return GEMINI_API_KEY or os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or ""
+
+def set_gemini_api_key(api_key: str):
+    """Sets the Gemini API key in-memory and persists it to .env."""
+    global GEMINI_API_KEY
+    GEMINI_API_KEY = api_key.strip()
+    sync_gemini_key_to_env(GEMINI_API_KEY)
+
+def sync_gemini_key_to_env(api_key: str):
+    """Safely updates GEMINI_API_KEY in .env file without wiping other credentials."""
+    clean_key = api_key.strip()
+    if os.path.exists(ENV_FILE):
+        with open(ENV_FILE, "r", encoding="utf-8", errors="replace") as f:
+            lines = f.readlines()
+        has_key = False
+        new_lines = []
+        for line in lines:
+            if line.startswith("GEMINI_API_KEY="):
+                new_lines.append(f"GEMINI_API_KEY={clean_key}\n")
+                has_key = True
+            else:
+                new_lines.append(line)
+        if not has_key:
+            new_lines.append(f"GEMINI_API_KEY={clean_key}\n")
+        with open(ENV_FILE, "w", encoding="utf-8") as f:
+            f.writelines(new_lines)
+    else:
+        with open(ENV_FILE, "w", encoding="utf-8") as f:
+            f.write(f"GEMINI_API_KEY={clean_key}\n")
+
+# ------------------------------------------------------------------------------
 # ELEVENLABS TTS CONFIGURATION & DYNAMIC KEY POOL
 # ------------------------------------------------------------------------------
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
@@ -284,8 +323,9 @@ if not ELEVENLABS_API_KEYS and ELEVENLABS_API_KEY:
 
 def reload_env_keys():
     """Reloads .env file from disk to refresh API credentials after GUI updates."""
-    global ELEVENLABS_API_KEY, ELEVENLABS_API_KEYS, ELEVENLABS_VOICE_ID, ELEVENLABS_MODEL_ID
+    global ELEVENLABS_API_KEY, ELEVENLABS_API_KEYS, ELEVENLABS_VOICE_ID, ELEVENLABS_MODEL_ID, GEMINI_API_KEY
     load_dotenv(ENV_FILE, override=True)
+    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or ""
     ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
     _raw = os.getenv("ELEVENLABS_API_KEYS", ELEVENLABS_API_KEY or "")
     ELEVENLABS_API_KEYS = [k.strip() for k in re.split(r"[,\n]+", _raw) if k.strip()]

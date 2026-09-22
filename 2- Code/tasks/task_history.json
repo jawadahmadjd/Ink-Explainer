@@ -397,5 +397,53 @@
     },
     "instructions": "ANTIGRAVITY SCRIPT & STORYBOARD SYNTHESIS INSTRUCTIONS (Niche: TEST_ANTIGRAVITY | Mode: CREATING ORIGINAL SCRIPT FROM TOPIC):\n\n1. TONE & NARRATIVE ARCHITECTURE (SOP 03):\n   - Tone: Witty, deadpan, self-effacing, relatable explainer narration in the style of 'Casually Explained' and 'MinutePhysics'.\n   - Follow the 7-Act Retention Architecture:\n       * Act 1: The Paradox Hook (undeniable modern vs ancestral contradiction; question that feels impossible to answer simply).\n       * Act 2: The Common Misconception (what pop culture / school taught vs reality).\n       * Act 3: The Historical/Scientific Origin (the prehistoric/evolutionary root moment).\n       * Act 4: The Hidden Mechanism (the physical gears broken down with simple visual analogies).\n       * Act 5: The Turning Point / Catastrophic Failure (when the system fails or goes wrong).\n       * Act 6: The Modern Parallel (how modern humans do the exact same thing with phones/emails/debt).\n       * Act 7: The Unresolved Irony & Epilogue (dry, thought-provoking philosophical reflection).\n\n2. ZERO PLAGIARISM REPURPOSING MANDATE:\n   - 100% original phrasing (0% verbatim copy-pasting from reference).\n   - Preserve all historical/scientific facts, archaeological sites, names, numbers, citations, and core thesis.\n   - Transform dry academic explanations into funny, high-dopamine visual thought-experiments.\n\n3. ELASTIC ACTION STEP PACING & NEVER-ORPHAN GRAMMAR SHIELD:\n   - Split narration into Elastic Action Steps (~20 to 65 characters / ~1.0s to 2.2s per shot).\n   - Every shot must represent an atomic cognitive thought or character action.\n   - Never guillotine sentences mid-clause, split adjective chains, or orphan introductory adverbs.\n   - Shield decimals and numbers ('99.9%', '$3.50', '50,000 years ago').\n\n4. MINUTEPHYSICS STICK-FIGURE PROMPT ENGINEERING:\n   - All human characters MUST be drawn strictly as simple minimalist stick figures:\n     thin black ink lines, solid white circle heads, minimal dot eyes, simple neutral line mouths.\n     Zero realistic human anatomy, zero flesh skin tones.\n   - Edge-to-edge full bleed 16:9 widescreen environment grounding, zero white borders or floating cards.\n   - Creative comedic visual gags, relatable props, expressive stick-figure body language.\n\n5. OUTPUT TARGETS:\n   - Compile into storyboard_master.csv, clean_ai_voiceover_script.txt, and all_prompts.txt.\n   - Call apply_antigravity_script_and_storyboard() or complete_task() to signal the studio pipeline.\n",
     "result_summary": "Synthesized 6 shots for '997- Test Antigravity Stage2 Studio' via Antigravity Engine."
+  },
+  {
+    "task_id": "task_20260922_192135",
+    "task_type": "SCRIPT_REPURPOSING_AND_STORYBOARD",
+    "project_title": "997- Test Antigravity Stage2 Studio",
+    "niche": "test_antigravity",
+    "status": "COMPLETED",
+    "created_at": "2026-09-22T19:21:35.336526",
+    "updated_at": "2026-09-22T19:21:35.359403",
+    "input_payload": {
+      "title": "997- Test Antigravity Stage2 Studio",
+      "niche": "test_antigravity",
+      "user_prompt": "",
+      "is_repurposing": true,
+      "matched_blueprint": {},
+      "has_reference_transcript": true,
+      "reference_transcript_path": "D:\\Tools of Jawad\\25- Ink Explainers\\2- Code\\tasks\\reference_transcript.txt",
+      "reference_word_count": 8,
+      "reference_transcript_preview": "Sample transcript text for testing the REST API.",
+      "video_info": {},
+      "cuts_count": 0
+    },
+    "instructions": "ANTIGRAVITY SCRIPT & STORYBOARD SYNTHESIS INSTRUCTIONS (Niche: TEST_ANTIGRAVITY | Mode: REPURPOSING INGESTED REFERENCE SCRIPT):\n\n1. TONE & NARRATIVE ARCHITECTURE (SOP 03):\n   - Tone: Witty, deadpan, self-effacing, relatable explainer narration in the style of 'Casually Explained' and 'MinutePhysics'.\n   - Follow the 7-Act Retention Architecture:\n       * Act 1: The Paradox Hook (undeniable modern vs ancestral contradiction; question that feels impossible to answer simply).\n       * Act 2: The Common Misconception (what pop culture / school taught vs reality).\n       * Act 3: The Historical/Scientific Origin (the prehistoric/evolutionary root moment).\n       * Act 4: The Hidden Mechanism (the physical gears broken down with simple visual analogies).\n       * Act 5: The Turning Point / Catastrophic Failure (when the system fails or goes wrong).\n       * Act 6: The Modern Parallel (how modern humans do the exact same thing with phones/emails/debt).\n       * Act 7: The Unresolved Irony & Epilogue (dry, thought-provoking philosophical reflection).\n\n2. ZERO PLAGIARISM REPURPOSING MANDATE:\n   - 100% original phrasing (0% verbatim copy-pasting from reference).\n   - Preserve all historical/scientific facts, archaeological sites, names, numbers, citations, and core thesis.\n   - Transform dry academic explanations into funny, high-dopamine visual thought-experiments.\n\n3. ELASTIC ACTION STEP PACING & NEVER-ORPHAN GRAMMAR SHIELD:\n   - Split narration into Elastic Action Steps (~20 to 65 characters / ~1.0s to 2.2s per shot).\n   - Every shot must represent an atomic cognitive thought or character action.\n   - Never guillotine sentences mid-clause, split adjective chains, or orphan introductory adverbs.\n   - Shield decimals and numbers ('99.9%', '$3.50', '50,000 years ago').\n\n4. MINUTEPHYSICS STICK-FIGURE PROMPT ENGINEERING:\n   - All human characters MUST be drawn strictly as simple minimalist stick figures:\n     thin black ink lines, solid white circle heads, minimal dot eyes, simple neutral line mouths.\n     Zero realistic human anatomy, zero flesh skin tones.\n   - Edge-to-edge full bleed 16:9 widescreen environment grounding, zero white borders or floating cards.\n   - Creative comedic visual gags, relatable props, expressive stick-figure body language.\n\n5. OUTPUT TARGETS:\n   - Compile into storyboard_master.csv, clean_ai_voiceover_script.txt, and all_prompts.txt.\n   - Call apply_antigravity_script_and_storyboard() or complete_task() to signal the studio pipeline.\n",
+    "result_summary": "Synthesized 2 shots for '997- Test Antigravity Stage2 Studio' via Antigravity Engine."
+  },
+  {
+    "task_id": "task_20260922_192135",
+    "task_type": "SCRIPT_CREATION_AND_STORYBOARD",
+    "project_title": "997- Test Antigravity Stage2 Studio",
+    "niche": "test_antigravity",
+    "status": "COMPLETED",
+    "created_at": "2026-09-22T19:21:35.379511",
+    "updated_at": "2026-09-22T19:21:35.392455",
+    "input_payload": {
+      "title": "997- Test Antigravity Stage2 Studio",
+      "niche": "test_antigravity",
+      "user_prompt": "Test Prompt",
+      "is_repurposing": false,
+      "matched_blueprint": {},
+      "has_reference_transcript": false,
+      "reference_transcript_path": null,
+      "reference_word_count": 0,
+      "reference_transcript_preview": "",
+      "video_info": {},
+      "cuts_count": 0
+    },
+    "instructions": "ANTIGRAVITY SCRIPT & STORYBOARD SYNTHESIS INSTRUCTIONS (Niche: TEST_ANTIGRAVITY | Mode: CREATING ORIGINAL SCRIPT FROM TOPIC):\n\n1. TONE & NARRATIVE ARCHITECTURE (SOP 03):\n   - Tone: Witty, deadpan, self-effacing, relatable explainer narration in the style of 'Casually Explained' and 'MinutePhysics'.\n   - Follow the 7-Act Retention Architecture:\n       * Act 1: The Paradox Hook (undeniable modern vs ancestral contradiction; question that feels impossible to answer simply).\n       * Act 2: The Common Misconception (what pop culture / school taught vs reality).\n       * Act 3: The Historical/Scientific Origin (the prehistoric/evolutionary root moment).\n       * Act 4: The Hidden Mechanism (the physical gears broken down with simple visual analogies).\n       * Act 5: The Turning Point / Catastrophic Failure (when the system fails or goes wrong).\n       * Act 6: The Modern Parallel (how modern humans do the exact same thing with phones/emails/debt).\n       * Act 7: The Unresolved Irony & Epilogue (dry, thought-provoking philosophical reflection).\n\n2. ZERO PLAGIARISM REPURPOSING MANDATE:\n   - 100% original phrasing (0% verbatim copy-pasting from reference).\n   - Preserve all historical/scientific facts, archaeological sites, names, numbers, citations, and core thesis.\n   - Transform dry academic explanations into funny, high-dopamine visual thought-experiments.\n\n3. ELASTIC ACTION STEP PACING & NEVER-ORPHAN GRAMMAR SHIELD:\n   - Split narration into Elastic Action Steps (~20 to 65 characters / ~1.0s to 2.2s per shot).\n   - Every shot must represent an atomic cognitive thought or character action.\n   - Never guillotine sentences mid-clause, split adjective chains, or orphan introductory adverbs.\n   - Shield decimals and numbers ('99.9%', '$3.50', '50,000 years ago').\n\n4. MINUTEPHYSICS STICK-FIGURE PROMPT ENGINEERING:\n   - All human characters MUST be drawn strictly as simple minimalist stick figures:\n     thin black ink lines, solid white circle heads, minimal dot eyes, simple neutral line mouths.\n     Zero realistic human anatomy, zero flesh skin tones.\n   - Edge-to-edge full bleed 16:9 widescreen environment grounding, zero white borders or floating cards.\n   - Creative comedic visual gags, relatable props, expressive stick-figure body language.\n\n5. OUTPUT TARGETS:\n   - Compile into storyboard_master.csv, clean_ai_voiceover_script.txt, and all_prompts.txt.\n   - Call apply_antigravity_script_and_storyboard() or complete_task() to signal the studio pipeline.\n",
+    "result_summary": "Synthesized 6 shots for '997- Test Antigravity Stage2 Studio' via Antigravity Engine."
   }
 ]

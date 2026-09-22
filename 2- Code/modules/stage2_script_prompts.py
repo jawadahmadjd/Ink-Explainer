@@ -71,13 +71,21 @@ def run_stage2_script_prompts(
     user_prompt: str = None,
     force_regenerate: bool = False,
     niche: str = None,
-    use_offline_fallback: bool = False
+    use_offline_fallback: bool = False,
+    generator_engine: str = "auto"
 ) -> dict:
     """
     Generate or sync script, master storyboard CSV, all prompts, and character audit.
-    By default, script repurposing/creation and prompt generation are handled entirely by Antigravity.
-    Provides use_offline_fallback=True as a local regex/heuristic fallback.
+    Supports engines:
+      - 'auto': Autonomous 1-click generation via Google Gemini API if key is available,
+                falling back seamlessly to Antigravity IDE Bridge if key is absent/fails.
+      - 'gemini': Exclusively use Google Gemini API.
+      - 'antigravity': Exclusively dispatch to Antigravity IDE Bridge.
+      - 'offline': Use local regex/heuristic rules.
     """
+    if use_offline_fallback:
+        generator_engine = "offline"
+
     dirs = config.get_project_dirs(video_title)
     finals_dir = dirs["finals_dir"]
     postmortem_dir = dirs["postmortem_dir"]
@@ -125,7 +133,7 @@ def run_stage2_script_prompts(
             header = next(reader, None)
             existing_rows = list(reader)
 
-    # If no existing master CSV, construct using Antigravity AI Engine (or offline fallback)
+    # If no existing master CSV, construct using Gemini API, Antigravity, or offline fallback
     if not existing_rows or force_regenerate:
         transcript_path = custom_script_path or os.path.join(postmortem_dir, "clean_transcript.txt")
         raw_text = ""
@@ -137,8 +145,27 @@ def run_stage2_script_prompts(
         if match:
             print(f"[REFERENCE MATCH FOUND] '{match['title']}' in niche '{match.get('niche', niche)}' (Score: {match['score']})")
 
-        if not use_offline_fallback:
-            # Primary path: Handled entirely by Antigravity
+        # Engine Path 1: Autonomous Gemini API Generation
+        if generator_engine == "gemini" or (generator_engine == "auto" and config.get_gemini_api_key()):
+            try:
+                print(f"\n[STAGE 2] Attempting autonomous generation via Google Gemini API for '{video_title}'...")
+                from modules.gemini_stage2 import run_gemini_stage2
+                res = run_gemini_stage2(
+                    video_title=video_title,
+                    custom_script_path=custom_script_path,
+                    user_prompt=user_prompt,
+                    force_regenerate=force_regenerate,
+                    niche=niche
+                )
+                return res
+            except Exception as gem_ex:
+                print(f"[STAGE 2 WARNING] Gemini API generation failed: {gem_ex}")
+                if generator_engine == "gemini":
+                    raise gem_ex
+                print("   [STAGE 2 FALLBACK] Seamlessly falling back to Antigravity AI Engine...")
+
+        # Engine Path 2: Interactive Antigravity Task Bridge
+        if generator_engine != "offline":
             from modules.antigravity_bridge import dispatch_task, wait_for_task_completion
             task_type = "SCRIPT_REPURPOSING_AND_STORYBOARD" if raw_text else "SCRIPT_CREATION_AND_STORYBOARD"
             print(f"\n[STAGE 2] Dispatching to Antigravity AI Engine ({task_type}) for '{video_title}' (Niche: {niche})...")
@@ -162,7 +189,7 @@ def run_stage2_script_prompts(
                 header = next(reader, None)
                 existing_rows = list(reader)
         else:
-            # Fallback path: Offline heuristic generation
+            # Engine Path 3: Offline heuristic generation
             print("   [STAGE 2 FALLBACK] Running offline rule-based script & prompt generator...")
             rows = []
             if raw_text:
